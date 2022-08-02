@@ -10,15 +10,17 @@ function processFile(file) {
 	(async () => {
 		const fileContent = await file.text();
 		const puzzleInfo = JSON.parse(fileContent)
-		console.log(puzzleInfo);
+		createBoard(puzzleInfo);
 	})();
-	hideInput;
 }
 
-function hideInput(){
-
-	var element = document.getElementById("input");
-	var child=document.getElementById("file");
-	element.removeChild(child);
-
-}	
+function createBoard(info) {
+	let app = new PIXI.Application({ width: 640, height: 360 });
+	let render = app.renderer;
+	render.backgroundColor = 0x152238;
+    render.view.style.position = "absolute";
+    render.view.style.display = "block";
+    render.autoResize = true;
+    app.render();
+	document.body.insertBefore(app.view, "input");
+}
