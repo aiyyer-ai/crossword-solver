@@ -7,7 +7,6 @@ function handleFile(event) {
 		document.getElementById('fileContent').textContent = evt.target.result;
 	})
 	reader.readAsText(event.target.file);
-	console.log(fileContent);
 }
 
 
