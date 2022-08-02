@@ -22,5 +22,6 @@ function createBoard(info) {
     render.view.style.display = "block";
     render.autoResize = true;
     app.render();
-	document.body.insertBefore(app.view, "input");
+    const inputField = document.getElementById("input");
+	document.body.insertBefore(app.view, inputField);
 }
