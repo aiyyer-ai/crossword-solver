@@ -17,7 +17,10 @@
   <input type="file" id="file" name="file" accept=".ipuz"><br><br>
   <input type="submit" value="Submit">
   
-  <script src="script.js"></script>
+  <script src="script.js">
+    const fileInput = document.getElementById("input");
+    fileInput.addEventListener("change", handleFile, false);
+  </script>
 </body>
 
 </html>
