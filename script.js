@@ -4,11 +4,10 @@ fileInput.addEventListener("change", handleFile, false);
 function handleFile(event) {
 	const reader = new FileReader();
 	reader.onload = (function(evt) {
-		console.log(evt);
 		document.getElementById('fileContent').textContent = evt.target.result;
 	})
-	console.log(event.target);
-	reader.readAsText(event.target.file);
+	const puzzleData = reader.readAsText(event.target.file);
+	console.log(puzzleData);
 }
 
 
