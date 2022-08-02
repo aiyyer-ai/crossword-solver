@@ -1,12 +1,13 @@
-const fileInput = document.getElementById("file");
-fileInput.addEventListener("change", handleFile, false);
+document.getElementById('file').addEventListener('change', (e) => {
+	const file = document.getElementById('file').files[0];
 
-function handleFile(event) {
+	if (file) {
+		processFile(file);
+	}
+});
+
+function processFile(file) {
 	const reader = new FileReader();
-	reader.onload = (function(evt) {
-		const fileTest = evt.target.result;
-		console.log(fileTest);
-	})
-	const file = event.target.file;
+	reader.readAsDataURL(file);
 	console.log(file);
 }
