@@ -6,8 +6,8 @@ function handleFile(event) {
 	reader.onload = (function(evt) {
 		document.getElementById('fileContent').textContent = evt.target.result;
 	})
-	const puzzleData = reader.readAsText(event.target.file);
-	console.log(puzzleData);
+	reader.readAsText(event.target.file);
+	console.log(fileContent);
 }
 
 
