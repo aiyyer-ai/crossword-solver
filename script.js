@@ -7,6 +7,8 @@ document.getElementById('file').addEventListener('change', (e) => {
 });
 
 function processFile(file) {
-	const fileContent = await file.text();
-	console.log(fileContent);
+	(async () => {
+		const fileContent = await file.text();
+		console.log(fileContent);
+	})();
 }
