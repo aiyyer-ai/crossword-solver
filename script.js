@@ -9,6 +9,7 @@ document.getElementById('file').addEventListener('change', (e) => {
 function processFile(file) {
 	(async () => {
 		const fileContent = await file.text();
-		console.log(fileContent);
+		const puzzleInfo = JSON.parse(fileContent)
+		console.log(puzzleInfo);
 	})();
 }
