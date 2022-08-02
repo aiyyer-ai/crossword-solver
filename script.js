@@ -12,4 +12,13 @@ function processFile(file) {
 		const puzzleInfo = JSON.parse(fileContent)
 		console.log(puzzleInfo);
 	})();
+	hideInput;
 }
+
+function hideInput(){
+
+	var element = document.getElementById("input");
+	var child=document.getElementById("file");
+	element.removeChild(child);
+
+}	
