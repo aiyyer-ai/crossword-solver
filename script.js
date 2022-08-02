@@ -7,7 +7,6 @@ document.getElementById('file').addEventListener('change', (e) => {
 });
 
 function processFile(file) {
-	const reader = new FileReader();
-	reader.readAsDataURL(file);
-	console.log(file);
+	const fileContent = await file.text();
+	console.log(fileContent);
 }
