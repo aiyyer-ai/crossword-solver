@@ -106,8 +106,8 @@ function keyPress(key) {
 					currentHighlight.object.children[currentHighlight.object.children.length - 1].destroy();
 				}
 				const letter = new PIXI.Text(key.toUpperCase(),{fontFamily : 'Arial', fontSize: 28, fill : 0x000000, align : 'left'});
-				letter.anchor.x = 0;
-				letter.anchor.y = 0;
+				letter.anchor.x = 1;
+				letter.anchor.y = 1;
 				letter.name = 'guess';
 				currentHighlight.object.addChild(letter);
 				let newSpot = app.stage.getChildByName((currentHighlight.across ? `${parseInt(clickedPos[0]) + 1},${clickedPos[1]}` : `${clickedPos[0]},${parseInt(clickedPos[1]) + 1}`));
