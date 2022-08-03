@@ -1,5 +1,3 @@
-import Events from 'nom-events';
-
 class Keyboard {
 	constructor() {
 		this.keyStates = new Map();
