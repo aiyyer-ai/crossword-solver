@@ -47,8 +47,10 @@ function createBoard(info) {
 			squareContainer.name = `${squarePosition},${row}`;
 			let crosswordSquare = new PIXI.Graphics();
 			crosswordSquare.beginFill(0xffffff);
-			crosswordSquare.drawRect(squareX, squareY, 34, 34);
+			crosswordSquare.drawRect(0, 0, 34, 34);
 			crosswordSquare.interactive = true;
+			crosswordSquare.squareX = squareX;
+			crosswordSquare.squareY = squareY;
 			crosswordSquare.name = `${squarePosition},${row}`;
 			crosswordSquare.on('click', (event) => onClick(crosswordSquare));
 			squarePosition++;
