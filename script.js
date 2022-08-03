@@ -63,7 +63,7 @@ function createBoard(info) {
 			squarePosition++;
 			squareContainer.addChild(crosswordSquare);
 			if(square != 0 && typeof square == 'number') {
-				const text = new PIXI.Text(String(square),{fontFamily: squareFont, fontSize: 10, fill : 0x000000, align : 'left'});
+				const text = new PIXI.Text(String(square),{fontFamily: squareFont, fontSize: 12, fill : 0x000000, align : 'left'});
 				text.name = `numberedSquare`;
 				crosswordSquare.addChild(text);
 			}
@@ -115,7 +115,7 @@ function keyPress(key) {
 				const letter = new PIXI.Text(key.toUpperCase(),{fontFamily : squareFont, fontSize: 28, fill : 0x000000, align : 'left'});
 				letter.anchor.set(0.5);
 				letter.x = currentHighlight.object.sizeX/2;
-				letter.y = currentHighlight.object.sizeY/2;
+				letter.y = (currentHighlight.object.sizeY/4) * 3;
 				letter.name = 'guess';
 				currentHighlight.object.addChild(letter);
 				let newSpot = app.stage.getChildByName((currentHighlight.across ? `${parseInt(clickedPos[0]) + 1},${clickedPos[1]}` : `${clickedPos[0]},${parseInt(clickedPos[1]) + 1}`));
