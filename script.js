@@ -56,7 +56,7 @@ function createBoard(info) {
 	}
 }
 
-const Keyboard = require('pixi.js-keyboard');
+import Keyboard from "pixi.js-keyboard";
 function onClick(object) {
 	setHighlight(object);
 	Keyboard.events.on('pressed', null, (keyCode, event) => {
