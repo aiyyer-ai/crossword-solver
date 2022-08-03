@@ -60,33 +60,31 @@ function createBoard(info) {
 }
 
 function keyPress(key) {
-	let clickedPos = currentHighlight.object.name.split(",");
-	console.log(key);
-	if(key == "Delete" || key == "Backspace") {
-		if(currentHighlight.object.children[0] ? (currentHighlight.object.children[currentHighlight.object.children.length - 1].name == 'guess') : currentHighlight.object.children[0])  {
-			currentHighlight.object.children[currentHighlight.object.children.length - 1].destroy();
-		} else {
-			let newSpot = app.stage.getChildByName((currentHighlight.across ? `${parseInt(clickedPos[0]) - 1},${clickedPos[1]}` : `${clickedPos[0]},${parseInt(clickedPos[1]) - 1}`));
-			if(newSpot) {
-				setHighlight(newSpot);
-			}
-		}
-	}
-	if (key.length == 1) {
-		if(currentHighlight.object) {
+	if(currentHighlight.object) {
+		console.log(key);
+		if(key == "Delete" || key == "Backspace") {
 			if(currentHighlight.object.children[0] ? (currentHighlight.object.children[currentHighlight.object.children.length - 1].name == 'guess') : currentHighlight.object.children[0])  {
 				currentHighlight.object.children[currentHighlight.object.children.length - 1].destroy();
+			} else {
+				let newSpot = app.stage.getChildByName((currentHighlight.across ? `${parseInt(clickedPos[0]) - 1},${clickedPos[1]}` : `${clickedPos[0]},${parseInt(clickedPos[1]) - 1}`));
+				if(newSpot) {
+					setHighlight(newSpot);
+				}
 			}
-			const letter = new PIXI.Text(key.toUpperCase(),{fontFamily : 'Arial', fontSize: 28, fill : 0x000000, align : 'center'});
-			letter.x = currentHighlight.object.squareX + 4;
-			letter.y = currentHighlight.object.squareY + 1;
-			letter.name = 'guess';
-			currentHighlight.object.addChild(letter);
-			let newSpot = app.stage.getChildByName((currentHighlight.across ? `${parseInt(clickedPos[0]) + 1},${clickedPos[1]}` : `${clickedPos[0]},${parseInt(clickedPos[1]) + 1}`));
-			if(newSpot) {
-				setHighlight(newSpot);
-			}
-			
+		}
+		if (key.length == 1) {
+				if(currentHighlight.object.children[0] ? (currentHighlight.object.children[currentHighlight.object.children.length - 1].name == 'guess') : currentHighlight.object.children[0])  {
+					currentHighlight.object.children[currentHighlight.object.children.length - 1].destroy();
+				}
+				const letter = new PIXI.Text(key.toUpperCase(),{fontFamily : 'Arial', fontSize: 28, fill : 0x000000, align : 'center'});
+				letter.x = currentHighlight.object.squareX + 4;
+				letter.y = currentHighlight.object.squareY + 1;
+				letter.name = 'guess';
+				currentHighlight.object.addChild(letter);
+				let newSpot = app.stage.getChildByName((currentHighlight.across ? `${parseInt(clickedPos[0]) + 1},${clickedPos[1]}` : `${clickedPos[0]},${parseInt(clickedPos[1]) + 1}`));
+				if(newSpot) {
+					setHighlight(newSpot);
+				}
 		}
 	}
 }
