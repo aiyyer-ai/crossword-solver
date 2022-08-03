@@ -46,6 +46,7 @@ function createBoard(info) {
 			squareContainer.width = 34;
 			squareContainer.name = `${squarePosition},${row}`;
 			let crosswordSquare = new PIXI.Graphics();
+			crosswordSquare.lineTextureStyle.options.texture.baseTexture.scaleMode = PIXI.SCALE_MODES.NEAREST;
 			crosswordSquare.beginFill(0xffffff);
 			crosswordSquare.drawRect(0, 0, 34, 34);
 			crosswordSquare.interactive = true;
@@ -59,6 +60,7 @@ function createBoard(info) {
 			squareContainer.addChild(crosswordSquare);
 			if(square != 0 && typeof square == 'number') {
 				const text = new PIXI.Text(String(square),{fontFamily : 'Arial', fontSize: 12, fill : 0x000000, align : 'left'});
+				text.texture.baseTexture.scaleMode = PIXI.SCALE_MODES.NEAREST;
 				text.name = `numberedSquare`;
 				crosswordSquare.addChild(text);
 			}
@@ -108,6 +110,7 @@ function keyPress(key) {
 					currentHighlight.object.children[currentHighlight.object.children.length - 1].destroy();
 				}
 				const letter = new PIXI.Text(key.toUpperCase(),{fontFamily : 'Arial', fontSize: 28, fill : 0x000000, align : 'left'});
+				letter.texture.baseTexture.scaleMode = PIXI.SCALE_MODES.NEAREST;
 				letter.anchor.set(0.5);
 				letter.x = currentHighlight.object.sizeX/2;
 				letter.y = currentHighlight.object.sizeY/2;
