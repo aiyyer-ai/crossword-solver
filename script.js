@@ -69,26 +69,25 @@ function keyPress(key) {
 		let clickedPos = currentHighlight.object.name.split(",");
 		//Arrow Movement
 		if(key == "ArrowLeft") {
-			console.log(app.stage.getChildByName(`${parseInt(clickedPos[0]) - 1},${clickedPos[1]}`));
-			let newSpot = app.stage.getChildByName(`${parseInt(clickedPos[0]) - 1},${clickedPos[1]}`).children[`${parseInt(clickedPos[0]) - 1},${clickedPos[1]}`];
+			let newSpot = app.stage.getChildByName(`${parseInt(clickedPos[0]) - 1},${clickedPos[1]}`).children[0];
 			if(newSpot) {
 				setHighlight(newSpot);
 			}
 		}
 		if(key == "ArrowRight") {
-			let newSpot = app.stage.getChildByName(`${parseInt(clickedPos[0]) + 1},${clickedPos[1]}`).children[`${parseInt(clickedPos[0]) - 1},${clickedPos[1]}`];
+			let newSpot = app.stage.getChildByName(`${parseInt(clickedPos[0]) + 1},${clickedPos[1]}`).children[0];
 			if(newSpot) {
 				setHighlight(newSpot);
 			}
 		}
 		if(key == "ArrowDown") {
-			let newSpot = app.stage.getChildByName(`${clickedPos[0]},${parseInt(clickedPos[1]) + 1}`).children[`${parseInt(clickedPos[0]) - 1},${clickedPos[1]}`];
+			let newSpot = app.stage.getChildByName(`${clickedPos[0]},${parseInt(clickedPos[1]) + 1}`).children[0];
 			if(newSpot) {
 				setHighlight(newSpot);
 			}
 		}
 		if(key == "ArrowUp") {
-			let newSpot = app.stage.getChildByName(`${clickedPos[0]},${parseInt(clickedPos[1]) - 1}`).children[`${parseInt(clickedPos[0]) - 1},${clickedPos[1]}`];
+			let newSpot = app.stage.getChildByName(`${clickedPos[0]},${parseInt(clickedPos[1]) - 1}`).children[0];
 			if(newSpot) {
 				setHighlight(newSpot);
 			}
@@ -97,7 +96,7 @@ function keyPress(key) {
 			if(currentHighlight.object.children[0] ? (currentHighlight.object.children[currentHighlight.object.children.length - 1].name == 'guess') : currentHighlight.object.children[0])  {
 				currentHighlight.object.children[currentHighlight.object.children.length - 1].destroy();
 			}
-			let newSpot = app.stage.getChildByName((currentHighlight.across ? `${parseInt(clickedPos[0]) - 1},${clickedPos[1]}` : `${clickedPos[0]},${parseInt(clickedPos[1]) - 1}`)).children[currentHighlight.across ? `${parseInt(clickedPos[0]) - 1},${clickedPos[1]}` : `${clickedPos[0]},${parseInt(clickedPos[1]) - 1}`];
+			let newSpot = app.stage.getChildByName((currentHighlight.across ? `${parseInt(clickedPos[0]) - 1},${clickedPos[1]}` : `${clickedPos[0]},${parseInt(clickedPos[1]) - 1}`)).children[0];
 			if(newSpot) {
 				setHighlight(newSpot);
 			}
@@ -112,7 +111,7 @@ function keyPress(key) {
 				letter.name = 'guess';
 				console.log(letter);
 				currentHighlight.object.addChild(letter);
-				let newSpot = app.stage.getChildByName((currentHighlight.across ? `${parseInt(clickedPos[0]) + 1},${clickedPos[1]}` : `${clickedPos[0]},${parseInt(clickedPos[1]) + 1}`)).children.children[currentHighlight.across ? `${parseInt(clickedPos[0]) - 1},${clickedPos[1]}` : `${clickedPos[0]},${parseInt(clickedPos[1]) - 1}`];
+				let newSpot = app.stage.getChildByName((currentHighlight.across ? `${parseInt(clickedPos[0]) + 1},${clickedPos[1]}` : `${clickedPos[0]},${parseInt(clickedPos[1]) + 1}`)).children[0];
 				if(newSpot) {
 					setHighlight(newSpot);
 				}
@@ -147,8 +146,8 @@ function setHighlight(clickee) {
 		let leftDone = false;
 		let rightDone = false;
 		while(search) {
-			let leftSquare = app.stage.getChildByName((currentHighlight.across ? `${parseInt(clickedPos[0]) - squareDistance},${clickedPos[1]}` : `${clickedPos[0]},${parseInt(clickedPos[1]) - squareDistance}`)).children[currentHighlight.across ? `${parseInt(clickedPos[0]) - 1},${clickedPos[1]}` : `${clickedPos[0]},${parseInt(clickedPos[1]) - 1}`];
-			let rightSquare = app.stage.getChildByName((currentHighlight.across ? `${parseInt(clickedPos[0]) + squareDistance},${clickedPos[1]}` : `${clickedPos[0]},${parseInt(clickedPos[1]) + squareDistance}`)).children[currentHighlight.across ? `${parseInt(clickedPos[0]) - 1},${clickedPos[1]}` : `${clickedPos[0]},${parseInt(clickedPos[1]) - 1}`];
+			let leftSquare = app.stage.getChildByName((currentHighlight.across ? `${parseInt(clickedPos[0]) - squareDistance},${clickedPos[1]}` : `${clickedPos[0]},${parseInt(clickedPos[1]) - squareDistance}`)).children[0];
+			let rightSquare = app.stage.getChildByName((currentHighlight.across ? `${parseInt(clickedPos[0]) + squareDistance},${clickedPos[1]}` : `${clickedPos[0]},${parseInt(clickedPos[1]) + squareDistance}`)).children[0];
 			if (leftSquare && !leftDone) {
 				currentHighlight.otherSquares.push(leftSquare);
 				leftSquare.tint = 0xbfe5ff;
