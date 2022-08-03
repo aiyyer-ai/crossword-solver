@@ -46,7 +46,7 @@ function createBoard(info) {
 			squareContainer.width = 34;
 			squareContainer.name = `${squarePosition},${row}`;
 			let crosswordSquare = new PIXI.Graphics();
-			crosswordSquare.lineTextureStyle.options.texture.baseTexture.scaleMode = PIXI.SCALE_MODES.NEAREST;
+			crosswordSquare.lineTextureStyle.options.baseTexture.scaleMode = PIXI.SCALE_MODES.NEAREST;
 			crosswordSquare.beginFill(0xffffff);
 			crosswordSquare.drawRect(0, 0, 34, 34);
 			crosswordSquare.interactive = true;
