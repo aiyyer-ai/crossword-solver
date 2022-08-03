@@ -106,7 +106,7 @@ function keyPress(key) {
 					currentHighlight.object.children[currentHighlight.object.children.length - 1].destroy();
 				}
 				const letter = new PIXI.Text(key.toUpperCase(),{fontFamily : 'Arial', fontSize: 28, fill : 0x000000, align : 'left'});
-				letter.anchor.set(0);
+				letter.anchor.set(1);
 				letter.name = 'guess';
 				console.log(`letter position: ${letter.x}, ${letter.y}`);
 				console.log(`letter square origin: ${currentHighlight.object.x}, ${currentHighlight.object.y}`);
