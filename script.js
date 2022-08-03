@@ -24,7 +24,7 @@ function createBoard(info) {
     render.view.style.position = "absolute";
     render.view.style.display = "block";
     render.resolution = window.devicePixelRatio;
-    PIXI.settings.RESOLUTION = window.devicePixelRatio;
+    PIXI.settings.RESOLUTION = window.devicePixelRatio * 4;
     render.autoResize = true;
     render.resize((boardWidth * 36) + 2, (boardHeight * 36) + 2);
     app.render();
@@ -62,7 +62,6 @@ function createBoard(info) {
 			if(square != 0 && typeof square == 'number') {
 				const text = new PIXI.Text(String(square),{fontFamily : 'Arial', fontSize: 12, fill : 0x000000, align : 'left'});
 				text.roundPixels = true;
-				text.texture.baseTexture.scaleMode = PIXI.SCALE_MODES.NEAREST;
 				text.name = `numberedSquare`;
 				crosswordSquare.addChild(text);
 			}
@@ -114,7 +113,6 @@ function keyPress(key) {
 				const letter = new PIXI.Text(key.toUpperCase(),{fontFamily : 'Arial', fontSize: 28, fill : 0x000000, align : 'left'});
 				letter.anchor.set(0.5);
 				letter.roundPixels = true;
-				letter.texture.baseTexture.scaleMode = PIXI.SCALE_MODES.NEAREST;
 				letter.x = currentHighlight.object.sizeX/2;
 				letter.y = currentHighlight.object.sizeY/2;
 				letter.name = 'guess';
