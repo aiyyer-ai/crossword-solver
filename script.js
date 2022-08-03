@@ -60,6 +60,14 @@ function createBoard(info) {
 }
 
 function keyPress(key) {
+	if(key == "delete") {
+		if(currentHighlight.object.children[0] ? (currentHighlight.object.children[currentHighlight.object.children.length - 1].name == 'guess') : currentHighlight.object.children[0])  {
+			currentHighlight.object.children[currentHighlight.object.children.length - 1].destroy();
+		} else {
+			let newSpot = app.stage.getChildByName((currentHighlight.across ? `${parseInt(clickedPos[0]) - 1},${clickedPos[1]}` : `${clickedPos[0]},${parseInt(clickedPos[1]) - 1}`));
+			setHighlight(newSpot);
+		}
+	}
 	if (key.length == 1) {
 		if(currentHighlight.object) {
 			if(currentHighlight.object.children[0] ? (currentHighlight.object.children[currentHighlight.object.children.length - 1].name == 'guess') : currentHighlight.object.children[0])  {
@@ -70,6 +78,8 @@ function keyPress(key) {
 			letter.y = currentHighlight.object.squareY + 1;
 			letter.name = 'guess';
 			currentHighlight.object.addChild(letter);
+			let newSpot = app.stage.getChildByName((currentHighlight.across ? `${parseInt(clickedPos[0]) + 1},${clickedPos[1]}` : `${clickedPos[0]},${parseInt(clickedPos[1]) + 1}`));
+			setHighlight(newSpot);
 		}
 	}
 }
