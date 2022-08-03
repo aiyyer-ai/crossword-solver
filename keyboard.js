@@ -101,5 +101,3 @@ setInterval(() => {
   console.log(keyboard.isKeyReleased('KeyA'));
   keyboard.update();
 }, 0);*/
-
-module.exports = keyboard;

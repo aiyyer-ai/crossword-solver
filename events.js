@@ -228,5 +228,3 @@ class Events {
 		return this.elementsMap.get(eventName);
 	}
 }
-
-module.exports = Events;
