@@ -66,7 +66,9 @@ function keyPress(key) {
 			currentHighlight.object.children[currentHighlight.object.children.length - 1].destroy();
 		} else {
 			let newSpot = app.stage.getChildByName((currentHighlight.across ? `${parseInt(clickedPos[0]) - 1},${clickedPos[1]}` : `${clickedPos[0]},${parseInt(clickedPos[1]) - 1}`));
-			setHighlight(newSpot);
+			if(newSpot) {
+				setHighlight(newSpot);
+			}
 		}
 	}
 	if (key.length == 1) {
@@ -80,7 +82,10 @@ function keyPress(key) {
 			letter.name = 'guess';
 			currentHighlight.object.addChild(letter);
 			let newSpot = app.stage.getChildByName((currentHighlight.across ? `${parseInt(clickedPos[0]) + 1},${clickedPos[1]}` : `${clickedPos[0]},${parseInt(clickedPos[1]) + 1}`));
-			setHighlight(newSpot);
+			if(newSpot) {
+				setHighlight(newSpot);
+			}
+			
 		}
 	}
 }
