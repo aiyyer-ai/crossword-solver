@@ -14,15 +14,18 @@ function processFile(file) {
 	})();
 }
 
-let app = new PIXI.Application({ width: 902, height: 902});
+let app = new PIXI.Application({ width: 1500, height: 1500, resolution: window.devicePixelRatio});
+PIXI.settings.FILTER_RESOLUTION = window.devicePixelRatio;
 function createBoard(info) {
 	console.log(info);
 	let boardWidth = info.dimensions.width;
 	let boardHeight = info.dimensions.height;
 	let render = app.renderer;
 	render.backgroundColor = 0x000000;
-    //render.autoResize = true;
-    //render.resize((boardWidth * 36) + 2, (boardHeight * 36) + 2);
+    render.view.style.position = "absolute";
+    render.view.style.display = "block";
+    render.autoResize = true;
+    render.resize((boardWidth * 36) + 2, (boardHeight * 36) + 2);
     app.render();
     const inputField = document.getElementById("input");
 	document.body.insertBefore(app.view, inputField);
