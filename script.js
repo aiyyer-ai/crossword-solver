@@ -40,6 +40,7 @@ function createBoard(info) {
 			crosswordSquare.beginFill(0xffffff);
 			crosswordSquare.drawRect(squareX, squareY, 34, 34);
 			crosswordSquare.interactive = true;
+			crosswordSquare.name = `x${squarePosition}y${row}`
 			crosswordSquare.on('pointerdown', (event) => onClick(crosswordSquare));
 			squarePosition++;
 			app.stage.addChild(crosswordSquare);
@@ -54,18 +55,30 @@ function createBoard(info) {
 }
 
 function onClick(object) {
+	console.log(object.name);
 	setHighlight(object);
 }
 
-let currentHighlight = {across:true, object:null};
+let currentHighlight = {across:true, object:null, otherSquares:[]};
 function setHighlight(clickee) {
+	//checks if its a double click, if so, swap across value
 	if(clickee == currentHighlight.object) {
 		currentHighlight.across = !currentHighlight.across;
 	}
+	//untints the previously clicked squares
 	if(currentHighlight.object) {
 		currentHighlight.object.tint = 0xffffff;
+		for (const blueLight of currentHighlight.otherSquares) {
+			blueLight.tint = 0xffffff;
+		}
 	}
 	currentHighlight.object = clickee;
 	clickee.tint = 0xfae522;
+	//tints the line of squares around
+	if(currentHighlight.across) {
+
+	} else {
+
+	}
 	//.tint = 0xbfe5ff;
 }
