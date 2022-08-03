@@ -24,7 +24,7 @@ function createBoard(info) {
     render.view.style.position = "absolute";
     render.view.style.display = "block";
     PIXI.settings.RESOLUTION = 4;
-    PIXI.settings.SCALE_MODE = PIXI.SCALE_MODES.NEAREST;
+    //PIXI.settings.SCALE_MODE = PIXI.SCALE_MODES.NEAREST;
     render.autoResize = true;
     render.resize((boardWidth * 36) + 2, (boardHeight * 36) + 2);
     app.render();
