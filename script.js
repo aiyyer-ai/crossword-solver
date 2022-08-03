@@ -47,8 +47,10 @@ function createBoard(info) {
 			squareContainer.name = `${squarePosition},${row}`;
 			let crosswordSquare = new PIXI.Graphics();
 			crosswordSquare.beginFill(0xffffff);
-			crosswordSquare.drawRect(0, 0, 34, 34);
+			crosswordSquare.drawRect(0, 0, squareContainer.width, squareContainer.height);
 			crosswordSquare.interactive = true;
+			crosswordSquare.sizeX = squareContainer.width;
+			crosswordSquare.sizeY = squareContainer.height;
 			crosswordSquare.squareX = squareX;
 			crosswordSquare.squareY = squareY;
 			crosswordSquare.name = `${squarePosition},${row}`;
@@ -106,13 +108,12 @@ function keyPress(key) {
 					currentHighlight.object.children[currentHighlight.object.children.length - 1].destroy();
 				}
 				const letter = new PIXI.Text(key.toUpperCase(),{fontFamily : 'Arial', fontSize: 28, fill : 0x000000, align : 'left'});
-				letter.anchor.set(1);
+				letter.anchor.set(0.5);
+				letter.x = currentHighlight.object.sizeX/2;
+				letter.y = currentHighlight.object.sizeY/2;
 				letter.name = 'guess';
-				console.log(`letter position: ${letter.x}, ${letter.y}`);
-				console.log(`letter square origin: ${currentHighlight.object.x}, ${currentHighlight.object.y}`);
 				currentHighlight.object.addChild(letter);
 				let newSpot = app.stage.getChildByName((currentHighlight.across ? `${parseInt(clickedPos[0]) + 1},${clickedPos[1]}` : `${clickedPos[0]},${parseInt(clickedPos[1]) + 1}`));
-				console.log(`square container origin: ${newSpot.x}, ${newSpot.y}`);
 				if(newSpot) {
 					setHighlight(newSpot.children[0]);
 				}
@@ -123,8 +124,6 @@ function keyPress(key) {
 function onClick(object) {
 	setHighlight(object);
 	let clickedPos = object.name.split(",");
-	console.log(`pixel position: ${object.squareX}, ${object.squareY}`);
-	console.log(`square index: ${clickedPos[0]}, ${clickedPos[1]}`);
 
 }
 
