@@ -65,13 +65,12 @@ function keyPress(key) {
 		console.log(currentHighlight.object.children[0]);
 		if(currentHighlight.object.children[0] ? (currentHighlight.object.children[0].name == 'guess') : currentHighlight.object.children[0])  {
 			currentHighlight.object.children[0].destroy();
-		} else {
-			const letter = new PIXI.Text(key.toUpperCase(),{fontFamily : 'Arial', fontSize: 28, fill : 0x000000, align : 'center'});
-			letter.x = currentHighlight.object.squareX;
-			letter.y = currentHighlight.object.squareY;
-			letter.name = 'guess';
-			currentHighlight.object.addChild(letter);
 		}
+		const letter = new PIXI.Text(key.toUpperCase(),{fontFamily : 'Arial', fontSize: 28, fill : 0x000000, align : 'center'});
+		letter.x = currentHighlight.object.squareX + 7;
+		letter.y = currentHighlight.object.squareY + 2;
+		letter.name = 'guess';
+		currentHighlight.object.addChild(letter);
 	}
 }
 
