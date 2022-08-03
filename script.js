@@ -39,6 +39,7 @@ function createBoard(info) {
 			let squareY = (row * 36) + 2;
 			crosswordSquare.beginFill(0xffffff);
 			crosswordSquare.drawRect(squareX, squareY, 34, 34);
+			crosswordSquare.on('pointerdown', (event) => onClick(crosswordSquare));
 			squarePosition++;
 			app.stage.addChild(crosswordSquare);
 			if(square != 0 && typeof square == 'number') {
@@ -49,4 +50,8 @@ function createBoard(info) {
 			}
 		}
 	}
+}
+
+function onClick(object) {
+	object.tint = 0x45b6fe
 }
