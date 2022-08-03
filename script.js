@@ -15,17 +15,13 @@ function processFile(file) {
 }
 
 let app = new PIXI.Application({ width: 902, height: 902});
-PIXI.settings.ROUND_PIXELS = true;
 function createBoard(info) {
 	console.log(info);
 	let boardWidth = info.dimensions.width;
 	let boardHeight = info.dimensions.height;
 	let render = app.renderer;
 	render.backgroundColor = 0x000000;
-    render.view.style.position = "absolute";
-    render.view.style.display = "block";
-    //PIXI.settings.SCALE_MODE = PIXI.SCALE_MODES.NEAREST;
-    render.autoResize = true;
+    //render.autoResize = true;
     //render.resize((boardWidth * 36) + 2, (boardHeight * 36) + 2);
     app.render();
     const inputField = document.getElementById("input");
