@@ -47,10 +47,10 @@ function createBoard(info) {
 			squareContainer.name = `${squarePosition},${row}`;
 			let crosswordSquare = new PIXI.Graphics();
 			crosswordSquare.beginFill(0xffffff);
-			crosswordSquare.drawRect(0, 0, squareContainer.width, squareContainer.height);
+			crosswordSquare.drawRect(0, 0, 34, 34);
 			crosswordSquare.interactive = true;
-			crosswordSquare.sizeX = squareContainer.width;
-			crosswordSquare.sizeY = squareContainer.height;
+			crosswordSquare.sizeX = 34;
+			crosswordSquare.sizeY = 34;
 			crosswordSquare.squareX = squareX;
 			crosswordSquare.squareY = squareY;
 			crosswordSquare.name = `${squarePosition},${row}`;
@@ -123,8 +123,6 @@ function keyPress(key) {
 
 function onClick(object) {
 	setHighlight(object);
-	let clickedPos = object.name.split(",");
-
 }
 
 let currentHighlight = {across:true, object:null, otherSquares:[]};
