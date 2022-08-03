@@ -59,7 +59,7 @@ function createBoard(info) {
 
 function keyPress(key) {
 	if(currentHighlight.object) {
-		console.log(currentHighlight.object);
+		console.log(currentHighlight.object.children[0]);
 		if(currentHighlight.object.children[0] ? (currentHighlight.object.children[0] == 'guess') : currentHighlight.object.children[0])  {
 			currentHighlight.object.children[0].text = key.toUpperCase();
 		} else {
