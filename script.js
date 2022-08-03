@@ -31,7 +31,7 @@ function createBoard(info) {
 	crosswordSquares.beginFill(0xffffff);
 	for (let row in info.puzzle) {
 		let squarePosition = 0;
-		for (let [index, square] in info.puzzle[row]) {
+		for (const [index, square] of Object.entries(info.puzzle[row])) {
 			console.log(square);
 			if (square == "#") {continue;}
 			crosswordSquares.drawRect((row * 36) + 2, (squarePosition * 36) + 2, 34, 34);
