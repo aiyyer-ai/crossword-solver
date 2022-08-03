@@ -58,7 +58,11 @@ function createBoard(info) {
 }
 
 function keyPress(key) {
-	console.log(key);
+	if(currentHighlight.object) {
+		const letter = new PIXI.Text(key.toUpperCase(),{fontFamily : 'Arial', fontSize: 12, fill : 0x000000, align : 'left'});
+		console.log(currentHighlight.object);
+		console.log(letter);
+	}
 }
 
 function onClick(object) {
