@@ -112,10 +112,10 @@ function keyPress(key) {
 				if(currentHighlight.object.children[0] ? (currentHighlight.object.children[currentHighlight.object.children.length - 1].name == 'guess') : currentHighlight.object.children[0])  {
 					currentHighlight.object.children[currentHighlight.object.children.length - 1].destroy();
 				}
-				const letter = new PIXI.Text(key.toUpperCase(),{fontFamily : squareFont, fontSize: 28, fill : 0x000000, align : 'left'});
+				const letter = new PIXI.Text(key.toUpperCase(),{fontFamily : squareFont, fontSize: 26, fill : 0x000000, align : 'left'});
 				letter.anchor.set(0.5);
 				letter.x = currentHighlight.object.sizeX/2;
-				letter.y = (currentHighlight.object.sizeY/4) * 3;
+				letter.y = (currentHighlight.object.sizeY/8) * 5;
 				letter.name = 'guess';
 				currentHighlight.object.addChild(letter);
 				let newSpot = app.stage.getChildByName((currentHighlight.across ? `${parseInt(clickedPos[0]) + 1},${clickedPos[1]}` : `${clickedPos[0]},${parseInt(clickedPos[1]) + 1}`));
