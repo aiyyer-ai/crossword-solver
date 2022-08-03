@@ -90,7 +90,7 @@ function setHighlight(clickee) {
 			}
 			currentHighlight.otherSquares.push(leftSquare);
 			leftSquare.tint = 0xbfe5ff;
-			currentLeft = currentLeft--;
+			currentLeft--;
 		}
 		let goRight = true;
 		let currentRight = parseInt(clickedPos[0]) + 1;
@@ -103,7 +103,7 @@ function setHighlight(clickee) {
 			}
 			currentHighlight.otherSquares.push(rightSquare);
 			rightSquare.tint = 0xbfe5ff;
-			currentRight = currentRight++;
+			currentRight++;
 		}
 	} else {
 
