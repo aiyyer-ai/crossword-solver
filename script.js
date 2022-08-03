@@ -58,14 +58,14 @@ function onClick(object) {
 }
 
 let currentHighlight = {across:true, object:null};
-function setHighlight(object) {
-	if(object == currentHighlight.object) {
+function setHighlight(clickee) {
+	if(clickee == currentHighlight.object) {
 		currentHighlight.across = !currentHighlight.across;
 	}
-	if(object != null) {
+	if(currentHighlight.object) {
 		currentHighlight.object.tint = 0x000000;
 	}
-	currentHighlight.object = object;
-	object.tint = 0xfae522;
-	//object.tint = 0xbfe5ff;
+	currentHighlight.object = clickee;
+	clickee.tint = 0xfae522;
+	//.tint = 0xbfe5ff;
 }
