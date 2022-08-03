@@ -20,11 +20,20 @@ function createBoard(info) {
 	let boardHeight = info.dimensions.height;
 	let app = new PIXI.Application({ width: boardWidth * 36, height: boardHeight * 36 });
 	let render = app.renderer;
-	render.backgroundColor = 0x152238;
+	render.backgroundColor = 0x000000;
     render.view.style.position = "absolute";
     render.view.style.display = "block";
     render.autoResize = true;
     app.render();
     const inputField = document.getElementById("input");
 	document.body.insertBefore(app.view, inputField);
+	let crosswordSquares = new PIXI.Graphics();
+	crosswordSquares.beginFill(0xff0000);
+	for (let row in info.puzzle) {
+		for (let square in info.puzzle[row]) {
+			console.log(info.puzzle[row].findIndex(square))
+			crosswordSquares.drawRect((row * 36) + 1, (info.puzzle[row].findIndex(square) * 36) + 1, 34, 34);
+		}
+	}
+	app.stage.addChild(crosswordSquares);
 }
