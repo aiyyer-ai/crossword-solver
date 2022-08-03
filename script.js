@@ -97,6 +97,10 @@ function setHighlight(clickee) {
 			} else {
 				rightDone = true;
 			}
+			if(leftDone && rightDone) {
+				search = false;
+				break;
+			}
 
 			squareDistance++;
 		}
