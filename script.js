@@ -60,7 +60,7 @@ function createBoard(info) {
 }
 
 function keyPress(key) {
-	key = key[0];
+	if (key.length > 1) {break;}
 	if(currentHighlight.object) {
 		if(currentHighlight.object.children[0] ? (currentHighlight.object.children[currentHighlight.object.children.length - 1].name == 'guess') : currentHighlight.object.children[0])  {
 			currentHighlight.object.children[currentHighlight.object.children.length - 1].destroy();
