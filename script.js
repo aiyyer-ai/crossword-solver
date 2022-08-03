@@ -30,7 +30,7 @@ function createBoard(info) {
 	document.body.insertBefore(app.view, inputField);
 	document.body.addEventListener("keydown", function(event) {
 		event.preventDefault();
-		console.log(`${event.type} has been fired`);
+		console.log(event);
 	});
 	for (let row in info.puzzle) {
 		let squarePosition = 0;
