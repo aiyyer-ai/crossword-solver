@@ -28,6 +28,10 @@ function createBoard(info) {
     app.render();
     const inputField = document.getElementById("input");
 	document.body.insertBefore(app.view, inputField);
+	app.stage.addEventListener("keydown", function(event) {
+		event.preventDefault();
+		console.log(`${event.type} has been fired`);
+	});
 	for (let row in info.puzzle) {
 		let squarePosition = 0;
 		for (const [index, square] of Object.entries(info.puzzle[row])) {
@@ -54,12 +58,6 @@ function createBoard(info) {
 			}
 		}
 	}
-	keyboard.events.on('pressed', null, (keyCode, event) => { keyPress(keyCode); });
-}
-
-function keyPress(keyCode) {
-	console.log(keyCode);
-	keyboard.update();
 }
 
 function onClick(object) {
