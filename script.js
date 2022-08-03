@@ -58,6 +58,9 @@ function createBoard(info) {
 
 function onClick(object) {
 	setHighlight(object);
+	Keyboard.events.on('pressed', null, (keyCode, event) => {
+		console.log(keyCode, String.fromCharCode(keyCode));
+	});
 }
 
 let currentHighlight = {across:true, object:null, otherSquares:[]};
