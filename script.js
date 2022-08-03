@@ -43,6 +43,8 @@ function createBoard(info) {
 			crosswordSquare.drawRect(squareX, squareY, 34, 34);
 			crosswordSquare.interactive = true;
 			crosswordSquare.name = `${squarePosition},${row}`;
+			crosswordSquare.squareX = squareX;
+			crosswordSquare.squareY = squareY;
 			crosswordSquare.on('click', (event) => onClick(crosswordSquare));
 			squarePosition++;
 			app.stage.addChild(crosswordSquare);
@@ -60,12 +62,12 @@ function createBoard(info) {
 function keyPress(key) {
 	if(currentHighlight.object) {
 		console.log(currentHighlight.object.children[0]);
-		if(currentHighlight.object.children[0] ? (currentHighlight.object.children[0] == 'guess') : currentHighlight.object.children[0])  {
+		if(currentHighlight.object.children[0] ? (currentHighlight.object.children[0].name == 'guess') : currentHighlight.object.children[0])  {
 			currentHighlight.object.children[0].text = key.toUpperCase();
 		} else {
 			const letter = new PIXI.Text(key.toUpperCase(),{fontFamily : 'Arial', fontSize: 28, fill : 0x000000, align : 'center'});
-			letter.x = currentHighlight.object.x;
-			letter.y = currentHighlight.object.y;
+			letter.x = currentHighlight.object.squareX;
+			letter.y = currentHighlight.object.squareY;
 			letter.name = 'guess';
 			currentHighlight.object.addChild(letter);
 		}
