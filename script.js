@@ -42,7 +42,9 @@ function createBoard(info) {
 			crosswordSquare.beginFill(0xffffff);
 			crosswordSquare.drawRect(squareX, squareY, 34, 34);
 			crosswordSquare.interactive = true;
-			crosswordSquare.name = `${squarePosition},${row}`
+			crosswordSquare.name = `${squarePosition},${row}`;
+			crosswordSquare.x = squareX;
+			crosswordSquare.y = squareY;
 			crosswordSquare.on('click', (event) => onClick(crosswordSquare));
 			squarePosition++;
 			app.stage.addChild(crosswordSquare);
@@ -64,8 +66,8 @@ function keyPress(key) {
 			currentHighlight.object.children[0].text = key.toUpperCase();
 		} else {
 			const letter = new PIXI.Text(key.toUpperCase(),{fontFamily : 'Arial', fontSize: 28, fill : 0x000000, align : 'center'});
-			letter.x = object.x;
-			letter.y = object.y;
+			letter.x = currentHighlight.object.x;
+			letter.y = currentHighlight.object.y;
 			letter.name = 'guess';
 			currentHighlight.object.addChild(letter);
 		}
