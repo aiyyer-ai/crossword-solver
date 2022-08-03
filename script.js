@@ -69,6 +69,7 @@ function keyPress(key) {
 		let clickedPos = currentHighlight.object.name.split(",");
 		//Arrow Movement
 		if(key == "ArrowLeft") {
+			console.log(app.stage.getChildByName(`${parseInt(clickedPos[0]) - 1},${clickedPos[1]}`));
 			let newSpot = app.stage.getChildByName(`${parseInt(clickedPos[0]) - 1},${clickedPos[1]}`).children[`${parseInt(clickedPos[0]) - 1},${clickedPos[1]}`];
 			if(newSpot) {
 				setHighlight(newSpot);
