@@ -61,7 +61,6 @@ function createBoard(info) {
 			squareContainer.addChild(crosswordSquare);
 			if(square != 0 && typeof square == 'number') {
 				const text = new PIXI.Text(String(square),{fontFamily : 'Arial', fontSize: 12, fill : 0x000000, align : 'left'});
-				text.roundPixels = true;
 				text.resolution = 4;
 				text.name = `numberedSquare`;
 				crosswordSquare.addChild(text);
@@ -113,7 +112,6 @@ function keyPress(key) {
 				}
 				const letter = new PIXI.Text(key.toUpperCase(),{fontFamily : 'Arial', fontSize: 28, fill : 0x000000, align : 'left'});
 				letter.anchor.set(0.5);
-				letter.roundPixels = true;
 				letter.resolution = 4;
 				letter.x = currentHighlight.object.sizeX/2;
 				letter.y = currentHighlight.object.sizeY/2;
