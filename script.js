@@ -62,13 +62,12 @@ function createBoard(info) {
 function keyPress(key) {
 	key = key[0];
 	if(currentHighlight.object) {
-		console.log(currentHighlight.object.children[0]);
-		if(currentHighlight.object.children[0] ? (currentHighlight.object.children[0].name == 'guess') : currentHighlight.object.children[0])  {
-			currentHighlight.object.children[0].destroy();
+		if(currentHighlight.object.children[0] ? (currentHighlight.object.children[currentHighlight.object.children.length - 1].name == 'guess') : currentHighlight.object.children[0])  {
+			currentHighlight.object.children[currentHighlight.object.children.length - 1].destroy();
 		}
 		const letter = new PIXI.Text(key.toUpperCase(),{fontFamily : 'Arial', fontSize: 28, fill : 0x000000, align : 'center'});
-		letter.x = currentHighlight.object.squareX + 7;
-		letter.y = currentHighlight.object.squareY + 2;
+		letter.x = currentHighlight.object.squareX + 4;
+		letter.y = currentHighlight.object.squareY + 1;
 		letter.name = 'guess';
 		currentHighlight.object.addChild(letter);
 	}
