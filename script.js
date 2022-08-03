@@ -24,6 +24,7 @@ function createBoard(info) {
 	render.backgroundColor = 0x000000;
     render.view.style.position = "absolute";
     render.view.style.display = "block";
+    render.resolution = 2;
     render.autoResize = true;
     render.resize((boardWidth * 36) + 2, (boardHeight * 36) + 2);
     app.render();
