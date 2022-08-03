@@ -30,11 +30,10 @@ function createBoard(info) {
 	let crosswordSquares = new PIXI.Graphics();
 	crosswordSquares.beginFill(0xff0000);
 	for (let row in info.puzzle) {
+		let squarePosition = 0;
 		for (let square in info.puzzle[row]) {
-			console.log(square);
-			console.log(info.puzzle[row]);
-			console.log(info.puzzle[row].findIndex(square));
-			crosswordSquares.drawRect((row * 36) + 1, (info.puzzle[row].findIndex(square) * 36) + 1, 34, 34);
+			crosswordSquares.drawRect((row * 36) + 1, (squarePosition * 36) + 1, 34, 34);
+			squarePosition++;
 		}
 	}
 	app.stage.addChild(crosswordSquares);
