@@ -62,7 +62,6 @@ function createBoard(info) {
 function keyPress(key) {
 	if(currentHighlight.object) {
 		let clickedPos = currentHighlight.object.name.split(",");
-		console.log(key);
 		//Arrow Movement
 		if(key == "ArrowLeft") {
 			let newSpot = app.stage.getChildByName(`${parseInt(clickedPos[0]) - 1},${clickedPos[1]}`);
@@ -106,6 +105,7 @@ function keyPress(key) {
 				letter.x = currentHighlight.object.squareX + 4;
 				letter.y = currentHighlight.object.squareY + 1;
 				letter.name = 'guess';
+				console.log(letter);
 				currentHighlight.object.addChild(letter);
 				let newSpot = app.stage.getChildByName((currentHighlight.across ? `${parseInt(clickedPos[0]) + 1},${clickedPos[1]}` : `${clickedPos[0]},${parseInt(clickedPos[1]) + 1}`));
 				if(newSpot) {
