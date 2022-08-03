@@ -43,8 +43,6 @@ function createBoard(info) {
 			crosswordSquare.drawRect(squareX, squareY, 34, 34);
 			crosswordSquare.interactive = true;
 			crosswordSquare.name = `${squarePosition},${row}`;
-			crosswordSquare.x = squareX;
-			crosswordSquare.y = squareY;
 			crosswordSquare.on('click', (event) => onClick(crosswordSquare));
 			squarePosition++;
 			app.stage.addChild(crosswordSquare);
