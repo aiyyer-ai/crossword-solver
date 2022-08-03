@@ -59,6 +59,7 @@ function createBoard(info) {
 
 function keyPress(keyCode) {
 	console.log(keyCode);
+	keyboard.update();
 }
 
 function onClick(object) {
