@@ -23,7 +23,6 @@ function createBoard(info) {
 	render.backgroundColor = 0x000000;
     render.view.style.position = "absolute";
     render.view.style.display = "block";
-    render.resolution = window.devicePixelRatio;
     PIXI.settings.RESOLUTION = window.devicePixelRatio * 4;
     render.autoResize = true;
     render.resize((boardWidth * 36) + 2, (boardHeight * 36) + 2);
