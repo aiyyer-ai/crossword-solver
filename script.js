@@ -60,7 +60,7 @@ function createBoard(info) {
 function keyPress(key) {
 	if(currentHighlight.object) {
 		console.log(currentHighlight.object);
-		if(currentHighlight.object.children[0].name == 'guess') {
+		if(currentHighlight.object.children[0] ? (currentHighlight.object.children[0] == 'guess') : currentHighlight.object.children[0])  {
 			currentHighlight.object.children[0].text = key.toUpperCase();
 		} else {
 			const letter = new PIXI.Text(key.toUpperCase(),{fontFamily : 'Arial', fontSize: 28, fill : 0x000000, align : 'center'});
