@@ -83,8 +83,8 @@ function setHighlight(clickee) {
 		let leftDone = false;
 		let rightDone = false;
 		while(search) {
-			let leftSquare = app.stage.getChildByName((currentHighlight.across ? `${parseInt(clickedPos[0]) - squareDistance},${clickedPos[1]}` : `${parseInt(clickedPos[0])},${clickedPos[1] - squareDistance}`));
-			let rightSquare = app.stage.getChildByName((currentHighlight.across ? `${parseInt(clickedPos[0]) + squareDistance},${clickedPos[1]}` : `${parseInt(clickedPos[0])},${clickedPos[1] + squareDistance}`));
+			let leftSquare = app.stage.getChildByName((currentHighlight.across ? `${parseInt(clickedPos[0]) - squareDistance},${clickedPos[1]}` : `${clickedPos[0]},${parseInt(clickedPos[1]) - squareDistance}`));
+			let rightSquare = app.stage.getChildByName((currentHighlight.across ? `${parseInt(clickedPos[0]) + squareDistance},${clickedPos[1]}` : `${clickedPos[0]},${parseInt(clickedPos[1]) + squareDistance}`));
 			if (leftSquare && !leftDone) {
 				currentHighlight.otherSquares.push(leftSquare);
 				leftSquare.tint = 0xbfe5ff;
