@@ -15,6 +15,7 @@ function processFile(file) {
 }
 
 let app = new PIXI.Application({ width: 902, height: 902});
+PIXI.settings.ROUND_PIXELS = true;
 function createBoard(info) {
 	console.log(info);
 	let boardWidth = info.dimensions.width;
