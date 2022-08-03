@@ -74,17 +74,21 @@ function createBoard(info) {
 }
 
 function findWordStart(position) {
+	let newSpot = null;
 	let spotCheck = [parseInt(position[0]) + 1, parseInt(position[1])];
-	let newSpot = app.stage.getChildByName(`${spotCheck[0]},${spotCheck[1]}`);
-	if(!newSpot && spotCheck[0] > boardWidth) {
-		spotCheck = [0, parseInt(position[1] + 1)];
-		findWordStart(spotCheck);
-		break;
-	}
-	if(!newSpot) {
-		findWordStart(spotCheck);
-		break;
-	}
+	while (!newSpot) {
+		newSpot = app.stage.getChildByName(`${spotCheck[0]},${spotCheck[1]}`);
+		if(spotCheck[1] >= boardHeight && spotCheck[0] >= boardWidth) {
+			currentHighlight.across = !currentHighlight.across
+			spotCheck = [0, 0];
+		}
+		if(!newSpot && spotCheck[0] > boardWidth) {
+			spotCheck = [0, parseInt(position[1] + 1)];
+		}
+		if(!newSpot) {
+			spotCheck[0]++;
+		}
+	}	
 	return newSpot;
 }
 
