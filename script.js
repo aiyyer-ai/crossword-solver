@@ -62,7 +62,7 @@ function setHighlight(object) {
 	if(object == currentHighlight.object) {
 		currentHighlight.across = !currentHighlight.across;
 	}
-	if(object) {
+	if(object != null) {
 		currentHighlight.object.tint = 0x000000;
 	}
 	currentHighlight.object = object;
