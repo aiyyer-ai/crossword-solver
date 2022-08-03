@@ -18,7 +18,7 @@ function createBoard(info) {
 	console.log(info);
 	let boardWidth = info.dimensions.width;
 	let boardHeight = info.dimensions.height;
-	let app = new PIXI.Application({ width: boardWidth * 36, height: boardHeight * 36 });
+	let app = new PIXI.Application({ width: (boardWidth * 36) + 2, height: (boardHeight * 36) + 2 });
 	let render = app.renderer;
 	render.backgroundColor = 0x000000;
     render.view.style.position = "absolute";
@@ -28,7 +28,7 @@ function createBoard(info) {
     const inputField = document.getElementById("input");
 	document.body.insertBefore(app.view, inputField);
 	let crosswordSquares = new PIXI.Graphics();
-	crosswordSquares.beginFill(0xff0000);
+	crosswordSquares.beginFill(0xffffff);
 	for (let row in info.puzzle) {
 		let squarePosition = 0;
 		for (let square in info.puzzle[row]) {
