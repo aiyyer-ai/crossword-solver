@@ -50,8 +50,6 @@ function createBoard(info) {
 			crosswordSquare.drawRect(squareX, squareY, 34, 34);
 			crosswordSquare.interactive = true;
 			crosswordSquare.name = `${squarePosition},${row}`;
-			crosswordSquare.squareX = squareX;
-			crosswordSquare.squareY = squareY;
 			crosswordSquare.on('click', (event) => onClick(crosswordSquare));
 			squarePosition++;
 			squareContainer.addChild(crosswordSquare);
