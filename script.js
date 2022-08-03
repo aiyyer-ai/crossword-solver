@@ -60,16 +60,17 @@ function createBoard(info) {
 }
 
 function keyPress(key) {
-	if (key.length > 1) {break;}
-	if(currentHighlight.object) {
-		if(currentHighlight.object.children[0] ? (currentHighlight.object.children[currentHighlight.object.children.length - 1].name == 'guess') : currentHighlight.object.children[0])  {
-			currentHighlight.object.children[currentHighlight.object.children.length - 1].destroy();
+	if (key.length == 1) {
+		if(currentHighlight.object) {
+			if(currentHighlight.object.children[0] ? (currentHighlight.object.children[currentHighlight.object.children.length - 1].name == 'guess') : currentHighlight.object.children[0])  {
+				currentHighlight.object.children[currentHighlight.object.children.length - 1].destroy();
+			}
+			const letter = new PIXI.Text(key.toUpperCase(),{fontFamily : 'Arial', fontSize: 28, fill : 0x000000, align : 'center'});
+			letter.x = currentHighlight.object.squareX + 4;
+			letter.y = currentHighlight.object.squareY + 1;
+			letter.name = 'guess';
+			currentHighlight.object.addChild(letter);
 		}
-		const letter = new PIXI.Text(key.toUpperCase(),{fontFamily : 'Arial', fontSize: 28, fill : 0x000000, align : 'center'});
-		letter.x = currentHighlight.object.squareX + 4;
-		letter.y = currentHighlight.object.squareY + 1;
-		letter.name = 'guess';
-		currentHighlight.object.addChild(letter);
 	}
 }
 
