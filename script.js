@@ -36,9 +36,16 @@ function createBoard(info) {
 				squarePosition++;
 				continue;
 			}
-			let crosswordSquare = new PIXI.Graphics();
+			let squareContainer = new PIXI.Container();
+			app.stage.addChild(squareContainer);
 			let squareX = (squarePosition * 36) + 2;
 			let squareY = (row * 36) + 2;
+			squareContainer.x = squareX;
+			squareContainer.y = squareY;
+			squareContainer.height = 34;
+			squareContainer.width = 34;
+			squareContainer.name = `${squarePosition},${row}`;
+			let crosswordSquare = new PIXI.Graphics();
 			crosswordSquare.beginFill(0xffffff);
 			crosswordSquare.drawRect(squareX, squareY, 34, 34);
 			crosswordSquare.interactive = true;
@@ -47,7 +54,7 @@ function createBoard(info) {
 			crosswordSquare.squareY = squareY;
 			crosswordSquare.on('click', (event) => onClick(crosswordSquare));
 			squarePosition++;
-			app.stage.addChild(crosswordSquare);
+			squareContainer.addChild(crosswordSquare);
 			if(square != 0 && typeof square == 'number') {
 				const text = new PIXI.Text(String(square),{fontFamily : 'Arial', fontSize: 12, fill : 0x000000, align : 'left'});
 				text.x = squareX;
