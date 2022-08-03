@@ -33,7 +33,10 @@ function createBoard(info) {
 		let squarePosition = 0;
 		for (const [index, square] of Object.entries(info.puzzle[row])) {
 			console.log(square);
-			if (square == "#") {continue;}
+			if (square == "#") {
+				squarePosition++;
+				continue;
+			}
 			crosswordSquares.drawRect((row * 36) + 2, (squarePosition * 36) + 2, 34, 34);
 			squarePosition++;
 		}
