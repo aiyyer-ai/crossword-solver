@@ -35,13 +35,16 @@ function createBoard(info) {
 				continue;
 			}
 			let crosswordSquare = new PIXI.Graphics();
+			let squareX = (squarePosition * 36) + 2;
+			let squareY = (row * 36) + 2;
 			crosswordSquare.beginFill(0xffffff);
-			crosswordSquare.drawRect((squarePosition * 36) + 2, (row * 36) + 2, 34, 34);
+			crosswordSquare.drawRect(squareX, squareY, 34, 34);
 			squarePosition++;
 			app.stage.addChild(crosswordSquare);
-			if(square != 0) {
-				console.log(square);
-				const text = new PIXI.Text(String(square),{fontFamily : 'Arial', fontSize: 8, fill : 0x000000, align : 'left'});
+			if(square != 0 && typeof square == 'number') {
+				const text = new PIXI.Text(String(square),{fontFamily : 'Arial', fontSize: 12, fill : 0x000000, align : 'left'});
+				text.x = squareX;
+				text.y = squareY;
 				crosswordSquare.addChild(text);
 			}
 		}
