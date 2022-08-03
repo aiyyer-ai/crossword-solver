@@ -105,7 +105,9 @@ function keyPress(key) {
 				if(currentHighlight.object.children[0] ? (currentHighlight.object.children[currentHighlight.object.children.length - 1].name == 'guess') : currentHighlight.object.children[0])  {
 					currentHighlight.object.children[currentHighlight.object.children.length - 1].destroy();
 				}
-				const letter = new PIXI.Text(key.toUpperCase(),{fontFamily : 'Arial', fontSize: 28, fill : 0x000000, align : 'center'});
+				const letter = new PIXI.Text(key.toUpperCase(),{fontFamily : 'Arial', fontSize: 28, fill : 0x000000, align : 'left'});
+				letter.anchor.x = 0.5;
+				letter.anchor.y = 0.5;
 				letter.name = 'guess';
 				console.log(letter);
 				currentHighlight.object.addChild(letter);
