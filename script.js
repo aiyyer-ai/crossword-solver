@@ -14,8 +14,8 @@ function processFile(file) {
 	})();
 }
 
-let app = new PIXI.Application({ width: 1500, height: 1500, resolution: 4, antialias: true });
-let squareSize = 34 * 4;
+let app = new PIXI.Application({ width: 902, height: 902, resolution: 4, antialias: true });
+let squareSize = 34;
 PIXI.settings.FILTER_RESOLUTION = 4;
 function createBoard(info) {
 	console.log(info);
