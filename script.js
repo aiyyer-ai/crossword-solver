@@ -26,9 +26,8 @@ function createBoard(info) {
     render.view.style.display = "block";
     render.resolution = 4;
     render.autoResize = true;
-    render.view.style.width = (boardWidth * 36) + 2;
-    render.view.style.height = (boardHeight * 36) + 2;
     app.render();
+    render.resize((boardWidth * 36) + 2, (boardHeight * 36) + 2);
     const inputField = document.getElementById("input");
 	document.body.insertBefore(app.view, inputField);
 	document.body.addEventListener("keydown", (event) => keyPress(event.key));
