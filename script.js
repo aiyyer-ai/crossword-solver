@@ -28,7 +28,7 @@ function createBoard(info) {
     app.render();
     const inputField = document.getElementById("input");
 	document.body.insertBefore(app.view, inputField);
-	app.stage.addEventListener("keydown", function(event) {
+	document.body.addEventListener("keydown", function(event) {
 		event.preventDefault();
 		console.log(`${event.type} has been fired`);
 	});
