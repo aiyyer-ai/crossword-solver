@@ -37,7 +37,7 @@ function createBoard(info) {
 				squarePosition++;
 				continue;
 			}
-			crosswordSquares.drawRect((row * 36) + 2, (squarePosition * 36) + 2, 34, 34);
+			crosswordSquares.drawRect((squarePosition * 36) + 2, (row * 36) + 2, 34, 34);
 			squarePosition++;
 		}
 	}
