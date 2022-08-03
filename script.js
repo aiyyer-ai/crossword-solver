@@ -14,7 +14,7 @@ function processFile(file) {
 	})();
 }
 
-let app = new PIXI.Application({ width: 1500, height: 1500});
+let app = new PIXI.Application({ width: 542, height: 542});
 function createBoard(info) {
 	console.log(info);
 	let boardWidth = info.dimensions.width;
@@ -23,10 +23,9 @@ function createBoard(info) {
 	render.backgroundColor = 0x000000;
     render.view.style.position = "absolute";
     render.view.style.display = "block";
-    PIXI.settings.RESOLUTION = 4;
     //PIXI.settings.SCALE_MODE = PIXI.SCALE_MODES.NEAREST;
     render.autoResize = true;
-    render.resize((boardWidth * 36) + 2, (boardHeight * 36) + 2);
+    //render.resize((boardWidth * 36) + 2, (boardHeight * 36) + 2);
     app.render();
     const inputField = document.getElementById("input");
 	document.body.insertBefore(app.view, inputField);
