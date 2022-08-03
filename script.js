@@ -15,6 +15,7 @@ function processFile(file) {
 }
 
 let app = new PIXI.Application({ width: 1500, height: 1500, resolution: 4, antialias: true });
+let squareSize = 34 * 4;
 PIXI.settings.FILTER_RESOLUTION = 4;
 function createBoard(info) {
 	console.log(info);
@@ -41,19 +42,19 @@ function createBoard(info) {
 			}
 			let squareContainer = new PIXI.Container();
 			app.stage.addChild(squareContainer);
-			let squareX = (squarePosition * 36) + 2;
-			let squareY = (row * 36) + 2;
+			let squareX = (squarePosition * (squareSize + 2)) + 2;
+			let squareY = (row * (squareSize + 2)) + 2;
 			squareContainer.x = squareX;
 			squareContainer.y = squareY;
-			squareContainer.height = 34;
-			squareContainer.width = 34;
+			squareContainer.height = squareSize;
+			squareContainer.width = squareSize;
 			squareContainer.name = `${squarePosition},${row}`;
 			let crosswordSquare = new PIXI.Graphics();
 			crosswordSquare.beginFill(0xffffff);
-			crosswordSquare.drawRect(0, 0, 34, 34);
+			crosswordSquare.drawRect(0, 0, squareSize, squareSize);
 			crosswordSquare.interactive = true;
-			crosswordSquare.sizeX = 34;
-			crosswordSquare.sizeY = 34;
+			crosswordSquare.sizeX = squareSize;
+			crosswordSquare.sizeY = squareSize;
 			crosswordSquare.squareX = squareX;
 			crosswordSquare.squareY = squareY;
 			crosswordSquare.name = `${squarePosition},${row}`;
