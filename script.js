@@ -32,7 +32,7 @@ function createBoard(info) {
 	for (let row in info.puzzle) {
 		let squarePosition = 0;
 		for (let square in info.puzzle[row]) {
-			crosswordSquares.drawRect((row * 36) + 1, (squarePosition * 36) + 1, 34, 34);
+			crosswordSquares.drawRect((row * 36) + 2, (squarePosition * 36) + 2, 34, 34);
 			squarePosition++;
 		}
 	}
