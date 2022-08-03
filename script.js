@@ -40,7 +40,7 @@ function createBoard(info) {
 			crosswordSquare.beginFill(0xffffff);
 			crosswordSquare.drawRect(squareX, squareY, 34, 34);
 			crosswordSquare.interactive = true;
-			crosswordSquare.name = `x${squarePosition}y${row}`
+			crosswordSquare.name = `${squarePosition},${row}`
 			crosswordSquare.on('pointerdown', (event) => onClick(crosswordSquare));
 			squarePosition++;
 			app.stage.addChild(crosswordSquare);
@@ -48,6 +48,7 @@ function createBoard(info) {
 				const text = new PIXI.Text(String(square),{fontFamily : 'Arial', fontSize: 12, fill : 0x000000, align : 'left'});
 				text.x = squareX;
 				text.y = squareY;
+				text.name = `numberedSquare`;
 				crosswordSquare.addChild(text);
 			}
 		}
@@ -75,10 +76,30 @@ function setHighlight(clickee) {
 	currentHighlight.object = clickee;
 	clickee.tint = 0xfae522;
 	//tints the line of squares around
+	let clickedPos = clickee.name.split(",");
+	//clickedPos[0] = x // clickedPos[1] = y //
 	if(currentHighlight.across) {
-
+		let goLeft = true;
+		let currentLeft = parseInt(clickedPos[0]) - 1;
+		while(goLeft) {
+			let leftSquare = app.stage.getChildByName(`${currentLeft},${clickedPos[1]}`)
+			if (!leftSquare) {goLeft = false;}
+			currentHighlight.otherSquares.push(leftSquare);
+			leftSquare.tint = 0xbfe5ff;
+			if(leftSquare.getChildByName(`numberedSquare`)) {goLeft = false;}
+			currentLeft = currentLeft--;
+		}
+		let goRight = true;
+		let currentRight = parseInt(clickedPos[0]) + 1;
+		while(goRight) {
+			let rightSquare = app.stage.getChildByName(`${currentRight},${clickedPos[1]}`)
+			if (!rightSquare) {goRight = false;}
+			currentHighlight.otherSquares.push(rightSquare);
+			rightSquare.tint = 0xbfe5ff;
+			if(rightSquare.getChildByName(`numberedSquare`)) {goRight = false;}
+			currentRight = currentRight++;
+		}
 	} else {
 
 	}
-	//.tint = 0xbfe5ff;
 }
