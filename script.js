@@ -57,7 +57,6 @@ function createBoard(info) {
 }
 
 function onClick(object) {
-	console.log(object.name);
 	setHighlight(object);
 }
 
@@ -83,7 +82,8 @@ function setHighlight(clickee) {
 		let goLeft = true;
 		let currentLeft = parseInt(clickedPos[0]) - 1;
 		while(goLeft) {
-			let leftSquare = app.stage.getChildByName(`${currentLeft},${clickedPos[1]}`)
+			let leftSquare = app.stage.getChildByName(`${currentLeft},${clickedPos[1]}`);
+			console.log(leftSquare);
 			if (!leftSquare) {goLeft = false;}
 			currentHighlight.otherSquares.push(leftSquare);
 			leftSquare.tint = 0xbfe5ff;
@@ -93,7 +93,8 @@ function setHighlight(clickee) {
 		let goRight = true;
 		let currentRight = parseInt(clickedPos[0]) + 1;
 		while(goRight) {
-			let rightSquare = app.stage.getChildByName(`${currentRight},${clickedPos[1]}`)
+			let rightSquare = app.stage.getChildByName(`${currentRight},${clickedPos[1]}`);
+			console.log(rightSquare);
 			if (!rightSquare) {goRight = false;}
 			currentHighlight.otherSquares.push(rightSquare);
 			rightSquare.tint = 0xbfe5ff;
