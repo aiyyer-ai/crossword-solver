@@ -27,19 +27,22 @@ function createBoard(info) {
     app.render();
     const inputField = document.getElementById("input");
 	document.body.insertBefore(app.view, inputField);
-	let crosswordSquares = new PIXI.Graphics();
-	crosswordSquares.beginFill(0xffffff);
 	for (let row in info.puzzle) {
 		let squarePosition = 0;
 		for (const [index, square] of Object.entries(info.puzzle[row])) {
-			console.log(square);
 			if (square == "#") {
 				squarePosition++;
 				continue;
 			}
-			crosswordSquares.drawRect((squarePosition * 36) + 2, (row * 36) + 2, 34, 34);
+			let crosswordSquare = new PIXI.Graphics();
+			crosswordSquare.beginFill(0xffffff);
+			if(square != 0) {
+				let text = new PIXI.Text(String(square),{fontFamily : 'Arial', fontSize: 8, fill : 0x000000, align : 'left'});
+			}
+			crosswordSquare.drawRect((squarePosition * 36) + 2, (row * 36) + 2, 34, 34);
 			squarePosition++;
+			app.stage.addChild(crosswordSquare);
+			crosswordSquare.addChild(text);
 		}
 	}
-	app.stage.addChild(crosswordSquares);
 }
