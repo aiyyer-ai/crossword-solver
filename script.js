@@ -63,7 +63,7 @@ function setHighlight(clickee) {
 		currentHighlight.across = !currentHighlight.across;
 	}
 	if(currentHighlight.object) {
-		currentHighlight.object.tint = 0x000000;
+		currentHighlight.object.tint = 0xffffff;
 	}
 	currentHighlight.object = clickee;
 	clickee.tint = 0xfae522;
