@@ -77,13 +77,13 @@ function keyPress(key) {
 			}
 		}
 		if(key == "ArrowDown") {
-			let newSpot = app.stage.getChildByName(`${clickedPos[0]},${parseInt(clickedPos[1]) - 1}`);
+			let newSpot = app.stage.getChildByName(`${clickedPos[0]},${parseInt(clickedPos[1]) + 1}`);
 			if(newSpot) {
 				setHighlight(newSpot);
 			}
 		}
 		if(key == "ArrowUp") {
-			let newSpot = app.stage.getChildByName(`${clickedPos[0]},${parseInt(clickedPos[1]) + 1}`);
+			let newSpot = app.stage.getChildByName(`${clickedPos[0]},${parseInt(clickedPos[1]) - 1}`);
 			if(newSpot) {
 				setHighlight(newSpot);
 			}
