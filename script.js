@@ -17,11 +17,13 @@ function processFile(file) {
 let app = null;
 let squareSize = 34;
 let squareFont = 'Arial';
+let boardWidth;
+let boardHeight;
 PIXI.settings.FILTER_RESOLUTION = 4;
 function createBoard(info) {
 	console.log(info);
-	let boardWidth = info.dimensions.width;
-	let boardHeight = info.dimensions.height;
+	boardWidth = info.dimensions.width;
+	boardHeight = info.dimensions.height;
 	app = new PIXI.Application({ width: (boardWidth * 36) + 2, height: (boardHeight * 36) + 2, resolution: 4, antialias: true })
 	let render = app.renderer;
 	render.backgroundColor = 0x000000;
@@ -71,10 +73,27 @@ function createBoard(info) {
 	}
 }
 
+function findWordStart(position) {
+	let spotCheck = [parseInt(position[0]) + 1, parseInt(position[1])];
+	let newSpot = app.stage.getChildByName(`${spotCheck[0]},${spotCheck[1]}`);
+	if(!newSpot && spotCheck[0] > boardWidth) {
+		spotCheck = [0, parseInt(position[1] + 1)];
+		findWordStart(spotCheck);
+	}
+	if(!newSpot) {
+		findWordStart(spotCheck);
+	}
+	return newSpot;
+}
+
 function keyPress(key) {
 	if(currentHighlight.object) {
 		let clickedPos = currentHighlight.object.name.split(",");
 		//Arrow Movement
+		if(key == "Enter") {
+			let newSpot = findWordStart(clickedPos);
+			setHighlight(newSpot);
+		}
 		if(key == "ArrowLeft") {
 			let newSpot = app.stage.getChildByName(`${parseInt(clickedPos[0]) - 1},${clickedPos[1]}`);
 			if(newSpot) {
