@@ -28,7 +28,7 @@ function createBoard(info) {
     app.render();
     const inputField = document.getElementById("input");
 	document.body.insertBefore(app.view, inputField);
-	document.body.addEventListener("keydown", function(event) => keyPress(event.key));
+	document.body.addEventListener("keydown", (event) => keyPress(event.key));
 	for (let row in info.puzzle) {
 		let squarePosition = 0;
 		for (const [index, square] of Object.entries(info.puzzle[row])) {
