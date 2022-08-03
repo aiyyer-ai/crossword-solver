@@ -42,7 +42,7 @@ function createBoard(info) {
 			crosswordSquare.drawRect(squareX, squareY, 34, 34);
 			crosswordSquare.interactive = true;
 			crosswordSquare.name = `${squarePosition},${row}`
-			crosswordSquare.on('pointerdown', (event) => onClick(crosswordSquare));
+			crosswordSquare.on('click', (event) => onClick(crosswordSquare));
 			squarePosition++;
 			app.stage.addChild(crosswordSquare);
 			if(square != 0 && typeof square == 'number') {
@@ -78,34 +78,27 @@ function setHighlight(clickee) {
 	//tints the line of squares around
 	let clickedPos = clickee.name.split(",");
 	//clickedPos[0] = x // clickedPos[1] = y //
-	if(currentHighlight.across) {
-		let goLeft = true;
-		let currentLeft = parseInt(clickedPos[0]) - 1;
-		while(goLeft) {
-			let leftSquare = app.stage.getChildByName(`${currentLeft},${clickedPos[1]}`);
-			console.log(leftSquare);
-			if (!leftSquare) {
-				goLeft = false;
-				break;
+		let search = true;
+		let squareDistance = 1;
+		let leftDone = false;
+		let rightDone = false;
+		while(search) {
+			let leftSquare = app.stage.getChildByName((currentHighlight.across ? `${parseInt(clickedPos[0]) - squareDistance},${clickedPos[1]}` : `${parseInt(clickedPos[0])},${clickedPos[1] - squareDistance}`));
+			let rightSquare = app.stage.getChildByName((currentHighlight.across ? `${parseInt(clickedPos[0]) + squareDistance},${clickedPos[1]}` : `${parseInt(clickedPos[0])},${clickedPos[1] + squareDistance}`));
+			if (leftSquare && !leftDone) {
+				currentHighlight.otherSquares.push(leftSquare);
+				leftSquare.tint = 0xbfe5ff;
+			} else {
+				leftDone = true;
 			}
-			currentHighlight.otherSquares.push(leftSquare);
-			leftSquare.tint = 0xbfe5ff;
-			currentLeft--;
-		}
-		let goRight = true;
-		let currentRight = parseInt(clickedPos[0]) + 1;
-		while(goRight) {
-			let rightSquare = app.stage.getChildByName(`${currentRight},${clickedPos[1]}`);
-			console.log(rightSquare);
-			if (!rightSquare) {
-				goRight = false;
-				break;
+			if (rightSquare && !rightDone) {
+				currentHighlight.otherSquares.push(rightSquare);
+				rightSquare.tint = 0xbfe5ff;
+			} else {
+				rightDone = true;
 			}
-			currentHighlight.otherSquares.push(rightSquare);
-			rightSquare.tint = 0xbfe5ff;
-			currentRight++;
-		}
-	} else {
 
-	}
+			squareDistance++;
+		}
+
 }
