@@ -62,7 +62,7 @@ function createBoard(info) {
 			squarePosition++;
 			squareContainer.addChild(crosswordSquare);
 			if(square != 0 && typeof square == 'number') {
-				const text = new PIXI.Text(String(square),{fontFamily : 'Arial', fontSize: 12, fill : 0x000000, align : 'left'});
+				const text = new PIXI.Text(String(square),{fontFamily : 'Arial', fontSize: 8, fill : 0x000000, align : 'left'});
 				text.name = `numberedSquare`;
 				crosswordSquare.addChild(text);
 			}
