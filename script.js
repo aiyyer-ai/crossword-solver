@@ -16,6 +16,7 @@ function processFile(file) {
 
 let app = null;
 let squareSize = 34;
+let squareFont = 'Arial';
 PIXI.settings.FILTER_RESOLUTION = 4;
 function createBoard(info) {
 	console.log(info);
@@ -62,7 +63,7 @@ function createBoard(info) {
 			squarePosition++;
 			squareContainer.addChild(crosswordSquare);
 			if(square != 0 && typeof square == 'number') {
-				const text = new PIXI.Text(String(square),{fontFamily : 'Arial', fontSize: 10, fill : 0x000000, align : 'left'});
+				const text = new PIXI.Text(String(square),{fontFamily: squareFont, fontSize: 10, fill : 0x000000, align : 'left'});
 				text.name = `numberedSquare`;
 				crosswordSquare.addChild(text);
 			}
@@ -111,7 +112,7 @@ function keyPress(key) {
 				if(currentHighlight.object.children[0] ? (currentHighlight.object.children[currentHighlight.object.children.length - 1].name == 'guess') : currentHighlight.object.children[0])  {
 					currentHighlight.object.children[currentHighlight.object.children.length - 1].destroy();
 				}
-				const letter = new PIXI.Text(key.toUpperCase(),{fontFamily : 'Arial', fontSize: 28, fill : 0x000000, align : 'left'});
+				const letter = new PIXI.Text(key.toUpperCase(),{fontFamily : squareFont, fontSize: 28, fill : 0x000000, align : 'left'});
 				letter.anchor.set(0.5);
 				letter.x = currentHighlight.object.sizeX/2;
 				letter.y = currentHighlight.object.sizeY/2;
