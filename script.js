@@ -54,5 +54,16 @@ function createBoard(info) {
 }
 
 function onClick(object) {
-	object.tint = 0x45b6fe
+	setHighlight(object);
+}
+
+let currentHighlight = {across:true, object:null};
+function setHighlight(object) {
+	if(object == currentHighlight.object) {
+		currentHighlight.across = !currentHighlight.across;
+	}
+	currentHighlight.object.tint = 0x000000;
+	currentHighlight.object = object;
+	object.tint = 0xfae522;
+	//object.tint = 0xbfe5ff;
 }
