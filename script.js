@@ -40,6 +40,7 @@ function createBoard(info) {
 			squarePosition++;
 			app.stage.addChild(crosswordSquare);
 			if(square != 0) {
+				console.log(square);
 				const text = new PIXI.Text(String(square),{fontFamily : 'Arial', fontSize: 8, fill : 0x000000, align : 'left'});
 				crosswordSquare.addChild(text);
 			}
