@@ -108,8 +108,11 @@ function keyPress(key) {
 				const letter = new PIXI.Text(key.toUpperCase(),{fontFamily : 'Arial', fontSize: 28, fill : 0x000000, align : 'left'});
 				letter.anchor.set(0);
 				letter.name = 'guess';
+				console.log(`letter position: ${letter.x, letter.y}`);
+				console.log(`letter square origin: ${currentHighlight.object.x, currentHighlight.object.y}`);
 				currentHighlight.object.addChild(letter);
 				let newSpot = app.stage.getChildByName((currentHighlight.across ? `${parseInt(clickedPos[0]) + 1},${clickedPos[1]}` : `${clickedPos[0]},${parseInt(clickedPos[1]) + 1}`));
+				console.log(`square container origin: ${newSpot.x, newSpot.y}`);
 				if(newSpot) {
 					setHighlight(newSpot.children[0]);
 				}
@@ -119,7 +122,10 @@ function keyPress(key) {
 
 function onClick(object) {
 	setHighlight(object);
-	console.log(object.squareX, object.squareY);
+	let clickedPos = object.name.split(",");
+	console.log(`pixel position: ${object.squareX, object.squareY}`);
+	console.log(`square index: ${clickedPos[0], clickedPos[1]}`);
+
 }
 
 let currentHighlight = {across:true, object:null, otherSquares:[]};
