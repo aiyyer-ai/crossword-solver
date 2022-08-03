@@ -59,10 +59,14 @@ function createBoard(info) {
 
 function keyPress(key) {
 	if(currentHighlight.object) {
-		if(currentHighlight.object.children.length) {
+		console.log(currentHighlight.object);
+		if(currentHighlight.object.children[0].name == 'guess') {
 			currentHighlight.object.children[0].text = key.toUpperCase();
 		} else {
-			const letter = new PIXI.Text(key.toUpperCase(),{fontFamily : 'Arial', fontSize: 12, fill : 0x000000, align : 'left'});
+			const letter = new PIXI.Text(key.toUpperCase(),{fontFamily : 'Arial', fontSize: 28, fill : 0x000000, align : 'center'});
+			letter.x = object.x;
+			letter.y = object.y;
+			letter.name = 'guess';
 			currentHighlight.object.addChild(letter);
 		}
 	}
