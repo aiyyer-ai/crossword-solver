@@ -43,7 +43,7 @@ function createBoard(info) {
 			crosswordSquare.interactive = true;
 			crosswordSquare.name = `${squarePosition},${row}`
 			crosswordSquare.on('click', (event) => onClick(crosswordSquare));
-			keyboard.events.on('pressed', null, (event) => keyPress(keyCode));
+			keyboard.events.on('pressed', null, (keyCode, event) => keyPress(keyCode));
 			squarePosition++;
 			app.stage.addChild(crosswordSquare);
 			if(square != 0 && typeof square == 'number') {
@@ -59,6 +59,7 @@ function createBoard(info) {
 
 function keyPress(keyCode) {
 	console.log(keyCode);
+	keyboard.update();
 }
 
 function onClick(object) {
