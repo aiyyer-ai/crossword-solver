@@ -61,6 +61,7 @@ function createBoard(info) {
 
 function keyPress(key) {
 	let clickedPos = currentHighlight.object.name.split(",");
+	console.log(key);
 	if(key == "delete") {
 		if(currentHighlight.object.children[0] ? (currentHighlight.object.children[currentHighlight.object.children.length - 1].name == 'guess') : currentHighlight.object.children[0])  {
 			currentHighlight.object.children[currentHighlight.object.children.length - 1].destroy();
