@@ -14,7 +14,7 @@ function processFile(file) {
 	})();
 }
 
-let app = new PIXI.Application({ width: 360, height: 360});
+let app = new PIXI.Application({ width: 1500, height: 1500});
 function createBoard(info) {
 	console.log(info);
 	let boardWidth = info.dimensions.width;
