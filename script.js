@@ -119,6 +119,7 @@ function keyPress(key) {
 
 function onClick(object) {
 	setHighlight(object);
+	console.log(object.squareX, object.squareY);
 }
 
 let currentHighlight = {across:true, object:null, otherSquares:[]};
