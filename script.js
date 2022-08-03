@@ -112,7 +112,7 @@ function keyPress(key) {
 				console.log(`letter square origin: ${currentHighlight.object.x}, ${currentHighlight.object.y}`);
 				currentHighlight.object.addChild(letter);
 				let newSpot = app.stage.getChildByName((currentHighlight.across ? `${parseInt(clickedPos[0]) + 1},${clickedPos[1]}` : `${clickedPos[0]},${parseInt(clickedPos[1]) + 1}`));
-				console.log(`square container origin: ${newSpot.x, newSpot.y}`);
+				console.log(`square container origin: ${newSpot.x}, ${newSpot.y}`);
 				if(newSpot) {
 					setHighlight(newSpot.children[0]);
 				}
