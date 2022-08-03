@@ -14,21 +14,19 @@ function processFile(file) {
 	})();
 }
 
-let app = new PIXI.Application({ width: 902, height: 902, resolution: 4, antialias: true });
+let app = null;
 let squareSize = 34;
 PIXI.settings.FILTER_RESOLUTION = 4;
 function createBoard(info) {
 	console.log(info);
 	let boardWidth = info.dimensions.width;
 	let boardHeight = info.dimensions.height;
+	app = new PIXI.Application({ width: (boardWidth * 36) + 2, height: (boardHeight * 36) + 2, resolution: 4, antialias: true })
 	let render = app.renderer;
 	render.backgroundColor = 0x000000;
     render.view.style.position = "absolute";
     render.view.style.display = "block";
-    render.view.style.width = `${(boardWidth * 36) + 2}px`;
-    render.view.style.height = `${(boardHeight * 36) + 2}px`;
     render.autoResize = true;
-    //render.resize((boardWidth * 36) + 2, (boardHeight * 36) + 2);
     app.render();
     const inputField = document.getElementById("input");
 	document.body.insertBefore(app.view, inputField);
