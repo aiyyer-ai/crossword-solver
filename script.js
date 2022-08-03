@@ -14,7 +14,7 @@ function processFile(file) {
 	})();
 }
 
-let app = new PIXI.Application({ width: 1500, height: 1500, resolution: window.devicePixelRatio});
+let app = new PIXI.Application({ width: 1500, height: 1500, resolution: window.devicePixelRatio, antialias: true });
 PIXI.settings.FILTER_RESOLUTION = window.devicePixelRatio;
 function createBoard(info) {
 	console.log(info);
@@ -24,9 +24,10 @@ function createBoard(info) {
 	render.backgroundColor = 0x000000;
     render.view.style.position = "absolute";
     render.view.style.display = "block";
-    render.resolution = 2;
+    render.resolution = 4;
     render.autoResize = true;
-    render.resize((boardWidth * 36) + 2, (boardHeight * 36) + 2);
+    render.view.style.width = (boardWidth * 36) + 2;
+    render.view.style.height = (boardHeight * 36) + 2;
     app.render();
     const inputField = document.getElementById("input");
 	document.body.insertBefore(app.view, inputField);
