@@ -31,7 +31,9 @@ function createBoard(info) {
 	crosswordSquares.beginFill(0xff0000);
 	for (let row in info.puzzle) {
 		for (let square in info.puzzle[row]) {
-			console.log(info.puzzle[row].findIndex(square))
+			console.log(square);
+			console.log(info.puzzle[row]);
+			console.log(info.puzzle[row].findIndex(square));
 			crosswordSquares.drawRect((row * 36) + 1, (info.puzzle[row].findIndex(square) * 36) + 1, 34, 34);
 		}
 	}
