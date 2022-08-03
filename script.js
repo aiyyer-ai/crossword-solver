@@ -69,36 +69,36 @@ function keyPress(key) {
 		let clickedPos = currentHighlight.object.name.split(",");
 		//Arrow Movement
 		if(key == "ArrowLeft") {
-			let newSpot = app.stage.getChildByName(`${parseInt(clickedPos[0]) - 1},${clickedPos[1]}`).children[0];
+			let newSpot = app.stage.getChildByName(`${parseInt(clickedPos[0]) - 1},${clickedPos[1]}`);
 			if(newSpot) {
-				setHighlight(newSpot);
+				setHighlight(newSpot.children[0]);
 			}
 		}
 		if(key == "ArrowRight") {
-			let newSpot = app.stage.getChildByName(`${parseInt(clickedPos[0]) + 1},${clickedPos[1]}`).children[0];
+			let newSpot = app.stage.getChildByName(`${parseInt(clickedPos[0]) + 1},${clickedPos[1]}`);
 			if(newSpot) {
-				setHighlight(newSpot);
+				setHighlight(newSpot.children[0]);
 			}
 		}
 		if(key == "ArrowDown") {
-			let newSpot = app.stage.getChildByName(`${clickedPos[0]},${parseInt(clickedPos[1]) + 1}`).children[0];
+			let newSpot = app.stage.getChildByName(`${clickedPos[0]},${parseInt(clickedPos[1]) + 1}`);
 			if(newSpot) {
-				setHighlight(newSpot);
+				setHighlight(newSpot.children[0]);
 			}
 		}
 		if(key == "ArrowUp") {
-			let newSpot = app.stage.getChildByName(`${clickedPos[0]},${parseInt(clickedPos[1]) - 1}`).children[0];
+			let newSpot = app.stage.getChildByName(`${clickedPos[0]},${parseInt(clickedPos[1]) - 1}`);
 			if(newSpot) {
-				setHighlight(newSpot);
+				setHighlight(newSpot.children[0]);
 			}
 		}
 		if(key == "Delete" || key == "Backspace") {
 			if(currentHighlight.object.children[0] ? (currentHighlight.object.children[currentHighlight.object.children.length - 1].name == 'guess') : currentHighlight.object.children[0])  {
 				currentHighlight.object.children[currentHighlight.object.children.length - 1].destroy();
 			}
-			let newSpot = app.stage.getChildByName((currentHighlight.across ? `${parseInt(clickedPos[0]) - 1},${clickedPos[1]}` : `${clickedPos[0]},${parseInt(clickedPos[1]) - 1}`)).children[0];
+			let newSpot = app.stage.getChildByName((currentHighlight.across ? `${parseInt(clickedPos[0]) - 1},${clickedPos[1]}` : `${clickedPos[0]},${parseInt(clickedPos[1]) - 1}`));
 			if(newSpot) {
-				setHighlight(newSpot);
+				setHighlight(newSpot.children[0]);
 			}
 		}
 		if (key.length == 1) {
@@ -111,9 +111,9 @@ function keyPress(key) {
 				letter.name = 'guess';
 				console.log(letter);
 				currentHighlight.object.addChild(letter);
-				let newSpot = app.stage.getChildByName((currentHighlight.across ? `${parseInt(clickedPos[0]) + 1},${clickedPos[1]}` : `${clickedPos[0]},${parseInt(clickedPos[1]) + 1}`)).children[0];
+				let newSpot = app.stage.getChildByName((currentHighlight.across ? `${parseInt(clickedPos[0]) + 1},${clickedPos[1]}` : `${clickedPos[0]},${parseInt(clickedPos[1]) + 1}`));
 				if(newSpot) {
-					setHighlight(newSpot);
+					setHighlight(newSpot.children[0]);
 				}
 		}
 	}
@@ -146,17 +146,19 @@ function setHighlight(clickee) {
 		let leftDone = false;
 		let rightDone = false;
 		while(search) {
-			let leftSquare = app.stage.getChildByName((currentHighlight.across ? `${parseInt(clickedPos[0]) - squareDistance},${clickedPos[1]}` : `${clickedPos[0]},${parseInt(clickedPos[1]) - squareDistance}`)).children[0];
-			let rightSquare = app.stage.getChildByName((currentHighlight.across ? `${parseInt(clickedPos[0]) + squareDistance},${clickedPos[1]}` : `${clickedPos[0]},${parseInt(clickedPos[1]) + squareDistance}`)).children[0];
+			let leftSquare = app.stage.getChildByName((currentHighlight.across ? `${parseInt(clickedPos[0]) - squareDistance},${clickedPos[1]}` : `${clickedPos[0]},${parseInt(clickedPos[1]) - squareDistance}`));
+			let rightSquare = app.stage.getChildByName((currentHighlight.across ? `${parseInt(clickedPos[0]) + squareDistance},${clickedPos[1]}` : `${clickedPos[0]},${parseInt(clickedPos[1]) + squareDistance}`));
 			if (leftSquare && !leftDone) {
-				currentHighlight.otherSquares.push(leftSquare);
-				leftSquare.tint = 0xbfe5ff;
+				let leftData = leftSquare.children[0];
+				currentHighlight.otherSquares.push(leftData);
+				leftData.tint = 0xbfe5ff;
 			} else {
 				leftDone = true;
 			}
 			if (rightSquare && !rightDone) {
-				currentHighlight.otherSquares.push(rightSquare);
-				rightSquare.tint = 0xbfe5ff;
+				let rightData = rightSquare.children[0];
+				currentHighlight.otherSquares.push(rightData);
+				rightData.tint = 0xbfe5ff;
 			} else {
 				rightDone = true;
 			}
