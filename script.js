@@ -39,6 +39,7 @@ function createBoard(info) {
 			let squareY = (row * 36) + 2;
 			crosswordSquare.beginFill(0xffffff);
 			crosswordSquare.drawRect(squareX, squareY, 34, 34);
+			crosswordSquare.interactive = true;
 			crosswordSquare.on('pointerdown', (event) => onClick(crosswordSquare));
 			squarePosition++;
 			app.stage.addChild(crosswordSquare);
