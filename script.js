@@ -15,9 +15,8 @@ function processFile(file) {
 }
 
 function createBoard(info) {
-	let boardWidth = info.dimension.width;
-	let boardHeight = info.dimension.height;
-	let app = new PIXI.Application({ width: boardWidth * 36, height: boardHeight * 36 });
+	console.log(info);
+	let app = new PIXI.Application({ width: 360, height: 360 });
 	let render = app.renderer;
 	render.backgroundColor = 0x152238;
     render.view.style.position = "absolute";
