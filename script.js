@@ -59,11 +59,11 @@ function createBoard(info) {
 
 function keyPress(keyCode) {
 	console.log(keyCode);
-	keyboard.update();
 }
 
 function onClick(object) {
 	setHighlight(object);
+	keyboard.update();
 }
 
 let currentHighlight = {across:true, object:null, otherSquares:[]};
