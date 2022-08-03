@@ -61,7 +61,33 @@ function createBoard(info) {
 
 function keyPress(key) {
 	if(currentHighlight.object) {
+		let clickedPos = currentHighlight.object.name.split(",");
 		console.log(key);
+		//Arrow Movement
+		if(key == "ArrowLeft") {
+			let newSpot = app.stage.getChildByName(`${parseInt(clickedPos[0]) - 1},${clickedPos[1]}`);
+			if(newSpot) {
+				setHighlight(newSpot);
+			}
+		}
+		if(key == "ArrowRight") {
+			let newSpot = app.stage.getChildByName(`${parseInt(clickedPos[0]) + 1},${clickedPos[1]}`);
+			if(newSpot) {
+				setHighlight(newSpot);
+			}
+		}
+		if(key == "ArrowDown") {
+			let newSpot = app.stage.getChildByName(`${clickedPos[0]},${parseInt(clickedPos[1]) - 1}`);
+			if(newSpot) {
+				setHighlight(newSpot);
+			}
+		}
+		if(key == "ArrowUp") {
+			let newSpot = app.stage.getChildByName(`${clickedPos[0]},${parseInt(clickedPos[1]) + 1}`);
+			if(newSpot) {
+				setHighlight(newSpot);
+			}
+		}
 		if(key == "Delete" || key == "Backspace") {
 			if(currentHighlight.object.children[0] ? (currentHighlight.object.children[currentHighlight.object.children.length - 1].name == 'guess') : currentHighlight.object.children[0])  {
 				currentHighlight.object.children[currentHighlight.object.children.length - 1].destroy();
