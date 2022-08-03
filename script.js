@@ -84,7 +84,7 @@ function setHighlight(clickee) {
 		while(goLeft) {
 			let leftSquare = app.stage.getChildByName(`${currentLeft},${clickedPos[1]}`);
 			console.log(leftSquare);
-			if (!leftSquare) {goLeft = false;}
+			if (leftSquare == null) {goLeft = false;}
 			currentHighlight.otherSquares.push(leftSquare);
 			leftSquare.tint = 0xbfe5ff;
 			if(leftSquare.getChildByName(`numberedSquare`)) {goLeft = false;}
@@ -95,7 +95,7 @@ function setHighlight(clickee) {
 		while(goRight) {
 			let rightSquare = app.stage.getChildByName(`${currentRight},${clickedPos[1]}`);
 			console.log(rightSquare);
-			if (!rightSquare) {goRight = false;}
+			if (leftSquare == null) {goRight = false;}
 			currentHighlight.otherSquares.push(rightSquare);
 			rightSquare.tint = 0xbfe5ff;
 			if(rightSquare.getChildByName(`numberedSquare`)) {goRight = false;}
