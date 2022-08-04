@@ -15,14 +15,6 @@ div.scroll {
    /* Should be removed. Only for demonstration */
 }
 
-.clues {
-  width: 15%;
-}
-
-.puzzle {
-  width: 70%;
-}
-
 /* Clear floats after the columns */
 .row:after {
   content: "";
