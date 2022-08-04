@@ -81,12 +81,10 @@ function findWordStart(position) {
 		if(spotCheck[1] >= boardHeight && spotCheck[0] >= boardWidth) {
 			currentHighlight.across = !currentHighlight.across
 			spotCheck = [0, 0];
-		}
-		if(!newSpot && spotCheck[0] > boardWidth) {
+		} else if(!newSpot && spotCheck[0] > boardWidth) {
 			spotCheck[0] = 0;
 			spotCheck[1]++;
-		}
-		if(!newSpot) {
+		} else if(!newSpot) {
 			spotCheck[0]++;
 		}
 	}	
