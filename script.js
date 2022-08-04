@@ -33,7 +33,7 @@ function createBoard(info) {
     render.view.style.height = `${(boardHeight * 36) + 2}px`;
     render.autoResize = true;
     app.render();
-    console.log(document.body);
+    console.log(document.body.getElementById("row"));
     const inputField = document.getElementById("input");
 	document.body.insertBefore(app.view, inputField);
 	document.body.addEventListener("keydown", (event) => keyPress(event.key));
