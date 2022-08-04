@@ -83,7 +83,7 @@ function createBoard(info) {
 	clueArea.beginFill(0xffffff);
 	clueArea.drawRect(0, 0, 500, (boardHeight * 36) - 2);
 	clueArea.beginFill(0x333333);
-	clueArea.drawRect(249, 0, 2, (boardHeight * 36) - 2);	
+	clueArea.drawRect(249, 0, 2, (boardHeight * 36) - 2);
 	clueContainer.addChild(clueArea);
 }
 
