@@ -46,8 +46,8 @@ function createBoard(info) {
 			}
 			let squareContainer = new PIXI.Container();
 			app.stage.addChild(squareContainer);
-			let squareX = (squarePosition * (squareSize + 2)) + border/2;
-			let squareY = (row * (squareSize + 2)) + border/2;
+			let squareX = (squarePosition * (squareSize + 2)) + border;
+			let squareY = (row * (squareSize + 2)) + border;
 			squareContainer.x = squareX;
 			squareContainer.y = squareY;
 			squareContainer.height = squareSize;
