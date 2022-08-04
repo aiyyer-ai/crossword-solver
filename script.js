@@ -133,24 +133,28 @@ function keyPress(key) {
 		if(key == "ArrowLeft") {
 			let newSpot = app.stage.getChildByName(`${parseInt(clickedPos[0]) - 1},${clickedPos[1]}`);
 			if(newSpot) {
+				currentHighlight.across = true;
 				setHighlight(newSpot.children[0]);
 			}
 		}
 		if(key == "ArrowRight") {
 			let newSpot = app.stage.getChildByName(`${parseInt(clickedPos[0]) + 1},${clickedPos[1]}`);
 			if(newSpot) {
+				currentHighlight.across = true;
 				setHighlight(newSpot.children[0]);
 			}
 		}
 		if(key == "ArrowDown") {
 			let newSpot = app.stage.getChildByName(`${clickedPos[0]},${parseInt(clickedPos[1]) + 1}`);
 			if(newSpot) {
+				currentHighlight.across = false;
 				setHighlight(newSpot.children[0]);
 			}
 		}
 		if(key == "ArrowUp") {
 			let newSpot = app.stage.getChildByName(`${clickedPos[0]},${parseInt(clickedPos[1]) - 1}`);
 			if(newSpot) {
+				currentHighlight.across = false;
 				setHighlight(newSpot.children[0]);
 			}
 		}
