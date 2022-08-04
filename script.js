@@ -16,7 +16,7 @@ function processFile(file) {
 
 let app = null;
 let squareSize = 34;
-let border = 5;
+let border = 4;
 let squareFont = 'Arial';
 let boardWidth;
 let boardHeight;
@@ -46,8 +46,8 @@ function createBoard(info) {
 			}
 			let squareContainer = new PIXI.Container();
 			app.stage.addChild(squareContainer);
-			let squareX = (squarePosition * (squareSize + 2)) + border;
-			let squareY = (row * (squareSize + 2)) + border;
+			let squareX = (squarePosition * (squareSize + 2)) + border/2;
+			let squareY = (row * (squareSize + 2)) + border/2;
 			squareContainer.x = squareX;
 			squareContainer.y = squareY;
 			squareContainer.height = squareSize;
