@@ -83,7 +83,8 @@ function findWordStart(position) {
 			spotCheck = [0, 0];
 		}
 		if(!newSpot && spotCheck[0] > boardWidth) {
-			spotCheck = [0, parseInt(position[1] + 1)];
+			spotCheck[0] = 0;
+			spotCheck[1]++;
 		}
 		if(!newSpot) {
 			spotCheck[0]++;
