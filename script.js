@@ -55,17 +55,22 @@ function createBoard(info) {
 		    downRender.view.style.height = `${(boardHeight * 36) + 2}px`;
 		    downRender.autoResize = true;
 		    down.render();
+
     const inputField = document.getElementById("row").querySelectorAll(".puzzle")[0].querySelectorAll(".input")[0];
 	document.getElementById("row").querySelectorAll(".puzzle")[0].insertBefore(app.view, inputField);
 	document.getElementById("row").querySelectorAll(".puzzle")[0].style.width = `${(boardWidth * 36) + 2}px`;
 	document.getElementById("row").querySelectorAll(".puzzle")[0].style.height = `${(boardHeight * 36) + 2}px`;
+
 	const acrossField = document.getElementById("row").querySelectorAll(".clues")[0].querySelectorAll(".across")[0];
 	document.getElementById("row").querySelectorAll(".clues")[0].insertBefore(across.view, acrossField);
 	document.getElementById("row").querySelectorAll(".clues")[0].style.height = `${(boardHeight * 36) + 2}px`;
+
 	const downField = document.getElementById("row").querySelectorAll(".clues")[1].querySelectorAll(".down")[0];
 	document.getElementById("row").querySelectorAll(".clues")[1].insertBefore(down.view, downField);
 	document.getElementById("row").querySelectorAll(".clues")[1].style.height = `${(boardHeight * 36) + 2}px`;
+
 	document.body.addEventListener("keydown", (event) => keyPress(event.key));
+
 	for (let row in info.puzzle) {
 		let squarePosition = 0;
 		for (const [index, square] of Object.entries(info.puzzle[row])) {
@@ -91,7 +96,7 @@ function createBoard(info) {
 			crosswordSquare.squareX = squareX;
 			crosswordSquare.squareY = squareY;
 			crosswordSquare.name = `${squarePosition},${row}`;
-			crosswordSquare.on('click', (event) => onClick(crosswordSquare));
+			crosswordSquare.on('click', (event) => onSquareClick(crosswordSquare));
 			squarePosition++;
 			squareContainer.addChild(crosswordSquare);
 			if(square != 0 && typeof square == 'number') {
@@ -103,6 +108,26 @@ function createBoard(info) {
 			}
 		}
 	}
+	let distanceDown = 0;
+	for (const [index, acrossClue] of Object.entries(info.clues.Across)) {
+		const clue = new PIXI.Text(String(acrossClue[1]),{fontFamily: squareFont, fontSize: 18, fill : 0x333333, align : 'left', wordWrap : true, wordWrapWidth: 250});
+		console.log(clue.getLocalBounds());
+		let clueContainer = new PIXI.Container();
+		across.stage.addChild(clueContainer);
+		clueContainer.y = distanceDown;
+		clueContainer.height = ;
+		clueContainer.width = ;
+		clueContainer.name = `${acrossClue[0]}`;
+		let clueInfo = new PIXI.Graphics();
+		clueInfo.beginFill(0xffffff);
+		clueInfo.drawRect(0, 0, , );
+		clueInfo.interactive = true;
+		clueInfo.name = `${squarePosition},${row}`;
+		clueInfo.on('click', (event) => onClueClick(clueInfo));
+		clueContainer.addChild(clueInfo);
+		
+	}
+
  //    let clueContainer = new PIXI.Container();
  //    app.stage.addChild(clueContainer);
  //    clueContainer.x = (boardWidth * 36) + 2;
@@ -242,7 +267,7 @@ function keyPress(key) {
 	}
 }
 
-function onClick(object) {
+function onSquareClick(object) {
 	setHighlight(object);
 }
 
