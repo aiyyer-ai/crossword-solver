@@ -132,7 +132,6 @@ function keyPress(key) {
 		}
 		if(key == "ArrowLeft") {
 			if(!currentHighlight.across) {
-				currentHighlight.across = true;
 				return setHighlight(currentHighlight.object);
 			}
 			let newSpot = app.stage.getChildByName(`${parseInt(clickedPos[0]) - 1},${clickedPos[1]}`);
@@ -143,7 +142,6 @@ function keyPress(key) {
 		}
 		if(key == "ArrowRight") {
 			if(!currentHighlight.across) {
-				currentHighlight.across = true;
 				return setHighlight(currentHighlight.object);
 			}
 			let newSpot = app.stage.getChildByName(`${parseInt(clickedPos[0]) + 1},${clickedPos[1]}`);
@@ -154,7 +152,6 @@ function keyPress(key) {
 		}
 		if(key == "ArrowDown") {
 			if(currentHighlight.across) {
-				currentHighlight.across = false;
 				return setHighlight(currentHighlight.object);
 			}
 			let newSpot = app.stage.getChildByName(`${clickedPos[0]},${parseInt(clickedPos[1]) + 1}`);
@@ -165,7 +162,6 @@ function keyPress(key) {
 		}
 		if(key == "ArrowUp") {
 			if(currentHighlight.across) {
-				currentHighlight.across = false;
 				return setHighlight(currentHighlight.object);
 			}
 			let newSpot = app.stage.getChildByName(`${clickedPos[0]},${parseInt(clickedPos[1]) - 1}`);
