@@ -24,7 +24,7 @@ function createBoard(info) {
 	console.log(info);
 	boardWidth = info.dimensions.width;
 	boardHeight = info.dimensions.height;
-	app = new PIXI.Application({ width: (boardWidth * 36) + 2, height: (boardHeight * 36) + 2, resolution: 4, antialias: true })
+	app = new PIXI.Application({ width: (boardWidth * 36) + 2 + 300, height: (boardHeight * 36) + 2, resolution: 4, antialias: true })
 	let render = app.renderer;
 	render.backgroundColor = 0x000000;
     render.view.style.position = "absolute";
@@ -73,6 +73,16 @@ function createBoard(info) {
 			}
 		}
 	}
+    let clueContainer = new PIXI.Container();
+    app.stage.addChild(clueContainer);
+    clueContainer.x = (boardWidth * 36) + 2;
+    clueContainer.y = 0;
+    clueContainer.height = (boardHeight * 36) + 2;
+	clueContainer.width = 300;
+	let clueArea = new PIXI.Graphics();
+	clueArea.beginFill(0xffffff);
+	clueArea.drawRect((boardWidth * 36) + 2, 0, clueContainer.width, (boardHeight * 36) + 2);
+	clueContainer.addChild(clueArea);
 }
 
 function findWordStart(position) {
