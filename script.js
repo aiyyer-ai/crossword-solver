@@ -115,12 +115,12 @@ function createBoard(info) {
 		let clueContainer = new PIXI.Container();
 		across.stage.addChild(clueContainer);
 		clueContainer.y = distanceDown;
-		clueContainer.height = ;
-		clueContainer.width = ;
+		clueContainer.height = 0;
+		clueContainer.width = 0;
 		clueContainer.name = `${acrossClue[0]}`;
 		let clueInfo = new PIXI.Graphics();
 		clueInfo.beginFill(0xffffff);
-		clueInfo.drawRect(0, 0, , );
+		clueInfo.drawRect(0, 0, 0, 0);
 		clueInfo.interactive = true;
 		clueInfo.name = `${squarePosition},${row}`;
 		clueInfo.on('click', (event) => onClueClick(clueInfo));
