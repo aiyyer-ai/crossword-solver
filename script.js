@@ -24,12 +24,12 @@ function createBoard(info) {
 	console.log(info);
 	boardWidth = info.dimensions.width;
 	boardHeight = info.dimensions.height;
-	app = new PIXI.Application({ width: (boardWidth * 36) + 2 + 300, height: (boardHeight * 36) + 2, resolution: 4, antialias: true })
+	app = new PIXI.Application({ width: (boardWidth * 36) + 2 + 400, height: (boardHeight * 36) + 2, resolution: 4, antialias: true })
 	let render = app.renderer;
 	render.backgroundColor = 0x000000;
     render.view.style.position = "absolute";
     render.view.style.display = "block";
-    render.view.style.width = `${(boardWidth * 36) + 2 + 300}px`;
+    render.view.style.width = `${(boardWidth * 36) + 2 + 400}px`;
     render.view.style.height = `${(boardHeight * 36) + 2}px`;
     render.autoResize = true;
     app.render();
@@ -78,10 +78,10 @@ function createBoard(info) {
     clueContainer.x = (boardWidth * 36) + 2;
     clueContainer.y = 0;
     clueContainer.height = (boardHeight * 36) + 2;
-	clueContainer.width = 300;
+	clueContainer.width = 400;
 	let clueArea = new PIXI.Graphics();
 	clueArea.beginFill(0xffffff);
-	clueArea.drawRect((boardWidth * 36) + 2, 0, clueContainer.width, (boardHeight * 36) + 2);
+	clueArea.drawRect((boardWidth * 36) + 2, 0, 400, (boardHeight * 36) + 2);
 	clueContainer.addChild(clueArea);
 }
 
