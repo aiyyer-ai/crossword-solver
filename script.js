@@ -36,6 +36,7 @@ function createBoard(info) {
     const inputField = document.getElementById("row").querySelectorAll(".puzzle")[0].querySelectorAll(".input")[0];
     console.log(inputField);
 	document.getElementById("row").querySelectorAll(".puzzle")[0].insertBefore(app.view, inputField);
+	inputField.style.width = (boardWidth * 36) + 2;
 	document.body.addEventListener("keydown", (event) => keyPress(event.key));
 	for (let row in info.puzzle) {
 		let squarePosition = 0;
