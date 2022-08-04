@@ -80,6 +80,12 @@ function findWordStart(position) {
 	let spotCheck = [parseInt(position[0]) + 1, parseInt(position[1])];
 	while (!newSpot) {
 		newSpot = app.stage.getChildByName(`${spotCheck[0]},${spotCheck[1]}`);
+		if(!currentHighlight.across) {
+			spotAbove = app.stage.getChildByName(`${spotCheck[0]},${spotCheck[1] - 1}`);
+			if(spotAbove) {
+				newSpot = null;
+			}
+		}
 		if(spotCheck[1] >= boardHeight && spotCheck[0] >= boardWidth) {
 			currentHighlight.across = !currentHighlight.across
 			spotCheck = [0, 0];
