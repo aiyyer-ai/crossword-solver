@@ -89,7 +89,7 @@ function findWordStart(position) {
 			spotCheck[0]++;
 		}
 	}	
-	return newSpot;
+	return newSpot.children[0];
 }
 
 function keyPress(key) {
