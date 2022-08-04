@@ -36,6 +36,9 @@ function createBoard(info) {
     const inputField = document.getElementById("row").querySelectorAll(".puzzle")[0].querySelectorAll(".input")[0];
 	document.getElementById("row").querySelectorAll(".puzzle")[0].insertBefore(app.view, inputField);
 	document.getElementById("row").querySelectorAll(".puzzle")[0].style.width = `${(boardWidth * 36) + 2}px`;
+	document.getElementById("row").querySelectorAll(".puzzle")[0].style.height = `${(boardHeight * 36) + 2}px`;
+	document.getElementById("row").querySelectorAll(".clues")[0].style.height = `${(boardHeight * 36) + 2}px`;
+	document.getElementById("row").querySelectorAll(".clues")[1].style.height = `${(boardHeight * 36) + 2}px`;
 	document.body.addEventListener("keydown", (event) => keyPress(event.key));
 	for (let row in info.puzzle) {
 		let squarePosition = 0;
