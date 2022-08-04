@@ -33,8 +33,8 @@ function createBoard(info) {
     render.view.style.height = `${(boardHeight * 36) + 2}px`;
     render.autoResize = true;
     app.render();
-    console.log(document);
-    const inputField = document.getElementById("input");
+    console.log(document.body.row);
+    const inputField = document.body.row.getElementById("input");
 	document.body.insertBefore(app.view, inputField);
 	document.body.addEventListener("keydown", (event) => keyPress(event.key));
 	for (let row in info.puzzle) {
