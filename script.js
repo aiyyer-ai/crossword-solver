@@ -16,6 +16,7 @@ function processFile(file) {
 
 let app = null;
 let squareSize = 34;
+let border = 5;
 let squareFont = 'Arial';
 let boardWidth;
 let boardHeight;
@@ -24,13 +25,13 @@ function createBoard(info) {
 	console.log(info);
 	boardWidth = info.dimensions.width;
 	boardHeight = info.dimensions.height;
-	app = new PIXI.Application({ width: (boardWidth * 36) + 2, height: (boardHeight * 36) + 2, resolution: 4, antialias: true })
+	app = new PIXI.Application({ width: (boardWidth * 36) + border, height: (boardHeight * 36) + border, resolution: 4, antialias: true })
 	let render = app.renderer;
 	render.backgroundColor = 0x000000;
     render.view.style.position = "absolute";
     render.view.style.display = "block";
-    render.view.style.width = `${(boardWidth * 36) + 2}px`;
-    render.view.style.height = `${(boardHeight * 36) + 2}px`;
+    render.view.style.width = `${(boardWidth * 36) + border}px`;
+    render.view.style.height = `${(boardHeight * 36) + border}px`;
     render.autoResize = true;
     app.render();
     const inputField = document.getElementById("input");
@@ -45,8 +46,8 @@ function createBoard(info) {
 			}
 			let squareContainer = new PIXI.Container();
 			app.stage.addChild(squareContainer);
-			let squareX = (squarePosition * (squareSize + 2)) + 2;
-			let squareY = (row * (squareSize + 2)) + 2;
+			let squareX = (squarePosition * (squareSize + 2)) + border;
+			let squareY = (row * (squareSize + 2)) + border;
 			squareContainer.x = squareX;
 			squareContainer.y = squareY;
 			squareContainer.height = squareSize;
