@@ -33,9 +33,9 @@ function createBoard(info) {
     render.view.style.height = `${(boardHeight * 36) + 2}px`;
     render.autoResize = true;
     app.render();
-    const inputField = document.getElementById("row").querySelectorAll(".puzzle")[0];
+    const inputField = document.getElementById("row").querySelectorAll(".puzzle")[0].querySelectorAll(".input")[0];
     console.log(inputField);
-	document.getElementById("row").insertBefore(app.view, inputField);
+	document.getElementById("row").querySelectorAll(".puzzle")[0].insertBefore(app.view, inputField);
 	document.body.addEventListener("keydown", (event) => keyPress(event.key));
 	for (let row in info.puzzle) {
 		let squarePosition = 0;

@@ -1,7 +1,4 @@
-/*html, body {
-  height: 100%;
-  width: 100%;
-}*/
+
 div.clues {
   overflow-x: hidden;
   overflow-y: auto;
@@ -9,7 +6,11 @@ div.clues {
   padding: 20px;
 }
 
-/* Clear floats after the columns */
+.column {
+  float: left;
+  padding: 10px;
+}
+
 .row:after {
   content: "";
   display: table;
