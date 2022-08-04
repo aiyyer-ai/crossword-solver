@@ -15,6 +15,8 @@ function processFile(file) {
 }
 
 let app = null;
+let across = null;
+let down = null;
 let squareSize = 34;
 let squareFont = 'Arial';
 let boardWidth;
@@ -24,7 +26,11 @@ function createBoard(info) {
 	console.log(info);
 	boardWidth = info.dimensions.width;
 	boardHeight = info.dimensions.height;
-	app = new PIXI.Application({ width: (boardWidth * 36) + 2, height: (boardHeight * 36) + 2, resolution: 4, antialias: true })
+	let acrossClueHeight = info.clues.Across.length;
+	let downClueHeight = info.clues.Down.length;
+	app = new PIXI.Application({ width: (boardWidth * 36) + 2, height: (boardHeight * 36) + 2, resolution: 4, antialias: true });
+	across = new PIXI.Application({ width: 250, height: (acrossClueHeight * 36), resolution: 4, antialias: true });
+	down = new PIXI.Application({ width: 250, height: (downClueHeight * 36), resolution: 4, antialias: true });
 	let render = app.renderer;
 	render.backgroundColor = 0x000000;
     render.view.style.position = "absolute";
@@ -33,11 +39,31 @@ function createBoard(info) {
     render.view.style.height = `${(boardHeight * 36) + 2}px`;
     render.autoResize = true;
     app.render();
+		let acrossRender = across.renderer;
+		acrossRender.backgroundColor = 0x00ff00;
+	    acrossRender.view.style.position = "absolute";
+	    acrossRender.view.style.display = "block";
+	    acrossRender.view.style.width = `250px`;
+	    acrossRender.view.style.height = `${(boardHeight * 36) + 2}px`;
+	    acrossRender.autoResize = true;
+	    across.render();
+			let downRender = down.renderer;
+			downRender.backgroundColor = 0x0000ff;
+		    downRender.view.style.position = "absolute";
+		    downRender.view.style.display = "block";
+		    downRender.view.style.width = `250px`;
+		    downRender.view.style.height = `${(boardHeight * 36) + 2}px`;
+		    downRender.autoResize = true;
+		    down.render();
     const inputField = document.getElementById("row").querySelectorAll(".puzzle")[0].querySelectorAll(".input")[0];
 	document.getElementById("row").querySelectorAll(".puzzle")[0].insertBefore(app.view, inputField);
 	document.getElementById("row").querySelectorAll(".puzzle")[0].style.width = `${(boardWidth * 36) + 2}px`;
 	document.getElementById("row").querySelectorAll(".puzzle")[0].style.height = `${(boardHeight * 36) + 2}px`;
+	const acrossField = document.getElementById("row").querySelectorAll(".clues")[0].querySelectorAll(".across")[0];
+	document.getElementById("row").querySelectorAll(".clues")[0].insertBefore(across.view, acrossField);
 	document.getElementById("row").querySelectorAll(".clues")[0].style.height = `${(boardHeight * 36) + 2}px`;
+	const downField = document.getElementById("row").querySelectorAll(".clues")[1].querySelectorAll(".down")[0];
+	document.getElementById("row").querySelectorAll(".clues")[0].insertBefore(down.view, downField);
 	document.getElementById("row").querySelectorAll(".clues")[1].style.height = `${(boardHeight * 36) + 2}px`;
 	document.body.addEventListener("keydown", (event) => keyPress(event.key));
 	for (let row in info.puzzle) {
