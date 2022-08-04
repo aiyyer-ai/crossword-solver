@@ -81,7 +81,7 @@ function createBoard(info) {
 	clueContainer.width = 400;
 	let clueArea = new PIXI.Graphics();
 	clueArea.beginFill(0xffffff);
-	clueArea.drawRect((boardWidth * 36) + 2, 0, 400, (boardHeight * 36) + 2);
+	clueArea.drawRect(0, 0, 400, (boardHeight * 36) + 2);
 	clueContainer.addChild(clueArea);
 }
 
