@@ -121,7 +121,7 @@ function createBoard(info) {
 		clueContainer.name = `${acrossClue[0]}`;
 		let clueInfo = new PIXI.Graphics();
 		clueInfo.beginFill(0xffffff);
-		clueInfo.drawRect(0, 0, 250, clueRect.height);
+		clueInfo.drawRect(0, 0, 250, 40);
 		clueInfo.interactive = true;
 		clueInfo.name = `${acrossClue[0]}`;
 		clueInfo.on('click', (event) => onClueClick(clueInfo));
