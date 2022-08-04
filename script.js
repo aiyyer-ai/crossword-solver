@@ -128,34 +128,50 @@ function keyPress(key) {
 		//Arrow Movement
 		if(key == "Enter") {
 			let newSpot = findWordStart(clickedPos);
-			setHighlight(newSpot);
+			return setHighlight(newSpot);
 		}
 		if(key == "ArrowLeft") {
+			if(!currentHighlight.across) {
+				currentHighlight.across = true;
+				return;
+			}
 			let newSpot = app.stage.getChildByName(`${parseInt(clickedPos[0]) - 1},${clickedPos[1]}`);
 			if(newSpot) {
 				currentHighlight.across = true;
-				setHighlight(newSpot.children[0]);
+				return setHighlight(newSpot.children[0]);
 			}
 		}
 		if(key == "ArrowRight") {
+			if(!currentHighlight.across) {
+				currentHighlight.across = true;
+				return;
+			}
 			let newSpot = app.stage.getChildByName(`${parseInt(clickedPos[0]) + 1},${clickedPos[1]}`);
 			if(newSpot) {
 				currentHighlight.across = true;
-				setHighlight(newSpot.children[0]);
+				return setHighlight(newSpot.children[0]);
 			}
 		}
 		if(key == "ArrowDown") {
+			if(currentHighlight.across) {
+				currentHighlight.across = false;
+				return;
+			}
 			let newSpot = app.stage.getChildByName(`${clickedPos[0]},${parseInt(clickedPos[1]) + 1}`);
 			if(newSpot) {
 				currentHighlight.across = false;
-				setHighlight(newSpot.children[0]);
+				return setHighlight(newSpot.children[0]);
 			}
 		}
 		if(key == "ArrowUp") {
+			if(currentHighlight.across) {
+				currentHighlight.across = false;
+				return;
+			}
 			let newSpot = app.stage.getChildByName(`${clickedPos[0]},${parseInt(clickedPos[1]) - 1}`);
 			if(newSpot) {
 				currentHighlight.across = false;
-				setHighlight(newSpot.children[0]);
+				return setHighlight(newSpot.children[0]);
 			}
 		}
 		if(key == "Delete" || key == "Backspace") {
@@ -164,7 +180,7 @@ function keyPress(key) {
 			}
 			let newSpot = app.stage.getChildByName((currentHighlight.across ? `${parseInt(clickedPos[0]) - 1},${clickedPos[1]}` : `${clickedPos[0]},${parseInt(clickedPos[1]) - 1}`));
 			if(newSpot) {
-				setHighlight(newSpot.children[0]);
+				return setHighlight(newSpot.children[0]);
 			} else {
 				// newSpot = findWordEnd(clickedPos);
 				// setHighlight(newSpot);
@@ -182,7 +198,7 @@ function keyPress(key) {
 				currentHighlight.object.addChild(letter);
 				let newSpot = app.stage.getChildByName((currentHighlight.across ? `${parseInt(clickedPos[0]) + 1},${clickedPos[1]}` : `${clickedPos[0]},${parseInt(clickedPos[1]) + 1}`));
 				if(newSpot) {
-					setHighlight(newSpot.children[0]);
+					return setHighlight(newSpot.children[0]);
 				}
 		}
 	}
