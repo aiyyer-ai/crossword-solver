@@ -12,15 +12,15 @@ div.scroll {
 .column {
   float: left;
   padding: 10px;
-  height: 300px; /* Should be removed. Only for demonstration */
+   /* Should be removed. Only for demonstration */
 }
 
-.left, .right {
-  width: 25%;
+.clues {
+  width: 15%;
 }
 
-.middle {
-  width: 50%;
+.puzzle {
+  width: 70%;
 }
 
 /* Clear floats after the columns */
