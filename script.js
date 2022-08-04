@@ -66,6 +66,8 @@ function createBoard(info) {
 			squareContainer.addChild(crosswordSquare);
 			if(square != 0 && typeof square == 'number') {
 				const text = new PIXI.Text(String(square),{fontFamily: squareFont, fontSize: 12, fill : 0x000000, align : 'left'});
+				text.x = 1;
+				text.y = -1;
 				text.name = `numberedSquare`;
 				crosswordSquare.addChild(text);
 			}
