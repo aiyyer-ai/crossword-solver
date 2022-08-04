@@ -151,7 +151,7 @@ function keyPress(key) {
 			if(newSpot) {
 				setHighlight(newSpot.children[0]);
 			}
-			newSpot = findWordStart(clickedPos);
+			newSpot = findWordEnd(clickedPos);
 			setHighlight(newSpot);
 		}
 		if (key.length == 1) {
