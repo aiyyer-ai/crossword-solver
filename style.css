@@ -2,17 +2,11 @@
   height: 100%;
   width: 100%;
 }*/
-div.scroll {
+div.clues {
   overflow-x: hidden;
   overflow-y: auto;
   text-align: center;
   padding: 20px;
-}
-
-.column {
-  float: left;
-  padding: 10px;
-   /* Should be removed. Only for demonstration */
 }
 
 /* Clear floats after the columns */
