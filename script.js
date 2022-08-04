@@ -93,6 +93,24 @@ function findWordStart(position) {
 	return newSpot.children[0];
 }
 
+function findWordEnd(position) {
+	let newSpot = null;
+	let spotCheck = [parseInt(position[0]) - 1, parseInt(position[1])];
+	while (!newSpot) {
+		newSpot = app.stage.getChildByName(`${spotCheck[0]},${spotCheck[1]}`);
+		if(spotCheck[1] >= boardHeight && spotCheck[0] >= boardWidth) {
+			currentHighlight.across = !currentHighlight.across
+			spotCheck = [0, 0];
+		} else if(!newSpot && spotCheck[0] > boardWidth) {
+			spotCheck[0] = 0;
+			spotCheck[1]--;
+		} else if(!newSpot) {
+			spotCheck[0]--;
+		}
+	}	
+	return newSpot.children[0];
+}
+
 function keyPress(key) {
 	if(currentHighlight.object) {
 		let clickedPos = currentHighlight.object.name.split(",");
@@ -133,6 +151,8 @@ function keyPress(key) {
 			if(newSpot) {
 				setHighlight(newSpot.children[0]);
 			}
+			let newSpot = findWordStart(clickedPos);
+			setHighlight(newSpot);
 		}
 		if (key.length == 1) {
 				if(currentHighlight.object.children[0] ? (currentHighlight.object.children[currentHighlight.object.children.length - 1].name == 'guess') : currentHighlight.object.children[0])  {
