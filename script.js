@@ -29,7 +29,7 @@ function createBoard(info) {
 	render.backgroundColor = 0x000000;
     render.view.style.position = "absolute";
     render.view.style.display = "block";
-    render.view.style.width = `${(boardWidth * 36) + 2}px`;
+    render.view.style.width = `${(boardWidth * 36) + 2 + 300}px`;
     render.view.style.height = `${(boardHeight * 36) + 2}px`;
     render.autoResize = true;
     app.render();
