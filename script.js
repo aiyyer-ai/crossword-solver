@@ -230,11 +230,10 @@ function onScrollDrag(scrollbutton, event) {
 }
 
 function offScrollClick(scrollbutton, event) {
-	console.log(event);
 	if(scrollbutton.dragging) {
 		scrollbutton.tint = 0xffffff;
 		scrollbutton.heightDifference = 0;
-		across.view.releasePointerCapture(event.data.originalEvent.pointerId);
+		across.view.releasePointerCapture(event.pointerId);
 		scrollbutton.dragging = false;
 	}
 }
