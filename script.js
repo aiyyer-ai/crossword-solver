@@ -15,6 +15,7 @@ function processFile(file) {
 }
 
 let app = null;
+let acrossContainer = null;
 let across = null;
 let down = null;
 let squareSize = 34;
