@@ -108,7 +108,7 @@ function createBoard(info) {
 	}
 	let distanceDown = 0;
 	for (const [index, acrossClue] of Object.entries(info.clues.Across)) {
-		const clue = new PIXI.Text(`${String(acrossClue[0])}: ${String(acrossClue[1])}`,{fontFamily: squareFont, fontSize: 18, fill : 0x333333, align : 'left', wordWrap : true, wordWrapWidth: 250});
+		const clue = new PIXI.Text(`<b>${String(acrossClue[0])}</b>  ${String(acrossClue[1])}`,{fontFamily: squareFont, fontSize: 18, fill : 0x333333, align : 'left', wordWrap : true, wordWrapWidth: 250});
 		let clueRect = clue.getLocalBounds();
 		console.log(clueRect);
 		let clueContainer = new PIXI.Container();
@@ -125,7 +125,7 @@ function createBoard(info) {
 		clueInfo.name = `${acrossClue[0]}`;
 		clueInfo.on('click', (event) => onClueClick(clueInfo));
 		clueContainer.addChild(clueInfo);
-		clue.anchor.set(0.5);
+		clue.anchor.set(0, 0.5);
 		clue.y = (clueRect.height + 20) / 2;
 		clue.name = `${acrossClue[0]}`;
 		clueInfo.addChild(clue);
