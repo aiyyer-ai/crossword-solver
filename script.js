@@ -110,7 +110,6 @@ function createBoard(info) {
 				text.name = `numberedSquare`;
 				crosswordSquare.addChild(text);
 			}
-			console.log(squareContainer);
 		}
 	}
 	let distanceDown = 0;
@@ -139,6 +138,7 @@ function createBoard(info) {
 		clue.y = (clueSpotHeight) / 2;
 		clue.x = clueNumRect.width;
 		clue.name = `${acrossClue[0]}`;
+		clueInfo.addChild(clueNum);
 		clueInfo.addChild(clue);
 	}
  //    let clueContainer = new PIXI.Container();
