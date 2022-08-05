@@ -178,8 +178,8 @@ function createBoard(info) {
 	scrollbutton.beginFill(0x7e7e7e);
 	scrollbutton.drawRect(0, 0, scrollbarWidth, scrollbuttonSize);
 	scrollbutton.interactive = true;
-	scrollbutton.on('pointerover', (event) => onScrollClick(scrollbutton));
-	scrollbutton.on('pointerdown', (event) => onScrollOver(scrollbutton, event));
+	scrollbutton.on('pointerover', (event) => onScrollOver(scrollbutton));
+	scrollbutton.on('pointerdown', (event) => onScrollClick(scrollbutton, event));
 	scrollbutton.on('pointerout', (event) => offScrollOver(scrollbutton));
 	scrollbarContainer.addChild(scrollbutton);
 	//I'll need to add more events
