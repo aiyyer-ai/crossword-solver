@@ -199,21 +199,23 @@ function onScrollbarClick(scrollbar) {
 
 function onScrollClick(scrollbutton, event) {
 	scrollbutton.tint = 0x616161;
-	scrollbutton.y = event.data.global.y;
+	scrollbutton.heightDifference = scrollbutton.y - event.data.global.y;
+	scrollbutton.y = event.data.global.y + scrollbutton.heightDifference;
 	scrollbutton.dragging = true;
 }
 
 function onScrollDrag(scrollbutton, event) {
 	console.log(event);
 	if(scrollbutton.dragging) {
-		scrollbutton.y = event.data.global.y;
+		scrollbutton.y = event.data.global.y + scrollbutton.heightDifference;
 	}
 }
 
 function offScrollClick(scrollbutton, event) {
 	if(scrollbutton.dragging) {
 		scrollbutton.tint = 0xffffff;
-		scrollbutton.y = event.data.global.y;
+		scrollbutton.y = event.data.global.y + scrollbutton.heightDifference;
+		scrollbutton.heightDifference = 0;
 		scrollbutton.dragging = false;
 	}
 }
