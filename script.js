@@ -15,7 +15,6 @@ function processFile(file) {
 }
 
 let app = null;
-let acrossContainer = null;
 let across = null;
 let down = null;
 let squareSize = 34;
@@ -199,7 +198,6 @@ function onScrollbarClick(scrollbar) {
 }
 
 function onScrollClick(scrollbutton, event) {
-	console.log(acrossContainer.getLocalBounds());
 	scrollbutton.tint = 0x616161;
 	let scrollbuttonRect = scrollbutton.getLocalBounds();
 	scrollbutton.heightDifference = scrollbutton.y - event.data.global.y;
