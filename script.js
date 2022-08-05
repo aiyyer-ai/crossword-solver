@@ -215,6 +215,7 @@ function onScrollbarClick(scrollbutton, event) {
 function onScrollClick(scrollbutton, event) {
 	scrollbutton.tint = 0x616161;
 	scrollbutton.heightDifference = scrollbutton.y - event.data.global.y;
+	across.view.setPointerCapture(event.pointerId);
 	scrollbutton.dragging = true;
 }
 
@@ -232,6 +233,7 @@ function offScrollClick(scrollbutton, event) {
 	if(scrollbutton.dragging) {
 		scrollbutton.tint = 0xffffff;
 		scrollbutton.heightDifference = 0;
+		across.view.releasePointerCapture(event.pointerId);
 		scrollbutton.dragging = false;
 	}
 }
