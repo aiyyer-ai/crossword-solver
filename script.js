@@ -29,8 +29,8 @@ function createBoard(info) {
 	let acrossClueHeight = info.clues.Across.length;
 	let downClueHeight = info.clues.Down.length;
 	app = new PIXI.Application({ width: (boardWidth * 36) + 2, height: (boardHeight * 36) + 2, resolution: 4, antialias: true });
-	across = new PIXI.Application({ width: 250, height: (boardHeight * 36) + 2, resolution: 4, antialias: true });
-	down = new PIXI.Application({ width: 250, height: (boardHeight * 36) + 2, resolution: 4, antialias: true });
+	across = new PIXI.Application({ width: 270, height: (boardHeight * 36) + 2, resolution: 4, antialias: true });
+	down = new PIXI.Application({ width: 270, height: (boardHeight * 36) + 2, resolution: 4, antialias: true });
 	let render = app.renderer;
 	render.backgroundColor = 0x000000;
     render.view.style.position = "absolute";
@@ -115,6 +115,7 @@ function createBoard(info) {
 	let distanceDown = 0;
 	let acrossContainer = new PIXI.Container();
 	across.stage.addChild(acrossContainer);
+	//adds clues to the mix
 	for (const [index, acrossClue] of Object.entries(info.clues.Across)) {
 		const clueNum = new PIXI.Text(` ${String(acrossClue[0])}  `,{fontFamily: squareFont, fontSize: 18, fill : 0x333333, align : 'left',  fontWeight : 'bold' });
 		let clueNumRect = clueNum.getLocalBounds();
@@ -143,18 +144,42 @@ function createBoard(info) {
 		clueInfo.addChild(clueNum);
 		clueInfo.addChild(clue);
 	}
- //    let clueContainer = new PIXI.Container();
- //    app.stage.addChild(clueContainer);
- //    clueContainer.x = (boardWidth * 36) + 2;
- //    clueContainer.y = 2;
- //    clueContainer.height = (boardHeight * 36) + 2;
-	// clueContainer.width = 500;
-	// let clueArea = new PIXI.Graphics();
-	// clueArea.beginFill(0xffffff);
-	// clueArea.drawRect(0, 0, 500, (boardHeight * 36) - 2);
-	// clueArea.beginFill(0x333333);
-	// clueArea.drawRect(249, 0, 2, (boardHeight * 36) - 2);
-	// clueContainer.addChild(clueArea);
+	//lets create a scrollbar here
+	let scrollbarContainer = new PIXI.Container();
+	let scrollbarWidth = 20;
+	across.stage.addChild(acrossContainer);
+	scrollbarContainer.x = 250;
+	scrollbarContainer.width = scrollbarWidth;
+	scrollbarContainer.height = (boardHeight * 36) + 2;
+	let scrollbar = new PIXI.Graphics();
+	scrollbar.beginFill(0xe5e5e5);
+	scrollbar.drawRect(0, 0, 20, (boardHeight * 36) + 2);
+	scrollbar.interactive = true;
+	scrollbar.on('click', (event) => onScrollbarClick(scrollbar));
+	let scrollbutton = new PIXI.Graphics();
+	let scrollbuttonSize = (((boardHeight * 36) + 2) / distanceDown) * (boardHeight * 36) + 2;
+	scrollbutton.beginFill(0x7e7e7e);
+	scrollbar.drawRect(0, 0, 20, scrollbuttonSize;
+	scrollbar.on('pointerover', (event) => onScrollOver(scrollbar));
+	scrollbar.on('pointerout', (event) => offScrollOver(scrollbar));
+	//I'll need to add more events
+
+
+
+
+	//end
+}
+
+function onScrollbarClick(scrollbar) {
+
+}
+
+function onScrollOver(scrollbar) {
+	scrollbar.tint = 0x555555;
+}
+
+function offScrollOver(scrollbar) {
+	scrollbar.tint = 0xffffff;
 }
 
 function findWordStart(position) {
