@@ -121,7 +121,7 @@ function createBoard(info) {
 	distanceDownAcross = 0;
 	let acrossContainer = new PIXI.Container();
 	acrossClueContainer = new PIXI.Container();
-	const acrossTopLayer = new PIXI.display.Layer();
+	const acrossTopLayer = new PIXI.DisplayObject.Layer();
 	across.stage.addChild(acrossTopLayer);
 	across.stage.addChild(acrossContainer);
 	acrossContainer.addChild(acrossClueContainer);
