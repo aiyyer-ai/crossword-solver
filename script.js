@@ -213,7 +213,6 @@ function onScrollbarClick(scrollbutton, event) {
 }
 
 function onScrollClick(scrollbutton, event) {
-	console.log(event);
 	scrollbutton.tint = 0x616161;
 	scrollbutton.heightDifference = scrollbutton.y - event.data.global.y;
 	across.view.setPointerCapture(event.data.originalEvent.pointerId);
@@ -231,6 +230,7 @@ function onScrollDrag(scrollbutton, event) {
 }
 
 function offScrollClick(scrollbutton, event) {
+	console.log(event);
 	if(scrollbutton.dragging) {
 		scrollbutton.tint = 0xffffff;
 		scrollbutton.heightDifference = 0;
