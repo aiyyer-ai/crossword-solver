@@ -43,14 +43,14 @@ function createBoard(info) {
 		acrossRender.backgroundColor = 0x00ff00;
 	    acrossRender.view.style.position = "absolute";
 	    acrossRender.view.style.display = "block";
-	    acrossRender.view.style.width = `250px`;
+	    acrossRender.view.style.width = `270px`;
 	    acrossRender.autoResize = true;
 	    across.render();
 			let downRender = down.renderer;
 			downRender.backgroundColor = 0x0000ff;
 		    downRender.view.style.position = "absolute";
 		    downRender.view.style.display = "block";
-		    downRender.view.style.width = `250px`;
+		    downRender.view.style.width = `270px`;
 		    downRender.autoResize = true;
 		    down.render();
 
