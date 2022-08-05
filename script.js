@@ -47,6 +47,7 @@ function createBoard(info) {
 	    acrossRender.view.style.display = "block";
 	    acrossRender.view.style.width = `${clueWidth}px`;
 	    acrossRender.autoResize = true;
+	    acrossRender.moveWhenInside = true;
 	    across.render();
 			let downRender = down.renderer;
 			downRender.backgroundColor = 0x00ffff;
@@ -54,6 +55,7 @@ function createBoard(info) {
 		    downRender.view.style.display = "block";
 		    downRender.view.style.width = `${clueWidth}px`;
 		    downRender.autoResize = true;
+		    downRender.moveWhenInside = true;
 		    down.render();
 
     const inputField = document.getElementById("row").querySelectorAll(".puzzle")[0].querySelectorAll(".input")[0];
