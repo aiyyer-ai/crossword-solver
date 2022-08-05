@@ -301,10 +301,10 @@ function findNextAvailableSpot(position, dir) {
 		  default:
 		  	spotCheck = [spotCheck[0], spotCheck[1]];
 		}
-		if(spotCheck[0] <= 0 || spotCheck[0] >= boardWidth) {
+		if(spotCheck[0] < 0 || spotCheck[0] > boardWidth) {
 			spotCheck = [parseInt(position[0]), parseInt(position[1])];
 		}
-		if(spotCheck[1] <= 0 || spotCheck[1] >= boardHeight) {
+		if(spotCheck[1] < 0 || spotCheck[1] > boardHeight) {
 			spotCheck = [parseInt(position[0]), parseInt(position[1])];
 		}
 		newSpot = app.stage.getChildByName(`${spotCheck[0]},${spotCheck[1]}`);
