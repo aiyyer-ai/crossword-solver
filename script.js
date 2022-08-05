@@ -47,7 +47,6 @@ function createBoard(info) {
 	    acrossRender.view.style.display = "block";
 	    acrossRender.view.style.width = `${clueWidth}px`;
 	    acrossRender.autoResize = true;
-	    acrossRender.moveWhenInside = true;
 	    across.render();
 			let downRender = down.renderer;
 			downRender.backgroundColor = 0x00ffff;
@@ -55,7 +54,6 @@ function createBoard(info) {
 		    downRender.view.style.display = "block";
 		    downRender.view.style.width = `${clueWidth}px`;
 		    downRender.autoResize = true;
-		    downRender.moveWhenInside = true;
 		    down.render();
 
     const inputField = document.getElementById("row").querySelectorAll(".puzzle")[0].querySelectorAll(".input")[0];
@@ -194,6 +192,8 @@ function createBoard(info) {
 	//end
 }
 
+//scrollbar Functions
+
 function onScrollbarClick(scrollbar) {
 	//temp tint
 	scrollbar.tint = 0x000000;
@@ -211,8 +211,8 @@ function onScrollClick(scrollbutton, event) {
 
 function onScrollDrag(scrollbutton, event) {
 	if(scrollbutton.dragging) {
-		if(event.data.global.y || event.data.global.x) {
-
+		if(Math.abs(scrollbutton.x - event.data.global.x) > 400) {
+			offScrollClick(scrollbutton, event);
 		}
 		let scrollbuttonRect = scrollbutton.getLocalBounds();
 		if((event.data.global.y + scrollbutton.heightDifference) > 0 && (event.data.global.y + scrollbutton.heightDifference + scrollbuttonRect.height) < ((boardHeight * 36) + 2)) {
@@ -244,6 +244,8 @@ function offScrollOver(scrollbutton) {
 function adjustScrollButtonPosition() {
 
 }
+
+//Crossword Functions
 
 function findWordStart(position) {
 	let newSpot = null;
