@@ -112,21 +112,22 @@ function createBoard(info) {
 		let clueRect = clue.getLocalBounds();
 		console.log(clueRect);
 		let clueContainer = new PIXI.Container();
+		let clueSpotHeight = clueRect.height + 15;
 		across.stage.addChild(clueContainer);
 		clueContainer.y = distanceDown;
-		distanceDown += clueRect.height + 20;
-		clueContainer.height = clueRect.height + 20;
+		distanceDown += clueSpotHeight;
+		clueContainer.height = clueSpotHeight;
 		clueContainer.width = 250;
 		clueContainer.name = `${acrossClue[0]}`;
 		let clueInfo = new PIXI.Graphics();
 		clueInfo.beginFill(0xffffff);
-		clueInfo.drawRect(0, 0, 250, clueRect.height + 20);
+		clueInfo.drawRect(0, 0, 250, clueSpotHeight);
 		clueInfo.interactive = true;
 		clueInfo.name = `${acrossClue[0]}`;
 		clueInfo.on('click', (event) => onClueClick(clueInfo));
 		clueContainer.addChild(clueInfo);
 		clue.anchor.set(0, 0.5);
-		clue.y = (clueRect.height + 20) / 2;
+		clue.y = (clueSpotHeight) / 2;
 		clue.name = `${acrossClue[0]}`;
 		clueInfo.addChild(clue);
 	}
