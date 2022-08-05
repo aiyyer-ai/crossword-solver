@@ -138,7 +138,7 @@ function createBoard(info) {
 	for (const [index, acrossClue] of Object.entries(info.clues.Across)) {
 		const clueNum = new PIXI.Text(` ${String(acrossClue[0])}  `,{fontFamily: squareFont, fontSize: 18, fill : 0x333333, align : 'left',  fontWeight : 'bold' });
 		let clueNumRect = clueNum.getLocalBounds();
-		const clue = new PIXI.Text(`${String(acrossClue[1])}`,{fontFamily: squareFont, fontSize: 18, fill : 0x333333, align : 'left', wordWrap : true, wordWrapWidth: (250 - clueNumRect.width)});
+		const clue = new PIXI.Text(`${String(acrossClue[1])}`,{fontFamily: squareFont, fontSize: 18, fill : 0x333333, align : 'left', wordWrap : true, wordWrapWidth: (245 - clueNumRect.width)});
 		let clueRect = clue.getLocalBounds();
 		let clueContainer = new PIXI.Container();
 		let clueSpotHeight = clueRect.height + 16;
@@ -185,7 +185,6 @@ function createBoard(info) {
 	scrollbuttonAcross.on('pointerdown', (event) => onScrollClick(scrollbuttonAcross, event));
 	scrollbuttonAcross.on('pointermove', (event) => onScrollDrag(scrollbuttonAcross, event));
 	document.body.onpointerup = (event) => offScrollClick(scrollbuttonAcross, event);
-	//document.addEventListener('pointerleave', (event) => {offScrollClick(scrollbuttonAcross, event);})
 	scrollbuttonAcross.on('pointerout', (event) => offScrollOver(scrollbuttonAcross));
 	scrollbarContainer.addChild(scrollbuttonAcross);
 	//I'll need to add more events
@@ -282,23 +281,36 @@ function findWordStart(position) {
 	return newSpot.children[0];
 }
 
-// function findWordEnd(position) {
-// 	let newSpot = null;
-// 	let spotCheck = [parseInt(position[0]) - 1, parseInt(position[1])];
-// 	while (!newSpot) {
-// 		newSpot = app.stage.getChildByName(`${spotCheck[0]},${spotCheck[1]}`);
-// 		if(spotCheck[1] < 0 && spotCheck[0] < 0) {
-// 			currentHighlight.across = !currentHighlight.across
-// 			spotCheck = [boardWidth, boardHeight];
-// 		} else if(!newSpot && spotCheck[0] < 0) {
-// 			spotCheck[0] = boardWidth;
-// 			spotCheck[1]--;
-// 		} else if(!newSpot) {
-// 			spotCheck[0]--;
-// 		}
-// 	}	
-// 	return newSpot.children[0];
-// }
+function findNextAvailableSpot(position, dir) {
+	let newSpot = null;
+	let spotCheck = [parseInt(position[0]), parseInt(position[1])];
+	while (!newSpot) {
+		switch(dir) {
+		  case `up`:
+		    spotCheck = [spotCheck[0], spotCheck[1] - 1];
+		    break;
+		  case `down`:
+		    spotCheck = [spotCheck[0], spotCheck[1] + 1];
+		    break;
+		  case `left`:
+		    spotCheck = [spotCheck[0] - 1, spotCheck[1]];
+		    break;
+		  case `right`:
+		    spotCheck = [spotCheck[0] + 1, spotCheck[1]];
+		    break;
+		  default:
+		  	spotCheck = [spotCheck[0], spotCheck[1]];
+		}
+		if(spotCheck[0] <= 0 || spotCheck[0] >= boardWidth) {
+			spotCheck = (spotCheck[0] <= 0) ? [0, spotCheck[1]] : [boardWidth, spotCheck[1]];
+		}
+		if(spotCheck[1] <= 0 || spotCheck[1] >= boardHeight) {
+			spotCheck = (spotCheck[1] <= 0) ? [spotCheck[0], 0] : [spotCheck[0], boardHeight];
+		}
+		newSpot = app.stage.getChildByName(`${spotCheck[0]},${spotCheck[1]}`);
+	}	
+	return newSpot.children[0];
+}
 
 function keyPress(key) {
 	if(currentHighlight.object) {
@@ -316,6 +328,9 @@ function keyPress(key) {
 			if(newSpot) {
 				currentHighlight.across = true;
 				return setHighlight(newSpot.children[0]);
+			} else {
+				let newSpot = findNextAvailableSpot(clickedPos, `left`);
+				return setHighlight(newSpot);
 			}
 		}
 		if(key == "ArrowRight") {
@@ -326,6 +341,9 @@ function keyPress(key) {
 			if(newSpot) {
 				currentHighlight.across = true;
 				return setHighlight(newSpot.children[0]);
+			} else {
+				let newSpot = findNextAvailableSpot(clickedPos, `right`);
+				return setHighlight(newSpot);
 			}
 		}
 		if(key == "ArrowDown") {
@@ -336,6 +354,9 @@ function keyPress(key) {
 			if(newSpot) {
 				currentHighlight.across = false;
 				return setHighlight(newSpot.children[0]);
+			} else {
+				let newSpot = findNextAvailableSpot(clickedPos, `down`);
+				return setHighlight(newSpot);
 			}
 		}
 		if(key == "ArrowUp") {
@@ -346,6 +367,9 @@ function keyPress(key) {
 			if(newSpot) {
 				currentHighlight.across = false;
 				return setHighlight(newSpot.children[0]);
+			} else {
+				let newSpot = findNextAvailableSpot(clickedPos, `up`);
+				return setHighlight(newSpot);
 			}
 		}
 		if(key == "Delete" || key == "Backspace") {
@@ -355,9 +379,6 @@ function keyPress(key) {
 			let newSpot = app.stage.getChildByName((currentHighlight.across ? `${parseInt(clickedPos[0]) - 1},${clickedPos[1]}` : `${clickedPos[0]},${parseInt(clickedPos[1]) - 1}`));
 			if(newSpot) {
 				return setHighlight(newSpot.children[0]);
-			} else {
-				// newSpot = findWordEnd(clickedPos);
-				// setHighlight(newSpot);
 			}
 		}
 		if (key.length == 1) {
