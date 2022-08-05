@@ -159,7 +159,7 @@ function createBoard(info) {
 	let scrollbutton = new PIXI.Graphics();
 	let scrollbuttonSize = (((boardHeight * 36) + 2) / distanceDown) * (boardHeight * 36) + 2;
 	scrollbutton.beginFill(0x7e7e7e);
-	scrollbar.drawRect(0, 0, 20, scrollbuttonSize;
+	scrollbar.drawRect(0, 0, 20, scrollbuttonSize);
 	scrollbar.on('pointerover', (event) => onScrollOver(scrollbar));
 	scrollbar.on('pointerout', (event) => offScrollOver(scrollbar));
 	//I'll need to add more events
