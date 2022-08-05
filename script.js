@@ -71,6 +71,7 @@ function createBoard(info) {
 
 	for (let row in info.puzzle) {
 		let squarePosition = 0;
+		let clueNumber = 1;
 		for (const [index, square] of Object.entries(info.puzzle[row])) {
 			if (square == "#") {
 				squarePosition++;
@@ -85,6 +86,7 @@ function createBoard(info) {
 			squareContainer.height = squareSize;
 			squareContainer.width = squareSize;
 			squareContainer.name = `${squarePosition},${row}`;
+			squareContainer.clue = clueNumber;
 			let crosswordSquare = new PIXI.Graphics();
 			crosswordSquare.beginFill(0xffffff);
 			crosswordSquare.drawRect(0, 0, squareSize, squareSize);
@@ -94,23 +96,27 @@ function createBoard(info) {
 			crosswordSquare.squareX = squareX;
 			crosswordSquare.squareY = squareY;
 			crosswordSquare.name = `${squarePosition},${row}`;
+			crosswordSquare.clue = clueNumber;
 			crosswordSquare.on('click', (event) => onSquareClick(crosswordSquare));
 			squarePosition++;
 			squareContainer.addChild(crosswordSquare);
 			if(square != 0 && typeof square == 'number') {
 				const text = new PIXI.Text(String(square),{fontFamily: squareFont, fontSize: 12, fill : 0x000000, align : 'left'});
+				clueNumber = square;
+				squareContainer.clue = clueNumber;
+				crosswordSquare.clue = clueNumber;
 				text.x = 1;
 				text.y = -1;
 				text.name = `numberedSquare`;
 				crosswordSquare.addChild(text);
 			}
+			console.log(squareContainer);
 		}
 	}
 	let distanceDown = 0;
 	for (const [index, acrossClue] of Object.entries(info.clues.Across)) {
 		const clue = new PIXI.Text(`${String(acrossClue[0])}: ${String(acrossClue[1])}`,{fontFamily: squareFont, fontSize: 18, fill : 0x333333, align : 'left', wordWrap : true, wordWrapWidth: 250});
 		let clueRect = clue.getLocalBounds();
-		console.log(clueRect);
 		let clueContainer = new PIXI.Container();
 		let clueSpotHeight = clueRect.height + 15;
 		across.stage.addChild(clueContainer);
