@@ -121,13 +121,13 @@ function createBoard(info) {
 	across.stage.addChild(acrossContainer);
 	acrossContainer.addChild(acrossClueContainer);
 	let acrossText = new PIXI.Text(` ACROSS `,{fontFamily: squareFont, fontSize: 18, fill : 0x333333, align : 'left',  fontWeight : 'bold' });
+	let acrossTextRect = acrossText.getLocalBounds();
+	let clueStartHeight = acrossTextRect.height;
 	let acrossLine = new PIXI.Graphics();
 	acrossLine.beginFill(0x333333);
 	acrossLine.drawRect(0, 0, 250, 3);
 	acrossContainer.addChild(acrossLine);
 	acrossLine.y = clueStartHeight;
-	let acrossTextRect = acrossText.getLocalBounds();
-	let clueStartHeight = acrossTextRect.height;
 	acrossContainer.addChild(acrossText);
 	acrossClueContainer.y = clueStartHeight + 3;
 
