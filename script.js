@@ -124,12 +124,12 @@ function createBoard(info) {
 	let acrossTextRect = acrossText.getLocalBounds();
 	let clueStartHeight = acrossTextRect.height;
 	let acrossLine = new PIXI.Graphics();
-	acrossLine.beginFill(0x333333);
-	acrossLine.drawRect(0, 0, 250, 3);
+	acrossLine.beginFill(0xe5e5e5);
+	acrossLine.drawRect(0, 0, 250, 1);
 	acrossContainer.addChild(acrossLine);
-	acrossLine.y = clueStartHeight;
+	acrossLine.y = clueStartHeight - 2;
 	acrossContainer.addChild(acrossText);
-	acrossClueContainer.y = clueStartHeight + 3;
+	acrossClueContainer.y = clueStartHeight;
 
 	//adds clues to the mix
 	for (const [index, acrossClue] of Object.entries(info.clues.Across)) {
