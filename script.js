@@ -201,7 +201,7 @@ function onScrollClick(scrollbutton, event) {
 	scrollbutton.tint = 0x616161;
 	let scrollbuttonRect = scrollbutton.getLocalBounds();
 	scrollbutton.heightDifference = scrollbutton.y - event.data.global.y;
-	if((event.data.global.y + scrollbutton.heightDifference) > 0 || (event.data.global.y + scrollbutton.heightDifference + scrollbuttonRect.height) < ((boardHeight * 36) + 2)) {
+	if((event.data.global.y + scrollbutton.heightDifference) > 0 && (event.data.global.y + scrollbutton.heightDifference + scrollbuttonRect.height) < ((boardHeight * 36) + 2)) {
 		scrollbutton.y = event.data.global.y + scrollbutton.heightDifference;
 	}
 	scrollbutton.dragging = true;
@@ -209,9 +209,11 @@ function onScrollClick(scrollbutton, event) {
 
 function onScrollDrag(scrollbutton, event) {
 	if(scrollbutton.dragging) {
-		if(event.data.global.y || event.data.global.x) {}
+		if(event.data.global.y || event.data.global.x) {
+
+		}
 		let scrollbuttonRect = scrollbutton.getLocalBounds();
-		if((event.data.global.y + scrollbutton.heightDifference) > 0 || (event.data.global.y + scrollbutton.heightDifference + scrollbuttonRect.height) < ((boardHeight * 36) + 2)) {
+		if((event.data.global.y + scrollbutton.heightDifference) > 0 && (event.data.global.y + scrollbutton.heightDifference + scrollbuttonRect.height) < ((boardHeight * 36) + 2)) {
 			scrollbutton.y = event.data.global.y + scrollbutton.heightDifference;
 		}
 	}
@@ -221,8 +223,7 @@ function offScrollClick(scrollbutton, event) {
 	if(scrollbutton.dragging) {
 		scrollbutton.tint = 0xffffff;
 		let scrollbuttonRect = scrollbutton.getLocalBounds();
-		console.log(event.data.global.y + scrollbutton.heightDifference);
-		if((event.data.global.y + scrollbutton.heightDifference) > 0 || (event.data.global.y + scrollbutton.heightDifference + scrollbuttonRect.height) < ((boardHeight * 36) + 2)) {
+		if((event.data.global.y + scrollbutton.heightDifference) > 0 && (event.data.global.y + scrollbutton.heightDifference + scrollbuttonRect.height) < ((boardHeight * 36) + 2)) {
 			scrollbutton.y = event.data.global.y + scrollbutton.heightDifference;
 		}
 		scrollbutton.heightDifference = 0;
