@@ -20,6 +20,7 @@ let down = null;
 let distanceDownAcross = null;
 let acrossClueContainer = null;
 let scrollbuttonAcross = null;
+let clueStartHeight = 0;
 let squareSize = 34;
 let squareFont = 'Arial';
 let boardWidth;
@@ -125,7 +126,7 @@ function createBoard(info) {
 	acrossContainer.addChild(acrossClueContainer);
 	let acrossText = new PIXI.Text(` ACROSS `,{fontFamily: squareFont, fontSize: 18, fill : 0x333333, align : 'left',  fontWeight : 'bold' });
 	let acrossTextRect = acrossText.getLocalBounds();
-	let clueStartHeight = acrossTextRect.height;
+	clueStartHeight = acrossTextRect.height;
 	let acrossBacking = new PIXI.Graphics();
 	acrossBacking.beginFill(0xffffff);
 	acrossBacking.drawRect(0, 0, 250, acrossTextRect.height);
@@ -255,7 +256,7 @@ function offScrollOver(scrollbutton) {
 
 function adjustCluePosition(scrollbutton, clueContainer) {
 	let scrolledToY = scrollbutton.y/((boardHeight * 36) + 2) * distanceDownAcross;
-	clueContainer.y = -scrolledToY;
+	clueContainer.y = -scrolledToY + clueStartHeight;
 }
 
 //Crossword Functions
