@@ -125,7 +125,7 @@ function createBoard(info) {
 	let clueStartHeight = acrossTextRect.height;
 	let acrossLine = new PIXI.Graphics();
 	acrossLine.beginFill(0xe5e5e5);
-	acrossLine.drawRect(0, 0, 250, 1);
+	acrossLine.drawRect(0, 0, 245, 1);
 	acrossContainer.addChild(acrossLine);
 	acrossLine.y = clueStartHeight;
 	acrossContainer.addChild(acrossText);
@@ -170,13 +170,14 @@ function createBoard(info) {
 	let scrollbar = new PIXI.Graphics();
 	scrollbar.beginFill(0xe5e5e5);
 	scrollbar.drawRect(0, 0, scrollbarWidth, (boardHeight * 36) + 2);
-	//scrollbar.interactive = true;
+	scrollbar.interactive = true;
 	scrollbar.on('click', (event) => onScrollbarClick(scrollbar));
 	scrollbarContainer.addChild(scrollbar);
 	let scrollbutton = new PIXI.Graphics();
 	let scrollbuttonSize = (((boardHeight * 36) + 2) / distanceDown) * (boardHeight * 36) + 2;
 	scrollbutton.beginFill(0x7e7e7e);
 	scrollbutton.drawRect(0, 0, scrollbarWidth, scrollbuttonSize);
+	scrollbutton.interactive = true;
 	scrollbutton.on('click', (event) => onScrollOver(scrollbutton));
 	scrollbutton.on('pointerout', (event) => offScrollOver(scrollbutton));
 	scrollbarContainer.addChild(scrollbutton);
