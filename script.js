@@ -182,7 +182,10 @@ function createBoard(info) {
 	scrollbutton.on('mousedown', (event) => onScrollClick(scrollbutton, event));
 	scrollbutton.on('mousemove', (event) => onScrollDrag(scrollbutton, event));
 	document.body.onmouseup = () => offScrollClick(scrollbutton, event);
-	document.body.mouseleave = () => offScrollClick(scrollbutton, event);
+	document.body.mouseleave = () => {
+		console.log("outta here");
+		offScrollClick(scrollbutton, event);
+	}
 	scrollbutton.on('pointerout', (event) => offScrollOver(scrollbutton));
 	scrollbarContainer.addChild(scrollbutton);
 	//I'll need to add more events
@@ -212,7 +215,6 @@ function onScrollClick(scrollbutton, event) {
 
 function onScrollDrag(scrollbutton, event) {
 	if(scrollbutton.dragging) {
-		console.log(event);
 		let scrollbuttonRect = scrollbutton.getLocalBounds();
 		if((event.data.global.y + scrollbutton.heightDifference) > 0 && (event.data.global.y + scrollbutton.heightDifference + scrollbuttonRect.height) < ((boardHeight * 36) + 2)) {
 			scrollbutton.y = event.data.global.y + scrollbutton.heightDifference;
