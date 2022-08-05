@@ -181,7 +181,7 @@ function createBoard(info) {
 	scrollbutton.on('pointerover', (event) => onScrollOver(scrollbutton));
 	scrollbutton.on('mousedown', (event) => onScrollClick(scrollbutton, event));
 	scrollbutton.on('mousemove', (event) => onScrollDrag(scrollbutton, event));
-	document.body.on('mouseup', (event) => offScrollClick(scrollbutton, event));
+	document.body.onmouseup = (event) => offScrollClick(scrollbutton, event);
 	scrollbutton.on('pointerout', (event) => offScrollOver(scrollbutton));
 	scrollbarContainer.addChild(scrollbutton);
 	//I'll need to add more events
