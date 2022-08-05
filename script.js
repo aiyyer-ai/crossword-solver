@@ -17,6 +17,7 @@ function processFile(file) {
 let app = null;
 let across = null;
 let down = null;
+let acrossClueContainer = null;
 let scrollbuttonAcross = null;
 let squareSize = 34;
 let squareFont = 'Arial';
@@ -118,7 +119,7 @@ function createBoard(info) {
 
 	let distanceDown = 0;
 	let acrossContainer = new PIXI.Container();
-	let acrossClueContainer = new PIXI.Container();
+	acrossClueContainer = new PIXI.Container();
 	across.stage.addChild(acrossContainer);
 	acrossContainer.addChild(acrossClueContainer);
 	let acrossText = new PIXI.Text(` ACROSS `,{fontFamily: squareFont, fontSize: 18, fill : 0x333333, align : 'left',  fontWeight : 'bold' });
@@ -200,10 +201,13 @@ function onScrollbarClick(scrollbutton, event) {
 	let scrollbuttonRect = scrollbutton.getLocalBounds();
 	if((event.data.global.y + scrollbuttonRect.height/2) > ((boardHeight * 36) + 2)) {
 		scrollbutton.y = ((boardHeight * 36) + 2) - scrollbuttonRect.height;
+		adjustCluePosition(scrollbutton, acrossClueContainer);
 	} else if((event.data.global.y - scrollbuttonRect.height/2) < 0) {
 		scrollbutton.y = 0;
+		adjustCluePosition(scrollbutton, acrossClueContainer);
 	} else {
 		scrollbutton.y = event.data.global.y - (scrollbuttonRect.height/2);
+		adjustCluePosition(scrollbutton, acrossClueContainer);
 	}
 }
 
@@ -213,6 +217,7 @@ function onScrollClick(scrollbutton, event) {
 	scrollbutton.heightDifference = scrollbutton.y - event.data.global.y;
 	if((event.data.global.y + scrollbutton.heightDifference) > 0 && (event.data.global.y + scrollbutton.heightDifference + scrollbuttonRect.height) < ((boardHeight * 36) + 2)) {
 		scrollbutton.y = event.data.global.y + scrollbutton.heightDifference;
+		adjustCluePosition(scrollbutton, acrossClueContainer);
 	}
 	scrollbutton.dragging = true;
 }
@@ -222,6 +227,7 @@ function onScrollDrag(scrollbutton, event) {
 		let scrollbuttonRect = scrollbutton.getLocalBounds();
 		if((event.data.global.y + scrollbutton.heightDifference) > 0 && (event.data.global.y + scrollbutton.heightDifference + scrollbuttonRect.height) < ((boardHeight * 36) + 2)) {
 			scrollbutton.y = event.data.global.y + scrollbutton.heightDifference;
+			adjustCluePosition(scrollbutton, acrossClueContainer);
 		}
 	}
 }
@@ -232,6 +238,7 @@ function offScrollClick(scrollbutton, event) {
 		let scrollbuttonRect = scrollbutton.getLocalBounds();
 		if((event.clientY + scrollbutton.heightDifference) > 0 && (event.clientY + scrollbutton.heightDifference + scrollbuttonRect.height) < ((boardHeight * 36) + 2)) {
 			scrollbutton.y = event.clientY + scrollbutton.heightDifference;
+			adjustCluePosition(scrollbutton, acrossClueContainer);
 		}
 		scrollbutton.heightDifference = 0;
 		scrollbutton.dragging = false;
@@ -246,8 +253,9 @@ function offScrollOver(scrollbutton) {
 	scrollbutton.tint = 0xffffff;
 }
 
-function adjustScrollButtonPosition() {
-
+function adjustCluePosition(scrollbutton, clueContainer) {
+	let scrolledToY = scrollbutton.y/((boardHeight * 36) + 2) * distanceDown;
+	clueContainer.y = scrolledToY;
 }
 
 //Crossword Functions
