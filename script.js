@@ -198,8 +198,10 @@ function createBoard(info) {
 
 function onScrollbarClick(scrollbutton, event) {
 	let scrollbuttonRect = scrollbutton.getLocalBounds();
-	if((event.data.global.y + scrollbuttonRect.height) > ((boardHeight * 36) + 2)) {
+	if((event.data.global.y + scrollbuttonRect.height/2) > ((boardHeight * 36) + 2)) {
 		scrollbutton.y = ((boardHeight * 36) + 2) - scrollbuttonRect.height;
+	} else if((event.data.global.y - scrollbuttonRect.height/2) < 0) {
+		scrollbutton.y = 0;
 	} else {
 		scrollbutton.y = event.data.global.y - (scrollbuttonRect.height/2);
 	}
