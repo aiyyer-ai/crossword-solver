@@ -112,6 +112,7 @@ function createBoard(info) {
 	for (const [index, acrossClue] of Object.entries(info.clues.Across)) {
 		const clue = new PIXI.Text(`${String(acrossClue[0])}: ${String(acrossClue[1])}`,{fontFamily: squareFont, fontSize: 18, fill : 0x333333, align : 'left', wordWrap : true, wordWrapWidth: 250});
 		let clueRect = clue.getLocalBounds();
+		console.log(clueRect);
 		let clueContainer = new PIXI.Container();
 		across.stage.addChild(clueContainer);
 		clueContainer.y = distanceDown;
