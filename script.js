@@ -29,8 +29,8 @@ function createBoard(info) {
 	let acrossClueHeight = info.clues.Across.length;
 	let downClueHeight = info.clues.Down.length;
 	app = new PIXI.Application({ width: (boardWidth * 36) + 2, height: (boardHeight * 36) + 2, resolution: 4, antialias: true });
-	across = new PIXI.Application({ width: 250, height: (acrossClueHeight * 12), resolution: 4, antialias: true });
-	down = new PIXI.Application({ width: 250, height: (downClueHeight * 12), resolution: 4, antialias: true });
+	across = new PIXI.Application({ width: 250, height: (acrossClueHeight * 36), resolution: 4, antialias: true });
+	down = new PIXI.Application({ width: 250, height: (downClueHeight * 36), resolution: 4, antialias: true });
 	let render = app.renderer;
 	render.backgroundColor = 0x000000;
     render.view.style.position = "absolute";
@@ -108,7 +108,7 @@ function createBoard(info) {
 	}
 	let distanceDown = 0;
 	for (const [index, acrossClue] of Object.entries(info.clues.Across)) {
-		const clue = new PIXI.Text(`<b>${String(acrossClue[0])}</b>  ${String(acrossClue[1])}`,{fontFamily: squareFont, fontSize: 18, fill : 0x333333, align : 'left', wordWrap : true, wordWrapWidth: 250});
+		const clue = new PIXI.Text(`${String(acrossClue[0])}: ${String(acrossClue[1])}`,{fontFamily: squareFont, fontSize: 18, fill : 0x333333, align : 'left', wordWrap : true, wordWrapWidth: 250});
 		let clueRect = clue.getLocalBounds();
 		console.log(clueRect);
 		let clueContainer = new PIXI.Container();
