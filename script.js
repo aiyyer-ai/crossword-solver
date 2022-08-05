@@ -199,22 +199,29 @@ function onScrollbarClick(scrollbar) {
 
 function onScrollClick(scrollbutton, event) {
 	scrollbutton.tint = 0x616161;
+	let scrollbuttonRect = scrollbutton.getLocalBounds();
 	scrollbutton.heightDifference = scrollbutton.y - event.data.global.y;
-	scrollbutton.y = event.data.global.y + scrollbutton.heightDifference;
+	if((event.data.global.y + scrollbutton.heightDifference) > 0 || (event.data.global.y + scrollbutton.heightDifference + scrollbuttonRect.height) < ((boardHeight * 36) + 2)) {
+		scrollbutton.y = event.data.global.y + scrollbutton.heightDifference;
+	}
 	scrollbutton.dragging = true;
 }
 
 function onScrollDrag(scrollbutton, event) {
-	console.log(event);
 	if(scrollbutton.dragging) {
-		scrollbutton.y = event.data.global.y + scrollbutton.heightDifference;
+		console.log(event);
+		if((event.data.global.y + scrollbutton.heightDifference) > 0 || (event.data.global.y + scrollbutton.heightDifference + scrollbuttonRect.height) < ((boardHeight * 36) + 2)) {
+			scrollbutton.y = event.data.global.y + scrollbutton.heightDifference;
+		}
 	}
 }
 
 function offScrollClick(scrollbutton, event) {
 	if(scrollbutton.dragging) {
 		scrollbutton.tint = 0xffffff;
-		scrollbutton.y = event.data.global.y + scrollbutton.heightDifference;
+		if((event.data.global.y + scrollbutton.heightDifference) > 0 || (event.data.global.y + scrollbutton.heightDifference + scrollbuttonRect.height) < ((boardHeight * 36) + 2)) {
+			scrollbutton.y = event.data.global.y + scrollbutton.heightDifference;
+		}
 		scrollbutton.heightDifference = 0;
 		scrollbutton.dragging = false;
 	}
