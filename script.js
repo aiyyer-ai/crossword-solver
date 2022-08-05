@@ -204,15 +204,18 @@ function onScrollClick(scrollbutton, event) {
 }
 
 function onScrollDrag(scrollbutton, event) {
+	console.log(event);
 	if(scrollbutton.dragging) {
 		scrollbutton.y = event.data.global.y;
 	}
 }
 
 function offScrollClick(scrollbutton, event) {
-	scrollbutton.tint = 0xffffff;
-	scrollbutton.y = event.data.global.y;
-	scrollbutton.dragging = false;
+	if(scrollbutton.dragging) {
+		scrollbutton.tint = 0xffffff;
+		scrollbutton.y = event.data.global.y;
+		scrollbutton.dragging = false;
+	}
 }
 
 function onScrollOver(scrollbutton) {
