@@ -128,7 +128,8 @@ function createBoard(info) {
 		clue.name = `${acrossClue[0]}`;
 		clueInfo.addChild(clue);
 	}
-
+	acrossRender.view.style.height = `${distanceDown}px`;
+	across.render();
  //    let clueContainer = new PIXI.Container();
  //    app.stage.addChild(clueContainer);
  //    clueContainer.x = (boardWidth * 36) + 2;
