@@ -121,10 +121,15 @@ function createBoard(info) {
 	across.stage.addChild(acrossContainer);
 	acrossContainer.addChild(acrossClueContainer);
 	let acrossText = new PIXI.Text(` ACROSS `,{fontFamily: squareFont, fontSize: 18, fill : 0x333333, align : 'left',  fontWeight : 'bold' });
+	let acrossLine = new PIXI.Graphics();
+	acrossLine.beginFill(0x333333);
+	acrossLine.drawRect(0, 0, 250, 3);
+	acrossContainer.addChild(acrossLine);
+	acrossLine.y = clueStartHeight;
 	let acrossTextRect = acrossText.getLocalBounds();
 	let clueStartHeight = acrossTextRect.height;
 	acrossContainer.addChild(acrossText);
-	acrossClueContainer.y = clueStartHeight;
+	acrossClueContainer.y = clueStartHeight + 3;
 
 	//adds clues to the mix
 	for (const [index, acrossClue] of Object.entries(info.clues.Across)) {
@@ -172,7 +177,7 @@ function createBoard(info) {
 	let scrollbuttonSize = (((boardHeight * 36) + 2) / distanceDown) * (boardHeight * 36) + 2;
 	scrollbutton.beginFill(0x7e7e7e);
 	scrollbutton.drawRect(0, 0, scrollbarWidth, scrollbuttonSize);
-	scrollbutton.on('pointerover', (event) => onScrollOver(scrollbutton));
+	scrollbutton.on('click', (event) => onScrollOver(scrollbutton));
 	scrollbutton.on('pointerout', (event) => offScrollOver(scrollbutton));
 	scrollbarContainer.addChild(scrollbutton);
 	//I'll need to add more events
