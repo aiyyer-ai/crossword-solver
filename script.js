@@ -17,7 +17,7 @@ function processFile(file) {
 let app = null;
 let across = null;
 let down = null;
-let scrollbutton = null;
+let scrollbuttonAcross = null;
 let squareSize = 34;
 let squareFont = 'Arial';
 let boardWidth;
@@ -172,20 +172,20 @@ function createBoard(info) {
 	scrollbar.beginFill(0xe5e5e5);
 	scrollbar.drawRect(0, 0, scrollbarWidth, (boardHeight * 36) + 2);
 	scrollbar.interactive = true;
-	scrollbar.on('click', (event) => onScrollbarClick(scrollbutton, event));
+	scrollbar.on('click', (event) => onScrollbarClick(scrollbuttonAcross, event));
 	scrollbarContainer.addChild(scrollbar);
-	let scrollbutton = new PIXI.Graphics();
+	scrollbuttonAcross = new PIXI.Graphics();
 	let scrollbuttonSize = (((boardHeight * 36) + 2) / distanceDown) * (boardHeight * 36) + 2;
-	scrollbutton.beginFill(0x7e7e7e);
-	scrollbutton.drawRect(0, 0, scrollbarWidth, scrollbuttonSize);
-	scrollbutton.interactive = true;
-	scrollbutton.on('pointerover', (event) => onScrollOver(scrollbutton));
-	scrollbutton.on('mousedown', (event) => onScrollClick(scrollbutton, event));
-	scrollbutton.on('mousemove', (event) => onScrollDrag(scrollbutton, event));
-	document.body.onmouseup = () => offScrollClick(scrollbutton, event);
-	document.addEventListener('mouseleave', (event) => {offScrollClick(scrollbutton, event);})
-	scrollbutton.on('pointerout', (event) => offScrollOver(scrollbutton));
-	scrollbarContainer.addChild(scrollbutton);
+	scrollbuttonAcross.beginFill(0x7e7e7e);
+	scrollbuttonAcross.drawRect(0, 0, scrollbarWidth, scrollbuttonSize);
+	scrollbuttonAcross.interactive = true;
+	scrollbuttonAcross.on('pointerover', (event) => onScrollOver(scrollbuttonAcross));
+	scrollbuttonAcross.on('mousedown', (event) => onScrollClick(scrollbuttonAcross, event));
+	scrollbuttonAcross.on('mousemove', (event) => onScrollDrag(scrollbuttonAcross, event));
+	document.body.onmouseup = () => offScrollClick(scrollbuttonAcross, event);
+	document.addEventListener('mouseleave', (event) => {offScrollClick(scrollbuttonAcross, event);})
+	scrollbuttonAcross.on('pointerout', (event) => offScrollOver(scrollbuttonAcross));
+	scrollbarContainer.addChild(scrollbuttonAcross);
 	//I'll need to add more events
 
 
