@@ -179,7 +179,9 @@ function createBoard(info) {
 	scrollbutton.drawRect(0, 0, scrollbarWidth, scrollbuttonSize);
 	scrollbutton.interactive = true;
 	scrollbutton.on('pointerover', (event) => onScrollOver(scrollbutton));
-	scrollbutton.on('pointerdown', (event) => onScrollClick(scrollbutton, event));
+	scrollbutton.on('mousedown', (event) => onScrollClick(scrollbutton, event));
+	scrollbutton.on('mousemove', (event) => onScrollDrag(scrollbutton, event));
+	scrollbutton.on('mouseup', (event) => offScrollClick(scrollbutton, event));
 	scrollbutton.on('pointerout', (event) => offScrollOver(scrollbutton));
 	scrollbarContainer.addChild(scrollbutton);
 	//I'll need to add more events
@@ -196,15 +198,31 @@ function onScrollbarClick(scrollbar) {
 }
 
 function onScrollClick(scrollbutton, event) {
-	console.log(event);
+	scrollbutton.y = e.data.global.y;
+	scrollbutton.dragging = true;
+}
+
+function onScrollDrag(scrollbutton, event) {
+	if(scrollbutton.dragging) {
+		scrollbutton.y = e.data.global.y;
+	}
+}
+
+function offScrollClick(scrollbutton, event) {
+	scrollbutton.y = e.data.global.y;
+	scrollbutton.dragging = false;
 }
 
 function onScrollOver(scrollbutton) {
-	scrollbutton.tint = 0xe5e5e5;
+	scrollbutton.tint = 0x7e7e7e;
 }
 
 function offScrollOver(scrollbutton) {
 	scrollbutton.tint = 0xffffff;
+}
+
+function adjustScrollButtonPosition {
+
 }
 
 function findWordStart(position) {
