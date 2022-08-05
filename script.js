@@ -114,9 +114,18 @@ function createBoard(info) {
 			}
 		}
 	}
+
 	let distanceDown = 0;
 	let acrossContainer = new PIXI.Container();
+	let acrossClueContainer = new PIXI.Container();
 	across.stage.addChild(acrossContainer);
+	acrossContainer.addChild(acrossClueContainer);
+	let acrossText = new PIXI.Text(` ACROSS `,{fontFamily: squareFont, fontSize: 18, fill : 0x333333, align : 'left',  fontWeight : 'bold' });
+	let acrossTextRect = acrossText.getLocalBounds();
+	let clueStartHeight = acrossTextRect.height;
+	acrossContainer.addChild(acrossText);
+	acrossClueContainer.y = clueStartHeight;
+
 	//adds clues to the mix
 	for (const [index, acrossClue] of Object.entries(info.clues.Across)) {
 		const clueNum = new PIXI.Text(` ${String(acrossClue[0])}  `,{fontFamily: squareFont, fontSize: 18, fill : 0x333333, align : 'left',  fontWeight : 'bold' });
@@ -125,7 +134,7 @@ function createBoard(info) {
 		let clueRect = clue.getLocalBounds();
 		let clueContainer = new PIXI.Container();
 		let clueSpotHeight = clueRect.height + 16;
-		acrossContainer.addChild(clueContainer);
+		acrossClueContainer.addChild(clueContainer);
 		clueContainer.y = distanceDown;
 		distanceDown += clueSpotHeight;
 		clueContainer.height = clueSpotHeight;
@@ -146,6 +155,7 @@ function createBoard(info) {
 		clueInfo.addChild(clueNum);
 		clueInfo.addChild(clue);
 	}
+
 	//lets create a scrollbar here
 	let scrollbarContainer = new PIXI.Container();
 	across.stage.addChild(scrollbarContainer);
@@ -155,7 +165,7 @@ function createBoard(info) {
 	let scrollbar = new PIXI.Graphics();
 	scrollbar.beginFill(0xe5e5e5);
 	scrollbar.drawRect(0, 0, scrollbarWidth, (boardHeight * 36) + 2);
-	scrollbar.interactive = true;
+	//scrollbar.interactive = true;
 	scrollbar.on('click', (event) => onScrollbarClick(scrollbar));
 	scrollbarContainer.addChild(scrollbar);
 	let scrollbutton = new PIXI.Graphics();
