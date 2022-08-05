@@ -127,7 +127,7 @@ function createBoard(info) {
 	acrossLine.beginFill(0xe5e5e5);
 	acrossLine.drawRect(0, 0, 250, 1);
 	acrossContainer.addChild(acrossLine);
-	acrossLine.y = clueStartHeight - 2;
+	acrossLine.y = clueStartHeight;
 	acrossContainer.addChild(acrossText);
 	acrossClueContainer.y = clueStartHeight;
 
