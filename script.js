@@ -133,7 +133,6 @@ function createBoard(info) {
 		clueInfo.name = `${acrossClue[0]}`;
 		clueInfo.on('click', (event) => onClueClick(clueInfo));
 		clueContainer.addChild(clueInfo);
-		clueNum.anchor.set(0, 0.5);
 		clue.anchor.set(0, 0.5);
 		clue.y = (clueSpotHeight) / 2;
 		clue.x = clueNumRect.width;
