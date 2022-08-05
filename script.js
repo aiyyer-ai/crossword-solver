@@ -121,8 +121,6 @@ function createBoard(info) {
 	distanceDownAcross = 0;
 	let acrossContainer = new PIXI.Container();
 	acrossClueContainer = new PIXI.Container();
-	const acrossTopLayer = new PIXI.DisplayObject.Layer();
-	across.stage.addChild(acrossTopLayer);
 	across.stage.addChild(acrossContainer);
 	acrossContainer.addChild(acrossClueContainer);
 	let acrossText = new PIXI.Text(` ACROSS `,{fontFamily: squareFont, fontSize: 18, fill : 0x333333, align : 'left',  fontWeight : 'bold' });
@@ -131,17 +129,18 @@ function createBoard(info) {
 	let acrossBacking = new PIXI.Graphics();
 	acrossBacking.beginFill(0xffffff);
 	acrossBacking.drawRect(0, 0, 250, acrossTextRect.height);
-	acrossBacking.parentLayer = acrossTopLayer;
+	acrossBacking.zIndex = 2;
 	acrossContainer.addChild(acrossBacking);
 	let acrossLine = new PIXI.Graphics();
 	acrossLine.beginFill(0xe5e5e5);
 	acrossLine.drawRect(0, 0, 245, 1);
-	acrossText.parentLayer = acrossTopLayer;
-	acrossLine.parentLayer = acrossTopLayer;
+	acrossText.zIndex = 3;
+	acrossLine.zIndex = 3;
 	acrossContainer.addChild(acrossLine);
 	acrossLine.y = clueStartHeight;
 	acrossContainer.addChild(acrossText);
 	acrossClueContainer.y = clueStartHeight;
+	acrossClueContainer.zIndex = 1;
 
 	//adds clues to the mix
 	for (const [index, acrossClue] of Object.entries(info.clues.Across)) {
