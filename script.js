@@ -121,7 +121,7 @@ function createBoard(info) {
 		clueContainer.name = `${acrossClue[0]}`;
 		let clueInfo = new PIXI.Graphics();
 		clueInfo.beginFill(0xffffff);
-		clueInfo.drawRect(0, 0, 250, 40);
+		clueInfo.drawRect(0, 0, 250, clueRect.height);
 		clueInfo.interactive = true;
 		clueInfo.name = `${acrossClue[0]}`;
 		clueInfo.on('click', (event) => onClueClick(clueInfo));
@@ -267,6 +267,15 @@ function keyPress(key) {
 				}
 		}
 	}
+}
+
+let currentClue = null;
+function onClueClick(object) {
+	if(currentClue) {
+		currentClue.tint = 0xffffff;
+	}
+	object.tint = 0xbfe5ff;
+	currentClue = object;
 }
 
 function onSquareClick(object) {
