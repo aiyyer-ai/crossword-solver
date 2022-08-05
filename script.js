@@ -17,6 +17,7 @@ function processFile(file) {
 let app = null;
 let across = null;
 let down = null;
+let scrollbutton = null;
 let squareSize = 34;
 let squareFont = 'Arial';
 let boardWidth;
@@ -197,10 +198,10 @@ function createBoard(info) {
 
 function onScrollbarClick(scrollbutton, event) {
 	let scrollbuttonRect = scrollbutton.getLocalBounds();
-	if((event.data.global.y + scrollbuttonRect.height) < ((boardHeight * 36) + 2)) {
+	if((event.data.global.y + scrollbuttonRect.height) > ((boardHeight * 36) + 2)) {
 		scrollbutton.y = ((boardHeight * 36) + 2) - scrollbuttonRect.height;
 	} else {
-		scrollbutton.y = event.data.global.y;
+		scrollbutton.y = event.data.global.y - (scrollbuttonRect.height/2);
 	}
 }
 
