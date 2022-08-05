@@ -190,13 +190,11 @@ function createBoard(info) {
 }
 
 function onScrollbarClick(scrollbar) {
-	console.log(scrollbar);
 	scrollbar.tint = 0x000000;
 }
 
 function onScrollOver(scrollbutton) {
-	console.log(scrollbutton);
-	scrollbutton.tint = 0x555555;
+	scrollbutton.tint = 0x7e7e7e;
 }
 
 function offScrollOver(scrollbutton) {
