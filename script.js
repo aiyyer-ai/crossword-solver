@@ -28,7 +28,8 @@ function createBoard(info) {
 	boardHeight = info.dimensions.height;
 	let acrossClueHeight = info.clues.Across.length;
 	let downClueHeight = info.clues.Down.length;
-	let clueWidth = 270;
+	let scrollbarWidth = 15;
+	let clueWidth = 250 + scrollbarWidth;
 	app = new PIXI.Application({ width: (boardWidth * 36) + 2, height: (boardHeight * 36) + 2, resolution: 4, antialias: true });
 	across = new PIXI.Application({ width: clueWidth, height: (boardHeight * 36) + 2, resolution: 4, antialias: true });
 	down = new PIXI.Application({ width: clueWidth, height: (boardHeight * 36) + 2, resolution: 4, antialias: true });
@@ -147,21 +148,20 @@ function createBoard(info) {
 	}
 	//lets create a scrollbar here
 	let scrollbarContainer = new PIXI.Container();
-	let scrollbarWidth = 20;
 	across.stage.addChild(scrollbarContainer);
 	scrollbarContainer.x = 250;
 	scrollbarContainer.width = scrollbarWidth;
 	scrollbarContainer.height = (boardHeight * 36) + 2;
 	let scrollbar = new PIXI.Graphics();
 	scrollbar.beginFill(0xe5e5e5);
-	scrollbar.drawRect(0, 0, 20, (boardHeight * 36) + 2);
+	scrollbar.drawRect(0, 0, scrollbarWidth, (boardHeight * 36) + 2);
 	scrollbar.interactive = true;
 	scrollbar.on('click', (event) => onScrollbarClick(scrollbar));
 	scrollbarContainer.addChild(scrollbar);
 	let scrollbutton = new PIXI.Graphics();
 	let scrollbuttonSize = (((boardHeight * 36) + 2) / distanceDown) * (boardHeight * 36) + 2;
 	scrollbutton.beginFill(0x7e7e7e);
-	scrollbutton.drawRect(0, 0, 20, scrollbuttonSize);
+	scrollbutton.drawRect(0, 0, scrollbarWidth, scrollbuttonSize);
 	scrollbutton.on('pointerover', (event) => onScrollOver(scrollbutton));
 	scrollbutton.on('pointerout', (event) => offScrollOver(scrollbutton));
 	scrollbarContainer.addChild(scrollbutton);
@@ -177,12 +177,12 @@ function onScrollbarClick(scrollbar) {
 
 }
 
-function onScrollOver(scrollbar) {
-	scrollbar.tint = 0x555555;
+function onScrollOver(scrollbutton) {
+	scrollbutton.tint = 0x555555;
 }
 
-function offScrollOver(scrollbar) {
-	scrollbar.tint = 0xffffff;
+function offScrollOver(scrollbutton) {
+	scrollbutton.tint = 0xffffff;
 }
 
 function findWordStart(position) {
