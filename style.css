@@ -1,13 +1,13 @@
 
-div.clues {
-  overflow-x: hidden;
-  overflow-y: auto;
-  text-align: center;
-}
-
 .column {
   float: left;
   padding: 3px;
+}
+
+.clues {
+  overflow-x: hidden;
+  overflow-y: auto;
+  text-align: center;
 }
 
 .row:after {
