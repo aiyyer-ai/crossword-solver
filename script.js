@@ -171,7 +171,7 @@ function createBoard(info) {
 	scrollbar.beginFill(0xe5e5e5);
 	scrollbar.drawRect(0, 0, scrollbarWidth, (boardHeight * 36) + 2);
 	scrollbar.interactive = true;
-	scrollbar.on('click', (event) => onScrollbarClick(scrollbar));
+	scrollbar.on('click', (event) => onScrollbarClick(scrollbutton, event));
 	scrollbarContainer.addChild(scrollbar);
 	let scrollbutton = new PIXI.Graphics();
 	let scrollbuttonSize = (((boardHeight * 36) + 2) / distanceDown) * (boardHeight * 36) + 2;
@@ -195,9 +195,13 @@ function createBoard(info) {
 
 //scrollbar Functions
 
-function onScrollbarClick(scrollbar) {
-	//temp tint
-	scrollbar.tint = 0x000000;
+function onScrollbarClick(scrollbutton, event) {
+	let scrollbuttonRect = scrollbutton.getLocalBounds();
+	if((event.data.global.y + scrollbuttonRect.height) < ((boardHeight * 36) + 2)) {
+		scrollbutton.y = ((boardHeight * 36) + 2) - scrollbuttonRect.height;
+	} else {
+		scrollbutton.y = event.data.global.y;
+	}
 }
 
 function onScrollClick(scrollbutton, event) {
