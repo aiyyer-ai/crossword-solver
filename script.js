@@ -136,7 +136,7 @@ function createBoard(info) {
 		clue.anchor.set(0, 0.5);
 		clue.y = (clueSpotHeight) / 2;
 		clue.x = clueNumRect.width;
-		clueNum.y = 8;
+		clueNum.y = 7;
 		clue.name = `${acrossClue[0]}`;
 		clueInfo.addChild(clueNum);
 		clueInfo.addChild(clue);
