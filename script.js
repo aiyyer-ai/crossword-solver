@@ -220,6 +220,7 @@ function offScrollClick(scrollbutton, event) {
 	if(scrollbutton.dragging) {
 		scrollbutton.tint = 0xffffff;
 		let scrollbuttonRect = scrollbutton.getLocalBounds();
+		console.log(event.data.global.y + scrollbutton.heightDifference);
 		if((event.data.global.y + scrollbutton.heightDifference) > 0 || (event.data.global.y + scrollbutton.heightDifference + scrollbuttonRect.height) < ((boardHeight * 36) + 2)) {
 			scrollbutton.y = event.data.global.y + scrollbutton.heightDifference;
 		}
