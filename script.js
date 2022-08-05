@@ -17,6 +17,7 @@ function processFile(file) {
 let app = null;
 let across = null;
 let down = null;
+let distanceDownAcross = null;
 let acrossClueContainer = null;
 let scrollbuttonAcross = null;
 let squareSize = 34;
@@ -117,7 +118,7 @@ function createBoard(info) {
 		}
 	}
 
-	let distanceDown = 0;
+	distanceDownAcross = 0;
 	let acrossContainer = new PIXI.Container();
 	acrossClueContainer = new PIXI.Container();
 	across.stage.addChild(acrossContainer);
@@ -142,8 +143,8 @@ function createBoard(info) {
 		let clueContainer = new PIXI.Container();
 		let clueSpotHeight = clueRect.height + 16;
 		acrossClueContainer.addChild(clueContainer);
-		clueContainer.y = distanceDown;
-		distanceDown += clueSpotHeight;
+		clueContainer.y = distanceDownAcross;
+		distanceDownAcross += clueSpotHeight;
 		clueContainer.height = clueSpotHeight;
 		clueContainer.width = 250;
 		clueContainer.name = `${acrossClue[0]}`;
@@ -176,7 +177,7 @@ function createBoard(info) {
 	scrollbar.on('click', (event) => onScrollbarClick(scrollbuttonAcross, event));
 	scrollbarContainer.addChild(scrollbar);
 	scrollbuttonAcross = new PIXI.Graphics();
-	let scrollbuttonSize = (((boardHeight * 36) + 2) / distanceDown) * (boardHeight * 36) + 2;
+	let scrollbuttonSize = (((boardHeight * 36) + 2) / distanceDownAcross) * (boardHeight * 36) + 2;
 	scrollbuttonAcross.beginFill(0x7e7e7e);
 	scrollbuttonAcross.drawRect(0, 0, scrollbarWidth, scrollbuttonSize);
 	scrollbuttonAcross.interactive = true;
