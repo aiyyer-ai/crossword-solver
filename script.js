@@ -42,14 +42,14 @@ function createBoard(info) {
     render.autoResize = true;
     app.render();
 		let acrossRender = across.renderer;
-		acrossRender.backgroundColor = 0x00ff00;
+		acrossRender.backgroundColor = 0xffffff;
 	    acrossRender.view.style.position = "absolute";
 	    acrossRender.view.style.display = "block";
 	    acrossRender.view.style.width = `${clueWidth}px`;
 	    acrossRender.autoResize = true;
 	    across.render();
 			let downRender = down.renderer;
-			downRender.backgroundColor = 0x0000ff;
+			downRender.backgroundColor = 0x00ffff;
 		    downRender.view.style.position = "absolute";
 		    downRender.view.style.display = "block";
 		    downRender.view.style.width = `${clueWidth}px`;
