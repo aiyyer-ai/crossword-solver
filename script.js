@@ -29,8 +29,8 @@ function createBoard(info) {
 	let acrossClueHeight = info.clues.Across.length;
 	let downClueHeight = info.clues.Down.length;
 	app = new PIXI.Application({ width: (boardWidth * 36) + 2, height: (boardHeight * 36) + 2, resolution: 4, antialias: true });
-	across = new PIXI.Application({ width: 250, height: (acrossClueHeight * 36), resolution: 4, antialias: true });
-	down = new PIXI.Application({ width: 250, height: (downClueHeight * 36), resolution: 4, antialias: true });
+	across = new PIXI.Application({ width: 250, height: (acrossClueHeight * 12), resolution: 4, antialias: true });
+	down = new PIXI.Application({ width: 250, height: (downClueHeight * 12), resolution: 4, antialias: true });
 	let render = app.renderer;
 	render.backgroundColor = 0x000000;
     render.view.style.position = "absolute";
