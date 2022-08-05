@@ -198,7 +198,7 @@ function onScrollbarClick(scrollbar) {
 }
 
 function onScrollClick(scrollbutton, event) {
-	console.log(across.getLocalBounds());
+	console.log(acrossContainer.getLocalBounds());
 	scrollbutton.tint = 0x616161;
 	let scrollbuttonRect = scrollbutton.getLocalBounds();
 	scrollbutton.heightDifference = scrollbutton.y - event.data.global.y;
