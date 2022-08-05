@@ -182,10 +182,10 @@ function createBoard(info) {
 	scrollbuttonAcross.drawRect(0, 0, scrollbarWidth, scrollbuttonSize);
 	scrollbuttonAcross.interactive = true;
 	scrollbuttonAcross.on('pointerover', (event) => onScrollOver(scrollbuttonAcross));
-	scrollbuttonAcross.on('mousedown', (event) => onScrollClick(scrollbuttonAcross, event));
-	scrollbuttonAcross.on('mousemove', (event) => onScrollDrag(scrollbuttonAcross, event));
-	document.addEventListener('onmouseup', (event) => {offScrollClick(scrollbuttonAcross, event);});
-	document.addEventListener('mouseleave', (event) => {offScrollClick(scrollbuttonAcross, event);});
+	scrollbuttonAcross.on('pointerdown', (event) => onScrollClick(scrollbuttonAcross, event));
+	scrollbuttonAcross.on('pointermove', (event) => onScrollDrag(scrollbuttonAcross, event));
+	document.body.onpointerup = (event) => offScrollClick(scrollbuttonAcross, event);
+	document.addEventListener('pointerleave', (event) => {offScrollClick(scrollbuttonAcross, event);})
 	scrollbuttonAcross.on('pointerout', (event) => offScrollOver(scrollbuttonAcross));
 	scrollbarContainer.addChild(scrollbuttonAcross);
 	//I'll need to add more events
@@ -214,12 +214,8 @@ function onScrollbarClick(scrollbutton, event) {
 
 function onScrollClick(scrollbutton, event) {
 	scrollbutton.tint = 0x616161;
-	let scrollbuttonRect = scrollbutton.getLocalBounds();
 	scrollbutton.heightDifference = scrollbutton.y - event.data.global.y;
-	if((event.data.global.y + scrollbutton.heightDifference) > 0 && (event.data.global.y + scrollbutton.heightDifference + scrollbuttonRect.height) < ((boardHeight * 36) + 2)) {
-		scrollbutton.y = event.data.global.y + scrollbutton.heightDifference;
-		adjustCluePosition(scrollbutton, acrossClueContainer);
-	}
+	scrollbutton.setPointerCapture(event.pointerId);
 	scrollbutton.dragging = true;
 }
 
@@ -236,12 +232,8 @@ function onScrollDrag(scrollbutton, event) {
 function offScrollClick(scrollbutton, event) {
 	if(scrollbutton.dragging) {
 		scrollbutton.tint = 0xffffff;
-		let scrollbuttonRect = scrollbutton.getLocalBounds();
-		if((event.clientY + scrollbutton.heightDifference) > 0 && (event.clientY + scrollbutton.heightDifference + scrollbuttonRect.height) < ((boardHeight * 36) + 2)) {
-			scrollbutton.y = event.clientY + scrollbutton.heightDifference;
-			adjustCluePosition(scrollbutton, acrossClueContainer);
-		}
 		scrollbutton.heightDifference = 0;
+		scrollbutton.releasePointerCapture(event.pointerId);
 		scrollbutton.dragging = false;
 	}
 }
