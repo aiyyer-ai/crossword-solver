@@ -255,9 +255,18 @@ function offScrollOver(scrollbutton) {
 }
 
 function adjustCluePosition(scrollbutton, clueContainer) {
+	console.log(scrollbutton.y);
 	let scrolledToY = scrollbutton.y/((boardHeight * 36) + 2) * distanceDownAcross;
 	clueContainer.y = -scrolledToY + clueStartHeight;
 }
+
+
+
+
+
+
+
+
 
 //Crossword Functions
 
