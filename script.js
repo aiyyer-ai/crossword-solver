@@ -81,7 +81,7 @@ function createBoard(info) {
 	app.stage.addChild(allSquares);
 	for (let row in info.puzzle) {
 		let squarePosition = 0;
-		for (const [index, square] of Object.entries(info.puzzle[row])) {
+		for (let [index, square] of Object.entries(info.puzzle[row])) {
 			if (square == "#") {
 				squarePosition++;
 				continue;
