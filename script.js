@@ -194,7 +194,7 @@ function createBoard(info) {
 	scrollbuttonAcross.on('pointerover', (event) => onScrollOver(scrollbuttonAcross));
 	scrollbuttonAcross.on('pointerdown', (event) => onScrollClick(scrollbuttonAcross, event, across));
 	scrollbuttonAcross.on('pointermove', (event) => onScrollDrag(scrollbuttonAcross, event, acrossClueContainer));
-	scrollbuttonAcross.on('pointerup', (event) => offScrollClick(scrollbuttonAcross, event, across));
+	document.body.onpointerup = (event) => offScrollClick(scrollbuttonAcross, event, across);
 	scrollbuttonAcross.on('pointerout', (event) => offScrollOver(scrollbuttonAcross));
 	scrollbarContainerAcross.addChild(scrollbuttonAcross);
 
@@ -273,7 +273,7 @@ function createBoard(info) {
 	scrollbuttonDown.on('pointerover', (event) => onScrollOver(scrollbuttonDown));
 	scrollbuttonDown.on('pointerdown', (event) => onScrollClick(scrollbuttonDown, event, down));
 	scrollbuttonDown.on('pointermove', (event) => onScrollDrag(scrollbuttonDown, event, downClueContainer));
-	scrollbuttonDown.on('pointerup', (event) => offScrollClick(scrollbuttonDown, event, down));
+	document.body.onpointerup = (event) => offScrollClick(scrollbuttonDown, event, down);
 	scrollbuttonDown.on('pointerout', (event) => offScrollOver(scrollbuttonDown));
 	scrollbarContainerDown.addChild(scrollbuttonDown);
 
@@ -299,7 +299,6 @@ function onScrollbarClick(scrollbutton, event, clueContainer) {
 }
 
 function onScrollClick(scrollbutton, event, clueApp) {
-	console.log(clueApp);
 	scrollbutton.tint = 0x616161;
 	scrollbutton.heightDifference = scrollbutton.y - event.data.global.y;
 	clueApp.view.setPointerCapture(event.data.originalEvent.pointerId);
@@ -321,10 +320,9 @@ function onScrollDrag(scrollbutton, event, clueContainer) {
 
 function offScrollClick(scrollbutton, event, clueApp) {
 	if(scrollbutton.dragging) {
-		console.log(clueApp);
 		scrollbutton.tint = 0xffffff;
 		scrollbutton.heightDifference = 0;
-		clueApp.view.releasePointerCapture(event.data.originalEvent.pointerId);
+		clueApp.view.releasePointerCapture(event.pointerId);
 		scrollbutton.dragging = false;
 	}
 }
