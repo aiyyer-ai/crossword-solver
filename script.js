@@ -194,7 +194,6 @@ function createBoard(info) {
 	scrollbuttonAcross.on('pointerover', (event) => onScrollOver(scrollbuttonAcross));
 	scrollbuttonAcross.on('pointerdown', (event) => onScrollClick(scrollbuttonAcross, event, across));
 	scrollbuttonAcross.on('pointermove', (event) => onScrollDrag(scrollbuttonAcross, event, acrossClueContainer));
-	document.body.onpointerup = (event) => offScrollClick(scrollbuttonAcross, event, across);
 	scrollbuttonAcross.on('pointerout', (event) => offScrollOver(scrollbuttonAcross));
 	scrollbarContainerAcross.addChild(scrollbuttonAcross);
 
@@ -273,10 +272,10 @@ function createBoard(info) {
 	scrollbuttonDown.on('pointerover', (event) => onScrollOver(scrollbuttonDown));
 	scrollbuttonDown.on('pointerdown', (event) => onScrollClick(scrollbuttonDown, event, down));
 	scrollbuttonDown.on('pointermove', (event) => onScrollDrag(scrollbuttonDown, event, downClueContainer));
-	document.body.onpointerup = (event) => offScrollClick(scrollbuttonDown, event, down);
 	scrollbuttonDown.on('pointerout', (event) => offScrollOver(scrollbuttonDown));
 	scrollbarContainerDown.addChild(scrollbuttonDown);
 
+	document.body.onpointerup = (event) => offScrollClick(scrollbuttonAcross, scrollbuttonDown, event);
 
 	//end
 }
@@ -318,12 +317,19 @@ function onScrollDrag(scrollbutton, event, clueContainer) {
 	}
 }
 
-function offScrollClick(scrollbutton, event, clueApp) {
-	if(scrollbutton.dragging) {
-		scrollbutton.tint = 0xffffff;
-		scrollbutton.heightDifference = 0;
-		clueApp.view.releasePointerCapture(event.pointerId);
-		scrollbutton.dragging = false;
+function offScrollClick(scrollbuttonAcross, scrollbuttonDown, event) {
+	if(scrollbuttonAcross.dragging) {
+		scrollbuttonAcross.tint = 0xffffff;
+		scrollbuttonAcross.heightDifference = 0;
+		across.view.releasePointerCapture(event.pointerId);
+		scrollbuttonAcross.dragging = false;
+	}
+
+	if(scrollbuttonDown.dragging) {
+		scrollbuttonDown.tint = 0xffffff;
+		scrollbuttonDown.heightDifference = 0;
+		down.view.releasePointerCapture(event.pointerId);
+		scrollbuttonDown.dragging = false;
 	}
 }
 
