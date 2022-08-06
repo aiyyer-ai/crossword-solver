@@ -602,8 +602,8 @@ function setHighlight(clickee) {
 	currentHighlight.otherSquares.push(clueDown.children[0]);
 	let scrollAbutton = across.stage.getChildByName(`scrollbarContainerAcross`).getChildByName(`scrollbuttonAcross`);
 	let scrollBbutton = down.stage.getChildByName(`scrollbarContainerDown`).getChildByName(`scrollbuttonDown`);
-	adjustScrollBar(clueAcross.y + clueStartHeight, scrollAbutton, acrossClueContainer);
-	adjustScrollBar(clueDown.y + clueStartHeight, scrollBbutton, downClueContainer);
+	adjustScrollBar(clueAcross.y - clueStartHeight, scrollAbutton, acrossClueContainer);
+	adjustScrollBar(clueDown.y - clueStartHeight, scrollBbutton, downClueContainer);
 	//tints the line of squares around
 	let clickedPos = clickee.name.split(",");
 	//clickedPos[0] = x // clickedPos[1] = y //
