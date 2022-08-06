@@ -273,8 +273,8 @@ function createBoard(info) {
 	scrollbuttonDown.on('pointerover', (event) => onScrollOver(scrollbuttonDown));
 	scrollbuttonDown.on('pointerdown', (event) => onScrollClick(scrollbuttonDown, event, down));
 	scrollbuttonDown.on('pointermove', (event) => onScrollDrag(scrollbuttonDown, event, downClueContainer));
-	document.body.onpointerup = (event) => offScrollClick(scrollbuttonDown, event);
-	scrollbuttonDown.on('pointerout', (event) => offScrollOver(scrollbuttonDown, down));
+	document.body.onpointerup = (event) => offScrollClick(scrollbuttonDown, event, down);
+	scrollbuttonDown.on('pointerout', (event) => offScrollOver(scrollbuttonDown));
 	scrollbarContainerDown.addChild(scrollbuttonDown);
 
 
