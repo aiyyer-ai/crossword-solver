@@ -92,12 +92,9 @@ function createBoard(info) {
 			if(square != 0 && typeof square == 'number') {
 				text = new PIXI.Text(String(square),{fontFamily: squareFont, fontSize: 12, fill : 0x000000, align : 'left'});
 				clueNumber = square;
-				squareContainer.clue = clueNumber;
-				crosswordSquare.clue = clueNumber;
 				text.x = 1;
 				text.y = -1;
 				text.name = `numberedSquare`;
-				
 			}
 
 			let squareX = (squarePosition * (squareSize + 2)) + 2;
@@ -107,7 +104,6 @@ function createBoard(info) {
 			squareContainer.height = squareSize;
 			squareContainer.width = squareSize;
 			squareContainer.name = `${squarePosition},${row}`;
-			squareContainer.clue = clueNumber;
 			
 			crosswordSquare.beginFill(0xffffff);
 			crosswordSquare.drawRect(0, 0, squareSize, squareSize);
@@ -117,9 +113,8 @@ function createBoard(info) {
 			crosswordSquare.squareX = squareX;
 			crosswordSquare.squareY = squareY;
 			crosswordSquare.name = `${squarePosition},${row}`;
-			crosswordSquare.clue = clueNumber;
 			crosswordSquare.on('click', (event) => onSquareClick(crosswordSquare));
-			
+
 			squarePosition++;
 			squareContainer.addChild(crosswordSquare);
 			if(text){
@@ -129,6 +124,8 @@ function createBoard(info) {
 
 		}
 	}
+
+	generateSquareNumbers(info);
 
 	//acrossClues
 	let acrossContainer = new PIXI.Container();
@@ -154,7 +151,6 @@ function createBoard(info) {
 	acrossContainer.addChild(acrossText);
 	acrossClueContainer.zIndex = 1;
 
-	//adds clues to the mix
 	for (const [index, acrossClue] of Object.entries(info.clues.Across)) {
 		const clueNum = new PIXI.Text(` ${String(acrossClue[0])}  `,{fontFamily: squareFont, fontSize: 18, fill : 0x333333, align : 'left',  fontWeight : 'bold' });
 		let clueNumRect = clueNum.getLocalBounds();
@@ -201,7 +197,7 @@ function createBoard(info) {
 	scrollbuttonAcross.beginFill(0x7e7e7e);
 	scrollbuttonAcross.drawRect(0, 0, scrollbarWidth, scrollbuttonSizeAcross);
 	scrollbuttonAcross.interactive = true;
-	acrossClueContainer.on('pointerover', (event) => onOver(scrollbuttonAcross, event, acrossClueContainer, across));
+	//acrossClueContainer.on('pointerover', (event) => onOver(scrollbuttonAcross, event, acrossClueContainer, across));
 	scrollbuttonAcross.on('pointerover', (event) => onScrollOver(scrollbuttonAcross));
 	scrollbuttonAcross.on('pointerdown', (event) => onScrollClick(scrollbuttonAcross, event, across));
 	scrollbuttonAcross.on('pointermove', (event) => onScrollDrag(scrollbuttonAcross, event, acrossClueContainer));
@@ -280,7 +276,7 @@ function createBoard(info) {
 	scrollbuttonDown.beginFill(0x7e7e7e);
 	scrollbuttonDown.drawRect(0, 0, scrollbarWidth, scrollbuttonSizeDown);
 	scrollbuttonDown.interactive = true;
-	downClueContainer.on('pointerover', (event) => onOver(scrollbuttonDown, event, downClueContainer, down));
+	//downClueContainer.on('pointerover', (event) => onOver(scrollbuttonDown, event, downClueContainer, down));
 	scrollbuttonDown.on('pointerover', (event) => onScrollOver(scrollbuttonDown));
 	scrollbuttonDown.on('pointerdown', (event) => onScrollClick(scrollbuttonDown, event, down));
 	scrollbuttonDown.on('pointermove', (event) => onScrollDrag(scrollbuttonDown, event, downClueContainer));
@@ -370,9 +366,47 @@ function onOver(scrollbutton, event, clueContainer, clueApp) {
 }
 
 
+//on Start Function
 
+function generateSquareNumbers() {
+	findClueNum([0,0], 'left');
+}
 
-
+function findClueNum(position, dir) {
+	let newSpot = null;
+	let spotCheck = [parseInt(position[0]), parseInt(position[1])];
+	while (!newSpot) {
+		switch(dir) {
+		  case `up`:
+		    spotCheck = [spotCheck[0], spotCheck[1] - 1];
+		    break;
+		  case `left`:
+		    spotCheck = [spotCheck[0] - 1, spotCheck[1]];
+		    break;
+		  default:
+		  	spotCheck = [spotCheck[0], spotCheck[1]];
+		}
+		if(spotCheck[0] < 0 || spotCheck[0] > boardWidth) {
+			spotCheck = [parseInt(position[0]), parseInt(position[1])];
+		}
+		if(spotCheck[1] < 0 || spotCheck[1] > boardHeight) {
+			spotCheck = [parseInt(position[0]), parseInt(position[1])];
+		}
+		newSpot = app.stage.getChildByName(`${spotCheck[0]},${spotCheck[1]}`);
+		if(!currentHighlight.across) {
+			spotAbove = app.stage.getChildByName(`${spotCheck[0]},${spotCheck[1] - 1}`);
+			if(spotAbove) {
+				newSpot = null;
+			}
+		} else {
+			spotBehind = app.stage.getChildByName(`${spotCheck[0] - 1},${spotCheck[1]}`);
+			if(spotBehind) {
+				newSpot = null;
+			}
+		}
+	}	
+	console.log(newSpot);
+}
 
 
 //Crossword Functions
