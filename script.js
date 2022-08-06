@@ -99,8 +99,8 @@ function createBoard(info) {
 			crosswordSquare.beginFill(0xffffff);
 			crosswordSquare.drawRect(0, 0, squareSize, squareSize);
 			if (square.style) {
-				crosswordSquare.lineStyle(2, 0x7e7e7e, 1);
-				crosswordSquare.drawCircle(squareSize/2, squareSize/2, (squareSize/2) - 0.5);
+				crosswordSquare.lineStyle(1, 0x000000, 1);
+				crosswordSquare.drawCircle(squareSize/2, squareSize/2, (squareSize/2));
 				square = square.cell;
 			}
 			crosswordSquare.interactive = true;
