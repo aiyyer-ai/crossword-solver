@@ -374,28 +374,20 @@ function findClueNum(position, dir) {
 	let newSpot = null;
 	let spotCheck = [parseInt(position[0]), parseInt(position[1])];
 	while (!newSpot) {
-		switch(dir) {
-		  case `up`:
-		    spotCheck = [spotCheck[0], spotCheck[1] - 1];
-		    break;
-		  case `left`:
-		    spotCheck = [spotCheck[0] - 1, spotCheck[1]];
-		    break;
-		  default:
-		  	spotCheck = [spotCheck[0], spotCheck[1]];
-		}
-		newSpot = allSquares.getChildByName(`${spotCheck[0]},${spotCheck[1]}`);
 		if(dir == `up`) {
 			spotAbove = allSquares.getChildByName(`${spotCheck[0]},${spotCheck[1] - 1}`);
 			if(spotAbove) {
 				newSpot = null;
+				spotCheck[1] = spotCheck[1] - 1;
 			}
 		} else {
 			spotBehind = allSquares.getChildByName(`${spotCheck[0] - 1},${spotCheck[1]}`);
 			if(spotBehind) {
 				newSpot = null;
+				spotCheck[0] = spotCheck[0] -1;
 			}
 		}
+		newSpot = allSquares.getChildByName(`${spotCheck[0]},${spotCheck[1]}`);
 	}	
 	return newSpot.children[0].children[0].name;
 }
