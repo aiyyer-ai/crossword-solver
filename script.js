@@ -236,6 +236,7 @@ function onScrollDrag(scrollbutton, event) {
 			adjustCluePosition(scrollbutton, acrossClueContainer);
 		} else {
 			scrollbutton.y = ((event.data.global.y + scrollbutton.heightDifference) <= 0) ? 0 : (((boardHeight * 36) + 2) - scrollbuttonRect.height);
+			adjustCluePosition(scrollbutton, acrossClueContainer);
 		}
 	}
 }
@@ -258,7 +259,7 @@ function offScrollOver(scrollbutton) {
 }
 
 function adjustCluePosition(scrollbutton, clueContainer) {
-	let scrolledToY = Math.floor(scrollbutton.y/((boardHeight * 36) + 2)) * distanceDownAcross;
+	let scrolledToY = Math.floor(scrollbutton.y/((boardHeight * 36) + 2) * distanceDownAcross);
 	clueContainer.y = -scrolledToY + clueStartHeight;
 }
 
