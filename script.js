@@ -322,7 +322,7 @@ function offScrollClick(scrollbutton, event, clueApp) {
 	if(scrollbutton.dragging) {
 		scrollbutton.tint = 0xffffff;
 		scrollbutton.heightDifference = 0;
-		clueApp.view.releasePointerCapture(event.pointerId);
+		clueApp.view.releasePointerCapture(event.data.originalEvent.pointerId);
 		scrollbutton.dragging = false;
 	}
 }
