@@ -374,6 +374,7 @@ function findClueNum(position, dir) {
 	let newSpot = null;
 	let spotCheck = [parseInt(position[0]), parseInt(position[1])];
 	while (!newSpot) {
+		newSpot = allSquares.getChildByName(`${spotCheck[0]},${spotCheck[1]}`);
 		if(dir == `up`) {
 			spotAbove = allSquares.getChildByName(`${spotCheck[0]},${spotCheck[1] - 1}`);
 			if(spotAbove) {
@@ -384,10 +385,9 @@ function findClueNum(position, dir) {
 			spotBehind = allSquares.getChildByName(`${spotCheck[0] - 1},${spotCheck[1]}`);
 			if(spotBehind) {
 				newSpot = null;
-				spotCheck[0] = spotCheck[0] -1;
+				spotCheck[0] = spotCheck[0] - 1;
 			}
 		}
-		newSpot = allSquares.getChildByName(`${spotCheck[0]},${spotCheck[1]}`);
 	}	
 	return newSpot.children[0].children[0].name;
 }
