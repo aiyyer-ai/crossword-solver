@@ -76,6 +76,8 @@ function createBoard(info) {
 
 	document.body.addEventListener("keydown", (event) => keyPress(event.key));
 
+	let allSquares = new PIXI.Container();
+	app.stage.addChild(allSquares);
 	for (let row in info.puzzle) {
 		let squarePosition = 0;
 		for (const [index, square] of Object.entries(info.puzzle[row])) {
@@ -84,7 +86,7 @@ function createBoard(info) {
 				continue;
 			}
 			let squareContainer = new PIXI.Container();
-			app.stage.addChild(squareContainer);
+			allSquares.addChild(squareContainer);
 			let squareX = (squarePosition * (squareSize + 2)) + 2;
 			let squareY = (row * (squareSize + 2)) + 2;
 			squareContainer.x = squareX;
@@ -109,7 +111,7 @@ function createBoard(info) {
 				clueNumber = square;
 				text.x = 1;
 				text.y = -1;
-				text.name = `numberedSquare`;
+				text.name = String(square);
 				crosswordSquare.addChild(text);
 			}
 		}
@@ -348,7 +350,6 @@ function adjustCluePosition(scrollbutton, clueContainer) {
 
 function onOver(scrollbutton, event, clueContainer, clueApp) {
 	clueApp.view.onwheel = (e) => {
-		console.log(event);
 		scrollbutton.y += e.DeltaY;
 		adjustCluePosition(scrollbutton, clueContainer);
 	};
@@ -359,7 +360,13 @@ function onOver(scrollbutton, event, clueContainer, clueApp) {
 //on Start Function
 
 function generateSquareNumbers() {
-	console.log(app.stage);
+	allSquares.children.forEach( (childSquare) => {
+		let squarePos = childSquare.name.split(",");
+		childSquare.clues = {`across`:null, `down`:null};
+		childSquare.clues[`across`] = findClueNum(squarePos, 'left');
+		childSquare.clues[`down`] = findClueNum(squarePos, 'up');
+		console.log(childSquare.clues);
+	})
 }
 
 function findClueNum(position, dir) {
@@ -382,14 +389,14 @@ function findClueNum(position, dir) {
 		if(spotCheck[1] < 0 || spotCheck[1] > boardHeight) {
 			spotCheck = [parseInt(position[0]), parseInt(position[1])];
 		}
-		newSpot = app.stage.getChildByName(`${spotCheck[0]},${spotCheck[1]}`);
+		newSpot = allSquares.getChildByName(`${spotCheck[0]},${spotCheck[1]}`);
 		if(!currentHighlight.across) {
-			spotAbove = app.stage.getChildByName(`${spotCheck[0]},${spotCheck[1] - 1}`);
+			spotAbove = allSquares.getChildByName(`${spotCheck[0]},${spotCheck[1] - 1}`);
 			if(spotAbove) {
 				newSpot = null;
 			}
 		} else {
-			spotBehind = app.stage.getChildByName(`${spotCheck[0] - 1},${spotCheck[1]}`);
+			spotBehind = allSquares.getChildByName(`${spotCheck[0] - 1},${spotCheck[1]}`);
 			if(spotBehind) {
 				newSpot = null;
 			}
@@ -405,14 +412,14 @@ function findWordStart(position) {
 	let newSpot = null;
 	let spotCheck = [parseInt(position[0]) + 1, parseInt(position[1])];
 	while (!newSpot) {
-		newSpot = app.stage.getChildByName(`${spotCheck[0]},${spotCheck[1]}`);
+		newSpot = allSquares.getChildByName(`${spotCheck[0]},${spotCheck[1]}`);
 		if(!currentHighlight.across) {
-			spotAbove = app.stage.getChildByName(`${spotCheck[0]},${spotCheck[1] - 1}`);
+			spotAbove = allSquares.getChildByName(`${spotCheck[0]},${spotCheck[1] - 1}`);
 			if(spotAbove) {
 				newSpot = null;
 			}
 		} else {
-			spotBehind = app.stage.getChildByName(`${spotCheck[0] - 1},${spotCheck[1]}`);
+			spotBehind = allSquares.getChildByName(`${spotCheck[0] - 1},${spotCheck[1]}`);
 			if(spotBehind) {
 				newSpot = null;
 			}
@@ -456,7 +463,7 @@ function findNextAvailableSpot(position, dir) {
 		if(spotCheck[1] < 0 || spotCheck[1] > boardHeight) {
 			spotCheck = [parseInt(position[0]), parseInt(position[1])];
 		}
-		newSpot = app.stage.getChildByName(`${spotCheck[0]},${spotCheck[1]}`);
+		newSpot = allSquares.getChildByName(`${spotCheck[0]},${spotCheck[1]}`);
 	}	
 	return newSpot.children[0];
 }
@@ -473,7 +480,7 @@ function keyPress(key) {
 			if(!currentHighlight.across) {
 				return setHighlight(currentHighlight.object);
 			}
-			let newSpot = app.stage.getChildByName(`${parseInt(clickedPos[0]) - 1},${clickedPos[1]}`);
+			let newSpot = allSquares.getChildByName(`${parseInt(clickedPos[0]) - 1},${clickedPos[1]}`);
 			if(newSpot) {
 				currentHighlight.across = true;
 				return setHighlight(newSpot.children[0]);
@@ -486,7 +493,7 @@ function keyPress(key) {
 			if(!currentHighlight.across) {
 				return setHighlight(currentHighlight.object);
 			}
-			let newSpot = app.stage.getChildByName(`${parseInt(clickedPos[0]) + 1},${clickedPos[1]}`);
+			let newSpot = allSquares.getChildByName(`${parseInt(clickedPos[0]) + 1},${clickedPos[1]}`);
 			if(newSpot) {
 				currentHighlight.across = true;
 				return setHighlight(newSpot.children[0]);
@@ -499,7 +506,7 @@ function keyPress(key) {
 			if(currentHighlight.across) {
 				return setHighlight(currentHighlight.object);
 			}
-			let newSpot = app.stage.getChildByName(`${clickedPos[0]},${parseInt(clickedPos[1]) + 1}`);
+			let newSpot = allSquares.getChildByName(`${clickedPos[0]},${parseInt(clickedPos[1]) + 1}`);
 			if(newSpot) {
 				currentHighlight.across = false;
 				return setHighlight(newSpot.children[0]);
@@ -512,7 +519,7 @@ function keyPress(key) {
 			if(currentHighlight.across) {
 				return setHighlight(currentHighlight.object);
 			}
-			let newSpot = app.stage.getChildByName(`${clickedPos[0]},${parseInt(clickedPos[1]) - 1}`);
+			let newSpot = allSquares.getChildByName(`${clickedPos[0]},${parseInt(clickedPos[1]) - 1}`);
 			if(newSpot) {
 				currentHighlight.across = false;
 				return setHighlight(newSpot.children[0]);
@@ -525,7 +532,7 @@ function keyPress(key) {
 			if(currentHighlight.object.children[0] ? (currentHighlight.object.children[currentHighlight.object.children.length - 1].name == 'guess') : currentHighlight.object.children[0])  {
 				currentHighlight.object.children[currentHighlight.object.children.length - 1].destroy();
 			}
-			let newSpot = app.stage.getChildByName((currentHighlight.across ? `${parseInt(clickedPos[0]) - 1},${clickedPos[1]}` : `${clickedPos[0]},${parseInt(clickedPos[1]) - 1}`));
+			let newSpot = allSquares.getChildByName((currentHighlight.across ? `${parseInt(clickedPos[0]) - 1},${clickedPos[1]}` : `${clickedPos[0]},${parseInt(clickedPos[1]) - 1}`));
 			if(newSpot) {
 				return setHighlight(newSpot.children[0]);
 			}
@@ -540,7 +547,7 @@ function keyPress(key) {
 				letter.y = (currentHighlight.object.sizeY/8) * 5;
 				letter.name = 'guess';
 				currentHighlight.object.addChild(letter);
-				let newSpot = app.stage.getChildByName((currentHighlight.across ? `${parseInt(clickedPos[0]) + 1},${clickedPos[1]}` : `${clickedPos[0]},${parseInt(clickedPos[1]) + 1}`));
+				let newSpot = allSquares.getChildByName((currentHighlight.across ? `${parseInt(clickedPos[0]) + 1},${clickedPos[1]}` : `${clickedPos[0]},${parseInt(clickedPos[1]) + 1}`));
 				if(newSpot) {
 					return setHighlight(newSpot.children[0]);
 				}
@@ -584,8 +591,8 @@ function setHighlight(clickee) {
 		let leftDone = false;
 		let rightDone = false;
 		while(search) {
-			let leftSquare = app.stage.getChildByName((currentHighlight.across ? `${parseInt(clickedPos[0]) - squareDistance},${clickedPos[1]}` : `${clickedPos[0]},${parseInt(clickedPos[1]) - squareDistance}`));
-			let rightSquare = app.stage.getChildByName((currentHighlight.across ? `${parseInt(clickedPos[0]) + squareDistance},${clickedPos[1]}` : `${clickedPos[0]},${parseInt(clickedPos[1]) + squareDistance}`));
+			let leftSquare = allSquares.getChildByName((currentHighlight.across ? `${parseInt(clickedPos[0]) - squareDistance},${clickedPos[1]}` : `${clickedPos[0]},${parseInt(clickedPos[1]) - squareDistance}`));
+			let rightSquare = allSquares.getChildByName((currentHighlight.across ? `${parseInt(clickedPos[0]) + squareDistance},${clickedPos[1]}` : `${clickedPos[0]},${parseInt(clickedPos[1]) + squareDistance}`));
 			if (leftSquare && !leftDone) {
 				let leftData = leftSquare.children[0];
 				currentHighlight.otherSquares.push(leftData);
