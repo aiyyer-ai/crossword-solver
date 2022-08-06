@@ -185,7 +185,7 @@ function createBoard(info) {
 	scrollbarContainerAcross.x = 250;
 	scrollbarContainerAcross.width = scrollbarWidth;
 	scrollbarContainerAcross.height = (boardHeight * 36) + 2;
-	scrollbarContainerAcross.name = `scrollbarContainerDown`;
+	scrollbarContainerAcross.name = `scrollbarContainerAcross`;
 	let scrollbarAcross = new PIXI.Graphics();
 	scrollbarAcross.beginFill(0xe5e5e5);
 	scrollbarAcross.drawRect(0, 0, scrollbarWidth, (boardHeight * 36) + 2);
@@ -598,8 +598,6 @@ function setHighlight(clickee) {
 	let clueDown = downClueContainer.getChildByName(clickee.parent.clues.down);
 	clueAcross.children[0].tint = 0xbfe5ff;
 	clueDown.children[0].tint = 0xbfe5ff;
-	console.log(across.stage.getChildByName(`scrollbarContainerAcross`));
-	console.log(across.stage);
 	let scrollAbutton = across.stage.getChildByName(`scrollbarContainerAcross`).getChildByName(`scrollbuttonAcross`);
 	let scrollBbutton = down.stage.getChildByName(`scrollbarContainerDown`).getChildByName(`scrollbuttonDown`);
 	adjustScrollBar(clueAcross.y, scrollAbutton, acrossClueContainer);
