@@ -359,6 +359,7 @@ function adjustCluePosition(scrollbutton, clueContainer) {
 }
 
 function adjustScrollBar(desiredY, scrollbutton, clueContainer) {
+	let scrollbuttonRect = scrollbutton.getLocalBounds();
 	if((desiredY + scrollbutton.heightDifference) > 0 && (desiredY + scrollbutton.heightDifference + scrollbuttonRect.height) < ((boardHeight * 36) + 2)) {
 		scrollbutton.y = (desiredY/clueContainer.distanceDown) * ((boardHeight * 36) + 2);
 		adjustCluePosition(scrollbutton, clueContainer);
