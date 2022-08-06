@@ -167,6 +167,7 @@ function createBoard(info) {
 		clueInfo.drawRect(0, 0, 250, clueSpotHeight);
 		clueInfo.interactive = true;
 		clueInfo.name = `${acrossClue[0]}`;
+		clueInfo.dir = `up`;
 		clueInfo.on('click', (event) => onClueClick(clueInfo));
 		clueContainer.addChild(clueInfo);
 		clue.anchor.set(0, 0.5);
@@ -184,6 +185,7 @@ function createBoard(info) {
 	scrollbarContainerAcross.x = 250;
 	scrollbarContainerAcross.width = scrollbarWidth;
 	scrollbarContainerAcross.height = (boardHeight * 36) + 2;
+	scrollbarContainerAcross.name = `scrollbarContainerDown`;
 	let scrollbarAcross = new PIXI.Graphics();
 	scrollbarAcross.beginFill(0xe5e5e5);
 	scrollbarAcross.drawRect(0, 0, scrollbarWidth, (boardHeight * 36) + 2);
@@ -195,6 +197,7 @@ function createBoard(info) {
 	scrollbuttonAcross.beginFill(0x7e7e7e);
 	scrollbuttonAcross.drawRect(0, 0, scrollbarWidth, scrollbuttonSizeAcross);
 	scrollbuttonAcross.interactive = true;
+	scrollbuttonAcross.name = `scrollbuttonAcross`;
 	//acrossClueContainer.on('pointerover', (event) => onOver(scrollbuttonAcross, event, acrossClueContainer, across));
 	scrollbuttonAcross.on('pointerover', (event) => onScrollOver(scrollbuttonAcross));
 	scrollbuttonAcross.on('pointerdown', (event) => onScrollClick(scrollbuttonAcross, event, across));
@@ -246,6 +249,7 @@ function createBoard(info) {
 		clueInfo.drawRect(0, 0, 250, clueSpotHeight);
 		clueInfo.interactive = true;
 		clueInfo.name = `${downClue[0]}`;
+		clueInfo.dir = `down`;
 		clueInfo.on('click', (event) => onClueClick(clueInfo));
 		clueContainer.addChild(clueInfo);
 		clue.anchor.set(0, 0.5);
@@ -263,6 +267,7 @@ function createBoard(info) {
 	scrollbarContainerDown.x = 250;
 	scrollbarContainerDown.width = scrollbarWidth;
 	scrollbarContainerDown.height = (boardHeight * 36) + 2;
+	scrollbarContainerDown.name = `scrollbarContainerDown`;
 	let scrollbarDown = new PIXI.Graphics();
 	scrollbarDown.beginFill(0xe5e5e5);
 	scrollbarDown.drawRect(0, 0, scrollbarWidth, (boardHeight * 36) + 2);
@@ -274,6 +279,7 @@ function createBoard(info) {
 	scrollbuttonDown.beginFill(0x7e7e7e);
 	scrollbuttonDown.drawRect(0, 0, scrollbarWidth, scrollbuttonSizeDown);
 	scrollbuttonDown.interactive = true;
+	scrollbuttonDown.name = `scrollbuttonDown`;
 	//downClueContainer.on('pointerover', (event) => onOver(scrollbuttonDown, event, downClueContainer, down));
 	scrollbuttonDown.on('pointerover', (event) => onScrollOver(scrollbuttonDown));
 	scrollbuttonDown.on('pointerdown', (event) => onScrollClick(scrollbuttonDown, event, down));
@@ -350,6 +356,11 @@ function offScrollOver(scrollbutton) {
 function adjustCluePosition(scrollbutton, clueContainer) {
 	let scrolledToY = Math.floor(scrollbutton.y/((boardHeight * 36) + 2) * clueContainer.distanceDown);
 	clueContainer.y = -scrolledToY;
+}
+
+function adjustScrollBar(desiredY, scrollbutton, clueContainer) {
+	scrollbutton.y = (desiredY/clueContainer.distanceDown) * ((boardHeight * 36) + 2);
+	adjustCluePosition(scrollbutton, clueContainer);
 }
 
 //Clue Functions
@@ -546,13 +557,22 @@ function keyPress(key) {
 	}
 }
 
-let currentClue = null;
+let currentClue = {across:null, down:null};
 function onClueClick(object) {
-	if(currentClue) {
-		currentClue.tint = 0xffffff;
+	if(object.dir == `down`) {
+		if(currentClue.down && object != currentClue.down) {
+			currentClue.down.tint = 0xffffff;
+		}
+		object.tint = 0xbfe5ff;
+		currentClue.down = object;
+	} else {
+		if(currentClue.across && object != currentClue.across) {
+			currentClue.across.tint = 0xffffff;
+		}
+		object.tint = 0xbfe5ff;
+		currentClue.across = object;		
 	}
-	object.tint = 0xbfe5ff;
-	currentClue = object;
+
 }
 
 function onSquareClick(object) {
@@ -574,6 +594,14 @@ function setHighlight(clickee) {
 	}
 	currentHighlight.object = clickee;
 	clickee.tint = 0xfae522;
+	let clueAcross = acrossClueContainer.getChildByName(clickee.clues.across);
+	let clueDown = downClueContainer.getChildByName(clickee.clues.down);
+	clueAcross.children[0].tint = 0xbfe5ff;
+	clueDown.children[0].tint = 0xbfe5ff;
+	let scrollAbutton = across.stage.getChildByName(`scrollbarContainerAcross`).getChildByName(`scrollbuttonAcross`);
+	let scrollBbutton = down.stage.getChildByName(`scrollbarContainerDown`).getChildByName(`scrollbuttonDown`);
+	adjustScrollBar(clueAcross.y, scrollAbutton, acrossClueContainer);
+	adjustScrollBar(clueDown.y, scrollBbutton, downClueContainer);
 	//tints the line of squares around
 	let clickedPos = clickee.name.split(",");
 	//clickedPos[0] = x // clickedPos[1] = y //
