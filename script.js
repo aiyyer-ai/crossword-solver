@@ -185,7 +185,7 @@ function createBoard(info) {
 	scrollbar.on('click', (event) => onScrollbarClick(scrollbuttonAcross, event));
 	scrollbarContainer.addChild(scrollbar);
 	scrollbuttonAcross = new PIXI.Graphics();
-	let scrollbuttonSize = (((boardHeight * 36) + 2) / distanceDownAcross) * (boardHeight * 36) + 2;
+	let scrollbuttonSize = (((boardHeight * 36) + 2) / distanceDownAcross) * ((boardHeight * 36) + 2);
 	scrollbuttonAcross.beginFill(0x7e7e7e);
 	scrollbuttonAcross.drawRect(0, 0, scrollbarWidth, scrollbuttonSize);
 	scrollbuttonAcross.interactive = true;
@@ -258,7 +258,8 @@ function offScrollOver(scrollbutton) {
 }
 
 function adjustCluePosition(scrollbutton, clueContainer) {
-	let scrolledToY = Math.floor(scrollbutton.y/((boardHeight * 36) + 2) * distanceDownAcross);
+	let scrollbuttonRect = scrollbutton.getLocalBounds();
+	let scrolledToY = Math.floor(scrollbutton.y/(((boardHeight * 36) + 2) - scrollbuttonRect.height) * distanceDownAcross);
 	clueContainer.y = -scrolledToY;
 }
 
