@@ -119,7 +119,6 @@ function createBoard(info) {
 		}
 	}
 
-	distanceDownAcross = 0;
 	let acrossContainer = new PIXI.Container();
 	acrossClueContainer = new PIXI.Container();
 	across.stage.addChild(acrossContainer);
@@ -127,6 +126,7 @@ function createBoard(info) {
 	let acrossText = new PIXI.Text(` ACROSS `,{fontFamily: squareFont, fontSize: 18, fill : 0x333333, align : 'left',  fontWeight : 'bold' });
 	let acrossTextRect = acrossText.getLocalBounds();
 	clueStartHeight = acrossTextRect.height;
+	distanceDownAcross = clueStartHeight;
 	let acrossBacking = new PIXI.Graphics();
 	acrossBacking.beginFill(0xffffff);
 	acrossBacking.drawRect(0, 0, 250, acrossTextRect.height);
@@ -140,7 +140,6 @@ function createBoard(info) {
 	acrossContainer.addChild(acrossLine);
 	acrossLine.y = clueStartHeight;
 	acrossContainer.addChild(acrossText);
-	acrossClueContainer.y = clueStartHeight;
 	acrossClueContainer.zIndex = 1;
 
 	//adds clues to the mix
@@ -260,7 +259,7 @@ function offScrollOver(scrollbutton) {
 
 function adjustCluePosition(scrollbutton, clueContainer) {
 	let scrolledToY = Math.floor(scrollbutton.y/((boardHeight * 36) + 2) * distanceDownAcross);
-	clueContainer.y = -scrolledToY + clueStartHeight;
+	clueContainer.y = -scrolledToY;
 }
 
 
