@@ -582,7 +582,7 @@ function onClueClick(object) {
 	}
 
 	let randomSquare = object.parent.squares[0].squareData.name.split(",");
-	let firstSquare = findClueNum(pickaname, object.dir, true);
+	let firstSquare = findClueNum(randomSquare, object.dir, true);
 	setHighlight(firstSquare);
 
 }
