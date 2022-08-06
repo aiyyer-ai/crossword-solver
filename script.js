@@ -15,6 +15,7 @@ function processFile(file) {
 }
 
 let app = null;
+let allSquares = null;
 let across = null;
 let down = null;
 let acrossClueContainer = null;
@@ -76,7 +77,7 @@ function createBoard(info) {
 
 	document.body.addEventListener("keydown", (event) => keyPress(event.key));
 
-	let allSquares = new PIXI.Container();
+	allSquares = new PIXI.Container();
 	app.stage.addChild(allSquares);
 	for (let row in info.puzzle) {
 		let squarePosition = 0;
