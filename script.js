@@ -78,23 +78,13 @@ function createBoard(info) {
 
 	for (let row in info.puzzle) {
 		let squarePosition = 0;
-		let text = null;
 		for (const [index, square] of Object.entries(info.puzzle[row])) {
-			let squareContainer = new PIXI.Container();
-			app.stage.addChild(squareContainer);
-			let crosswordSquare = new PIXI.Graphics();
 			if (square == "#") {
 				squarePosition++;
 				continue;
 			}
-			if(square != 0 && typeof square == 'number') {
-				text = new PIXI.Text(String(square),{fontFamily: squareFont, fontSize: 12, fill : 0x000000, align : 'left'});
-				clueNumber = square;
-				text.x = 1;
-				text.y = -1;
-				text.name = String(square);
-			}
-
+			let squareContainer = new PIXI.Container();
+			app.stage.addChild(squareContainer);
 			let squareX = (squarePosition * (squareSize + 2)) + 2;
 			let squareY = (row * (squareSize + 2)) + 2;
 			squareContainer.x = squareX;
@@ -102,7 +92,7 @@ function createBoard(info) {
 			squareContainer.height = squareSize;
 			squareContainer.width = squareSize;
 			squareContainer.name = `${squarePosition},${row}`;
-			
+			let crosswordSquare = new PIXI.Graphics();
 			crosswordSquare.beginFill(0xffffff);
 			crosswordSquare.drawRect(0, 0, squareSize, squareSize);
 			crosswordSquare.interactive = true;
@@ -112,14 +102,16 @@ function createBoard(info) {
 			crosswordSquare.squareY = squareY;
 			crosswordSquare.name = `${squarePosition},${row}`;
 			crosswordSquare.on('click', (event) => onSquareClick(crosswordSquare));
-
 			squarePosition++;
 			squareContainer.addChild(crosswordSquare);
-			if(text){
+			if(square != 0 && typeof square == 'number') {
+				const text = new PIXI.Text(String(square),{fontFamily: squareFont, fontSize: 12, fill : 0x000000, align : 'left'});
+				clueNumber = square;
+				text.x = 1;
+				text.y = -1;
+				text.name = `numberedSquare`;
 				crosswordSquare.addChild(text);
 			}
-			
-
 		}
 	}
 
