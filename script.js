@@ -594,7 +594,7 @@ function onSquareClick(object) {
 
 function setHighlight(clickee, adjust = false) {
 	//checks if its a double click, if so, swap across value
-	if(clickee == currentHighlight.object) {
+	if(clickee == currentHighlight.object && !adjust) {
 		currentHighlight.across = !currentHighlight.across;
 	}
 	//untints the previously clicked squares
