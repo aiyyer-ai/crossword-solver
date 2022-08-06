@@ -359,11 +359,11 @@ function adjustCluePosition(scrollbutton, clueContainer) {
 }
 
 function adjustScrollBar(desiredY, scrollbutton, clueContainer) {
-	if((event.data.global.y + scrollbutton.heightDifference) > 0 && (event.data.global.y + scrollbutton.heightDifference + scrollbuttonRect.height) < ((boardHeight * 36) + 2)) {
+	if((desiredY + scrollbutton.heightDifference) > 0 && (desiredY + scrollbutton.heightDifference + scrollbuttonRect.height) < ((boardHeight * 36) + 2)) {
 		scrollbutton.y = (desiredY/clueContainer.distanceDown) * ((boardHeight * 36) + 2);
 		adjustCluePosition(scrollbutton, clueContainer);
 	} else {
-		scrollbutton.y = ((event.data.global.y + scrollbutton.heightDifference) <= 0) ? 0 : (((boardHeight * 36) + 2) - scrollbuttonRect.height);
+		scrollbutton.y = ((desiredY + scrollbutton.heightDifference) <= 0) ? 0 : (((boardHeight * 36) + 2) - scrollbuttonRect.height);
 		adjustCluePosition(scrollbutton, clueContainer);
 	}
 }
