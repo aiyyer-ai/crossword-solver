@@ -78,8 +78,6 @@ function createBoard(info) {
 
 	for (let row in info.puzzle) {
 		let squarePosition = 0;
-		let acrossClueNumber = 0;
-		let downClueNumber = 0;
 		let text = null;
 		for (const [index, square] of Object.entries(info.puzzle[row])) {
 			let squareContainer = new PIXI.Container();
@@ -94,7 +92,7 @@ function createBoard(info) {
 				clueNumber = square;
 				text.x = 1;
 				text.y = -1;
-				text.name = `numberedSquare`;
+				text.name = String(square);
 			}
 
 			let squareX = (squarePosition * (squareSize + 2)) + 2;
@@ -125,7 +123,7 @@ function createBoard(info) {
 		}
 	}
 
-	generateSquareNumbers(info);
+	generateSquareNumbers();
 
 	//acrossClues
 	let acrossContainer = new PIXI.Container();
@@ -369,7 +367,7 @@ function onOver(scrollbutton, event, clueContainer, clueApp) {
 //on Start Function
 
 function generateSquareNumbers() {
-	findClueNum([0,0], 'left');
+	console.log(app.stage);
 }
 
 function findClueNum(position, dir) {
@@ -405,7 +403,7 @@ function findClueNum(position, dir) {
 			}
 		}
 	}	
-	console.log(newSpot);
+	return newSpot.children[0].children[0].name;
 }
 
 
