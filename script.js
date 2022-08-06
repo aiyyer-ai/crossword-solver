@@ -166,7 +166,7 @@ function createBoard(info) {
 		clueInfo.drawRect(0, 0, 250, clueSpotHeight);
 		clueInfo.interactive = true;
 		clueInfo.name = `${acrossClue[0]}`;
-		clueInfo.dir = `up`;
+		clueInfo.dir = `left`;
 		clueInfo.on('click', (event) => onClueClick(clueInfo));
 		clueContainer.addChild(clueInfo);
 		clue.anchor.set(0, 0.5);
@@ -580,22 +580,9 @@ function onClueClick(object) {
 	} else {
 		currentHighlight.across = true;
 	}
-	console.log(object);
-
-
-	// if(object.dir == `down`) {
-	// 	if(currentClue.down && object != currentClue.down) {
-	// 		currentClue.down.tint = 0xffffff;
-	// 	}
-	// 	object.tint = 0xbfe5ff;
-	// 	currentClue.down = object;
-	// } else {
-	// 	if(currentClue.across && object != currentClue.across) {
-	// 		currentClue.across.tint = 0xffffff;
-	// 	}
-	// 	object.tint = 0xbfe5ff;
-	// 	currentClue.across = object;		
-	// }
+	let randomSquare = object.parent.squares[0].name.split(",");
+	let firstSquare = findClueNum(pickaname, object.dir, true);
+	setHighlight(firstSquare);
 
 }
 
