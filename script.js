@@ -565,6 +565,9 @@ function keyPress(key) {
 				letter.y = (currentHighlight.object.sizeY/8) * 5;
 				letter.name = 'guess';
 				currentHighlight.object.addChild(letter);
+				let clueAcross = acrossClueContainer.getChildByName(currentHighlight.object.parent.clues.across);
+				let clueDown = downClueContainer.getChildByName(currentHighlight.object.parent.clues.down);
+				console.log(clueAcross);
 				let newSpot = allSquares.getChildByName((currentHighlight.across ? `${parseInt(clickedPos[0]) + 1},${clickedPos[1]}` : `${clickedPos[0]},${parseInt(clickedPos[1]) + 1}`));
 				if(newSpot) {
 					return setHighlight(newSpot.children[0]);
