@@ -362,9 +362,9 @@ function onOver(scrollbutton, event, clueContainer, clueApp) {
 function generateSquareNumbers() {
 	allSquares.children.forEach( (childSquare) => {
 		let squarePos = childSquare.name.split(",");
-		childSquare.clues = {`across`:null, `down`:null};
-		childSquare.clues[`across`] = findClueNum(squarePos, 'left');
-		childSquare.clues[`down`] = findClueNum(squarePos, 'up');
+		childSquare.clues = {across:null, down:null};
+		childSquare.clues.across = findClueNum(squarePos, 'left');
+		childSquare.clues.down = findClueNum(squarePos, 'up');
 		console.log(childSquare.clues);
 	})
 }
