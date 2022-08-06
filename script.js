@@ -549,8 +549,8 @@ function keyPress(key) {
 		if(key == "Delete" || key == "Backspace") {
 			if(currentHighlight.object.children[0] ? (currentHighlight.object.children[currentHighlight.object.children.length - 1].name == 'guess') : currentHighlight.object.children[0])  {
 				currentHighlight.object.children[currentHighlight.object.children.length - 1].destroy();
-				let clueAcross = acrossClueContainer.getChildByName(currentHighlight.object.parent.clues.across);
-				let clueDown = downClueContainer.getChildByName(currentHighlight.object.parent.clues.down);
+				let clueAcross = acrossClueContainer.getChildByName(currentHighlight.object.parent.clues.across).children[0];
+				let clueDown = downClueContainer.getChildByName(currentHighlight.object.parent.clues.down).children[0];
 				clueAcross[currentHighlight.object.parent.clues].filled = false;
 				clueDown[currentHighlight.object.parent.clues].filled = false;
 			}
@@ -562,8 +562,8 @@ function keyPress(key) {
 		if (key.length == 1) {
 				if(currentHighlight.object.children[0] ? (currentHighlight.object.children[currentHighlight.object.children.length - 1].name == 'guess') : currentHighlight.object.children[0])  {
 					currentHighlight.object.children[currentHighlight.object.children.length - 1].destroy();
-					let clueAcross = acrossClueContainer.getChildByName(currentHighlight.object.parent.clues.across);
-					let clueDown = downClueContainer.getChildByName(currentHighlight.object.parent.clues.down);
+					let clueAcross = acrossClueContainer.getChildByName(currentHighlight.object.parent.clues.across).children[0];
+					let clueDown = downClueContainer.getChildByName(currentHighlight.object.parent.clues.down).children[0];
 					clueAcross[currentHighlight.object.parent.clues].filled = false;
 					clueDown[currentHighlight.object.parent.clues].filled = false;
 				}
@@ -573,12 +573,11 @@ function keyPress(key) {
 				letter.y = (currentHighlight.object.sizeY/8) * 5;
 				letter.name = 'guess';
 				currentHighlight.object.addChild(letter);
-				let clueAcross = acrossClueContainer.getChildByName(currentHighlight.object.parent.clues.across);
-				let clueDown = downClueContainer.getChildByName(currentHighlight.object.parent.clues.down);
-				console.log(clueDown);
+				let clueAcross = acrossClueContainer.getChildByName(currentHighlight.object.parent.clues.across).children[0];
+				let clueDown = downClueContainer.getChildByName(currentHighlight.object.parent.clues.down).children[0];
 				clueAcross[currentHighlight.object.parent.clues].filled = true;
 				clueDown[currentHighlight.object.parent.clues].filled = true;
-
+				console.log(clueDown);
 				let newSpot = allSquares.getChildByName((currentHighlight.across ? `${parseInt(clickedPos[0]) + 1},${clickedPos[1]}` : `${clickedPos[0]},${parseInt(clickedPos[1]) + 1}`));
 				if(newSpot) {
 					return setHighlight(newSpot.children[0]);
