@@ -598,10 +598,12 @@ function setHighlight(clickee) {
 	let clueDown = downClueContainer.getChildByName(clickee.parent.clues.down);
 	clueAcross.children[0].tint = 0xbfe5ff;
 	clueDown.children[0].tint = 0xbfe5ff;
+	currentHighlight.otherSquares.push(clueAcross.children[0]);
+	currentHighlight.otherSquares.push(clueDown.children[0]);
 	let scrollAbutton = across.stage.getChildByName(`scrollbarContainerAcross`).getChildByName(`scrollbuttonAcross`);
 	let scrollBbutton = down.stage.getChildByName(`scrollbarContainerDown`).getChildByName(`scrollbuttonDown`);
-	adjustScrollBar(clueAcross.y, scrollAbutton, acrossClueContainer);
-	adjustScrollBar(clueDown.y, scrollBbutton, downClueContainer);
+	adjustScrollBar(clueAcross.y + clueStartHeight, scrollAbutton, acrossClueContainer);
+	adjustScrollBar(clueDown.y + clueStartHeight, scrollBbutton, downClueContainer);
 	//tints the line of squares around
 	let clickedPos = clickee.name.split(",");
 	//clickedPos[0] = x // clickedPos[1] = y //
