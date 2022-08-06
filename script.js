@@ -17,9 +17,10 @@ function processFile(file) {
 let app = null;
 let across = null;
 let down = null;
-let distanceDownAcross = null;
 let acrossClueContainer = null;
 let scrollbuttonAcross = null;
+let downClueContainer = null;
+let scrollbuttonDown = null;
 let clueStartHeight = 0;
 let squareSize = 34;
 let squareFont = 'Arial';
@@ -119,6 +120,7 @@ function createBoard(info) {
 		}
 	}
 
+	//acrossClues
 	let acrossContainer = new PIXI.Container();
 	acrossClueContainer = new PIXI.Container();
 	across.stage.addChild(acrossContainer);
@@ -126,7 +128,7 @@ function createBoard(info) {
 	let acrossText = new PIXI.Text(` ACROSS `,{fontFamily: squareFont, fontSize: 18, fill : 0x333333, align : 'left',  fontWeight : 'bold' });
 	let acrossTextRect = acrossText.getLocalBounds();
 	clueStartHeight = acrossTextRect.height;
-	distanceDownAcross = clueStartHeight;
+	acrossClueContainer.distanceDown = clueStartHeight;
 	let acrossBacking = new PIXI.Graphics();
 	acrossBacking.beginFill(0xffffff);
 	acrossBacking.drawRect(0, 0, 250, acrossTextRect.height);
@@ -151,8 +153,8 @@ function createBoard(info) {
 		let clueContainer = new PIXI.Container();
 		let clueSpotHeight = clueRect.height + 16;
 		acrossClueContainer.addChild(clueContainer);
-		clueContainer.y = distanceDownAcross;
-		distanceDownAcross += clueSpotHeight;
+		clueContainer.y = acrossClueContainer.distanceDown;
+		acrossClueContainer.distanceDown += clueSpotHeight;
 		clueContainer.height = clueSpotHeight;
 		clueContainer.width = 250;
 		clueContainer.name = `${acrossClue[0]}`;
@@ -173,31 +175,107 @@ function createBoard(info) {
 	}
 
 	//lets create a scrollbar here
-	let scrollbarContainer = new PIXI.Container();
-	across.stage.addChild(scrollbarContainer);
-	scrollbarContainer.x = 250;
-	scrollbarContainer.width = scrollbarWidth;
-	scrollbarContainer.height = (boardHeight * 36) + 2;
-	let scrollbar = new PIXI.Graphics();
-	scrollbar.beginFill(0xe5e5e5);
-	scrollbar.drawRect(0, 0, scrollbarWidth, (boardHeight * 36) + 2);
-	scrollbar.interactive = true;
-	scrollbar.on('click', (event) => onScrollbarClick(scrollbuttonAcross, event));
-	scrollbarContainer.addChild(scrollbar);
+	let scrollbarContainerAcross = new PIXI.Container();
+	across.stage.addChild(scrollbarContainerAcross);
+	scrollbarContainerAcross.x = 250;
+	scrollbarContainerAcross.width = scrollbarWidth;
+	scrollbarContainerAcross.height = (boardHeight * 36) + 2;
+	let scrollbarAcross = new PIXI.Graphics();
+	scrollbarAcross.beginFill(0xe5e5e5);
+	scrollbarAcross.drawRect(0, 0, scrollbarWidth, (boardHeight * 36) + 2);
+	scrollbarAcross.interactive = true;
+	scrollbarAcross.on('click', (event) => onScrollbarClick(scrollbuttonAcross, event, acrossContainer));
+	scrollbarContainerAcross.addChild(scrollbarAcross);
 	scrollbuttonAcross = new PIXI.Graphics();
-	let scrollbuttonSize = (((boardHeight * 36) + 2) / distanceDownAcross) * ((boardHeight * 36) + 2);
+	let scrollbuttonSizeAcross = (((boardHeight * 36) + 2) / acrossClueContainer.distanceDown) * ((boardHeight * 36) + 2);
 	scrollbuttonAcross.beginFill(0x7e7e7e);
-	scrollbuttonAcross.drawRect(0, 0, scrollbarWidth, scrollbuttonSize);
+	scrollbuttonAcross.drawRect(0, 0, scrollbarWidth, scrollbuttonSizeAcross);
 	scrollbuttonAcross.interactive = true;
 	scrollbuttonAcross.on('pointerover', (event) => onScrollOver(scrollbuttonAcross));
-	scrollbuttonAcross.on('pointerdown', (event) => onScrollClick(scrollbuttonAcross, event));
-	scrollbuttonAcross.on('pointermove', (event) => onScrollDrag(scrollbuttonAcross, event));
-	document.body.onpointerup = (event) => offScrollClick(scrollbuttonAcross, event);
+	scrollbuttonAcross.on('pointerdown', (event) => onScrollClick(scrollbuttonAcross, event, across));
+	scrollbuttonAcross.on('pointermove', (event) => onScrollDrag(scrollbuttonAcross, event, acrossContainer));
+	document.body.onpointerup = (event) => offScrollClick(scrollbuttonAcross, event, across);
 	scrollbuttonAcross.on('pointerout', (event) => offScrollOver(scrollbuttonAcross));
-	scrollbarContainer.addChild(scrollbuttonAcross);
-	//I'll need to add more events
+	scrollbarContainerAcross.addChild(scrollbuttonAcross);
 
 
+
+	//downClues
+	let downContainer = new PIXI.Container();
+	downClueContainer = new PIXI.Container();
+	down.stage.addChild(downContainer);
+	downContainer.addChild(downClueContainer);
+	let downText = new PIXI.Text(` DOWN `,{fontFamily: squareFont, fontSize: 18, fill : 0x333333, align : 'left',  fontWeight : 'bold' });
+	let downTextRect = downText.getLocalBounds();
+	downClueContainer.distanceDown = clueStartHeight;
+	let downBacking = new PIXI.Graphics();
+	downBacking.beginFill(0xffffff);
+	downBacking.drawRect(0, 0, 250, clueStartHeight);
+	downBacking.zIndex = 2;
+	downContainer.addChild(downBacking);
+	let downLine = new PIXI.Graphics();
+	downLine.beginFill(0xe5e5e5);
+	downLine.drawRect(0, 0, 245, 1);
+	downText.zIndex = 3;
+	downLine.zIndex = 3;
+	downContainer.addChild(downLine);
+	downLine.y = clueStartHeight;
+	downContainer.addChild(downText);
+	downClueContainer.zIndex = 1;
+
+	//adds clues to the mix
+	for (const [index, downClue] of Object.entries(info.clues.Down)) {
+		const clueNum = new PIXI.Text(` ${String(downClue[0])}  `,{fontFamily: squareFont, fontSize: 18, fill : 0x333333, align : 'left',  fontWeight : 'bold' });
+		let clueNumRect = clueNum.getLocalBounds();
+		const clue = new PIXI.Text(`${String(downClue[1])}`,{fontFamily: squareFont, fontSize: 18, fill : 0x333333, align : 'left', wordWrap : true, wordWrapWidth: (245 - clueNumRect.width)});
+		let clueRect = clue.getLocalBounds();
+		let clueContainer = new PIXI.Container();
+		let clueSpotHeight = clueRect.height + 16;
+		downClueContainer.addChild(clueContainer);
+		clueContainer.y = downClueContainer.distanceDown;
+		downClueContainer.distanceDown += clueSpotHeight;
+		clueContainer.height = clueSpotHeight;
+		clueContainer.width = 250;
+		clueContainer.name = `${downClue[0]}`;
+		let clueInfo = new PIXI.Graphics();
+		clueInfo.beginFill(0xffffff);
+		clueInfo.drawRect(0, 0, 250, clueSpotHeight);
+		clueInfo.interactive = true;
+		clueInfo.name = `${downClue[0]}`;
+		clueInfo.on('click', (event) => onClueClick(clueInfo));
+		clueContainer.addChild(clueInfo);
+		clue.anchor.set(0, 0.5);
+		clue.y = (clueSpotHeight) / 2;
+		clue.x = clueNumRect.width;
+		clueNum.y = 8;
+		clue.name = `${downClue[0]}`;
+		clueInfo.addChild(clueNum);
+		clueInfo.addChild(clue);
+	}
+
+	//lets create a scrollbar here
+	let scrollbarContainerDown = new PIXI.Container();
+	down.stage.addChild(scrollbarContainerDown);
+	scrollbarContainerDown.x = 250;
+	scrollbarContainerDown.width = scrollbarWidth;
+	scrollbarContainerDown.height = (boardHeight * 36) + 2;
+	let scrollbarDown = new PIXI.Graphics();
+	scrollbarDown.beginFill(0xe5e5e5);
+	scrollbarDown.drawRect(0, 0, scrollbarWidth, (boardHeight * 36) + 2);
+	scrollbarDown.interactive = true;
+	scrollbarDown.on('click', (event) => onScrollbarClick(scrollbuttonDown, event, downClueContainer));
+	scrollbarContainerDown.addChild(scrollbarDown);
+	scrollbuttonDown = new PIXI.Graphics();
+	let scrollbuttonSizeDown = (((boardHeight * 36) + 2) / downClueContainer.distanceDown) * ((boardHeight * 36) + 2);
+	scrollbuttonDown.beginFill(0x7e7e7e);
+	scrollbuttonDown.drawRect(0, 0, scrollbarWidth, scrollbuttonSizeDown);
+	scrollbuttonDown.interactive = true;
+	scrollbuttonDown.on('pointerover', (event) => onScrollOver(scrollbuttonDown));
+	scrollbuttonDown.on('pointerdown', (event) => onScrollClick(scrollbuttonDown, event, down));
+	scrollbuttonDown.on('pointermove', (event) => onScrollDrag(scrollbuttonDown, event, downClueContainer));
+	document.body.onpointerup = (event) => offScrollClick(scrollbuttonDown, event);
+	scrollbuttonDown.on('pointerout', (event) => offScrollOver(scrollbuttonDown, down));
+	scrollbarContainerDown.addChild(scrollbuttonDown);
 
 
 	//end
@@ -205,46 +283,46 @@ function createBoard(info) {
 
 //scrollbar Functions
 
-function onScrollbarClick(scrollbutton, event) {
+function onScrollbarClick(scrollbutton, event, clueContainer) {
 	let scrollbuttonRect = scrollbutton.getLocalBounds();
 	let halfwayScrollbutton = Math.floor(scrollbuttonRect.height/2);
 	if((event.data.global.y + halfwayScrollbutton) > ((boardHeight * 36) + 2)) {
 		scrollbutton.y = ((boardHeight * 36) + 2) - scrollbuttonRect.height;
-		adjustCluePosition(scrollbutton, acrossClueContainer);
+		adjustCluePosition(scrollbutton, clueContainer);
 	} else if((event.data.global.y - halfwayScrollbutton) < 0) {
 		scrollbutton.y = 0;
-		adjustCluePosition(scrollbutton, acrossClueContainer);
+		adjustCluePosition(scrollbutton, clueContainer);
 	} else {
 		scrollbutton.y = event.data.global.y - halfwayScrollbutton;
-		adjustCluePosition(scrollbutton, acrossClueContainer);
+		adjustCluePosition(scrollbutton, clueContainer);
 	}
 }
 
-function onScrollClick(scrollbutton, event) {
+function onScrollClick(scrollbutton, event, clueApp) {
 	scrollbutton.tint = 0x616161;
 	scrollbutton.heightDifference = scrollbutton.y - event.data.global.y;
-	across.view.setPointerCapture(event.data.originalEvent.pointerId);
+	clueApp.view.setPointerCapture(event.data.originalEvent.pointerId);
 	scrollbutton.dragging = true;
 }
 
-function onScrollDrag(scrollbutton, event) {
+function onScrollDrag(scrollbutton, event, clueContainer) {
 	if(scrollbutton.dragging) {
 		let scrollbuttonRect = scrollbutton.getLocalBounds();
 		if((event.data.global.y + scrollbutton.heightDifference) > 0 && (event.data.global.y + scrollbutton.heightDifference + scrollbuttonRect.height) < ((boardHeight * 36) + 2)) {
 			scrollbutton.y = event.data.global.y + scrollbutton.heightDifference;
-			adjustCluePosition(scrollbutton, acrossClueContainer);
+			adjustCluePosition(scrollbutton, clueContainer);
 		} else {
 			scrollbutton.y = ((event.data.global.y + scrollbutton.heightDifference) <= 0) ? 0 : (((boardHeight * 36) + 2) - scrollbuttonRect.height);
-			adjustCluePosition(scrollbutton, acrossClueContainer);
+			adjustCluePosition(scrollbutton, clueContainer);
 		}
 	}
 }
 
-function offScrollClick(scrollbutton, event) {
+function offScrollClick(scrollbutton, event, clueApp) {
 	if(scrollbutton.dragging) {
 		scrollbutton.tint = 0xffffff;
 		scrollbutton.heightDifference = 0;
-		across.view.releasePointerCapture(event.pointerId);
+		clueApp.view.releasePointerCapture(event.pointerId);
 		scrollbutton.dragging = false;
 	}
 }
@@ -258,7 +336,7 @@ function offScrollOver(scrollbutton) {
 }
 
 function adjustCluePosition(scrollbutton, clueContainer) {
-	let scrolledToY = Math.floor(scrollbutton.y/((boardHeight * 36) + 2) * distanceDownAcross);
+	let scrolledToY = Math.floor(scrollbutton.y/((boardHeight * 36) + 2) * clueContainer.distanceDown);
 	clueContainer.y = -scrolledToY;
 }
 
