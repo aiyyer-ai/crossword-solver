@@ -580,8 +580,8 @@ function onClueClick(object) {
 	} else {
 		currentHighlight.across = true;
 	}
-	console.log(object.parent.squares[0]);
-	let randomSquare = object.parent.squares[0].name.split(",");
+
+	let randomSquare = object.parent.squares[0].squareData.name.split(",");
 	let firstSquare = findClueNum(pickaname, object.dir, true);
 	setHighlight(firstSquare);
 
