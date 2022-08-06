@@ -299,6 +299,7 @@ function onScrollbarClick(scrollbutton, event, clueContainer) {
 }
 
 function onScrollClick(scrollbutton, event, clueApp) {
+	console.log(event);
 	scrollbutton.tint = 0x616161;
 	scrollbutton.heightDifference = scrollbutton.y - event.data.global.y;
 	clueApp.view.setPointerCapture(event.data.originalEvent.pointerId);
@@ -320,6 +321,7 @@ function onScrollDrag(scrollbutton, event, clueContainer) {
 
 function offScrollClick(scrollbutton, event, clueApp) {
 	if(scrollbutton.dragging) {
+		console.log(event);
 		scrollbutton.tint = 0xffffff;
 		scrollbutton.heightDifference = 0;
 		clueApp.view.releasePointerCapture(event.data.originalEvent.pointerId);
