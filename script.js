@@ -184,7 +184,7 @@ function createBoard(info) {
 	scrollbarAcross.beginFill(0xe5e5e5);
 	scrollbarAcross.drawRect(0, 0, scrollbarWidth, (boardHeight * 36) + 2);
 	scrollbarAcross.interactive = true;
-	scrollbarAcross.on('click', (event) => onScrollbarClick(scrollbuttonAcross, event, acrossContainer));
+	scrollbarAcross.on('click', (event) => onScrollbarClick(scrollbuttonAcross, event, acrossClueContainer));
 	scrollbarContainerAcross.addChild(scrollbarAcross);
 	scrollbuttonAcross = new PIXI.Graphics();
 	let scrollbuttonSizeAcross = (((boardHeight * 36) + 2) / acrossClueContainer.distanceDown) * ((boardHeight * 36) + 2);
@@ -193,7 +193,7 @@ function createBoard(info) {
 	scrollbuttonAcross.interactive = true;
 	scrollbuttonAcross.on('pointerover', (event) => onScrollOver(scrollbuttonAcross));
 	scrollbuttonAcross.on('pointerdown', (event) => onScrollClick(scrollbuttonAcross, event, across));
-	scrollbuttonAcross.on('pointermove', (event) => onScrollDrag(scrollbuttonAcross, event, acrossContainer));
+	scrollbuttonAcross.on('pointermove', (event) => onScrollDrag(scrollbuttonAcross, event, acrossClueContainer));
 	document.body.onpointerup = (event) => offScrollClick(scrollbuttonAcross, event, across);
 	scrollbuttonAcross.on('pointerout', (event) => offScrollOver(scrollbuttonAcross));
 	scrollbarContainerAcross.addChild(scrollbuttonAcross);
