@@ -598,6 +598,8 @@ function setHighlight(clickee) {
 	let clueDown = downClueContainer.getChildByName(clickee.parent.clues.down);
 	clueAcross.children[0].tint = 0xbfe5ff;
 	clueDown.children[0].tint = 0xbfe5ff;
+	console.log(across.stage.getChildByName(`scrollbarContainerAcross`));
+	console.log(across.stage);
 	let scrollAbutton = across.stage.getChildByName(`scrollbarContainerAcross`).getChildByName(`scrollbuttonAcross`);
 	let scrollBbutton = down.stage.getChildByName(`scrollbarContainerDown`).getChildByName(`scrollbuttonDown`);
 	adjustScrollBar(clueAcross.y, scrollAbutton, acrossClueContainer);
