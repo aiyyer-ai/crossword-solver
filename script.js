@@ -575,9 +575,10 @@ function keyPress(key) {
 				currentHighlight.object.addChild(letter);
 				let clueAcross = acrossClueContainer.getChildByName(currentHighlight.object.parent.clues.across);
 				let clueDown = downClueContainer.getChildByName(currentHighlight.object.parent.clues.down);
+				console.log(clueDown);
 				clueAcross[currentHighlight.object.parent.clues].filled = true;
 				clueDown[currentHighlight.object.parent.clues].filled = true;
-				console.log(clueDown);
+
 				let newSpot = allSquares.getChildByName((currentHighlight.across ? `${parseInt(clickedPos[0]) + 1},${clickedPos[1]}` : `${clickedPos[0]},${parseInt(clickedPos[1]) + 1}`));
 				if(newSpot) {
 					return setHighlight(newSpot.children[0]);
