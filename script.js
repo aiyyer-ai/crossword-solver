@@ -258,7 +258,7 @@ function offScrollOver(scrollbutton) {
 }
 
 function adjustCluePosition(scrollbutton, clueContainer) {
-	let scrolledToY = Math.floor(scrollbutton.y/(((boardHeight * 36) + 2)) * distanceDownAcross);
+	let scrolledToY = Math.floor(scrollbutton.y/((boardHeight * 36) + 2) * distanceDownAcross);
 	clueContainer.y = -scrolledToY;
 }
 
