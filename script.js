@@ -47,7 +47,7 @@ function createBoard(info) {
     render.autoResize = true;
     app.render();
 		let acrossRender = across.renderer;
-		acrossRender.backgroundColor = 0xffffff;
+		acrossRender.backgroundColor = 0xff00ff;
 	    acrossRender.view.style.position = "absolute";
 	    acrossRender.view.style.display = "block";
 	    acrossRender.view.style.width = `${clueWidth}px`;
@@ -78,11 +78,23 @@ function createBoard(info) {
 
 	for (let row in info.puzzle) {
 		let squarePosition = 0;
-		let clueNumber = 1;
+		let acrossClueNumber = 0;
+		let downClueNumber = 0;
+		let text = null;
 		for (const [index, square] of Object.entries(info.puzzle[row])) {
 			if (square == "#") {
 				squarePosition++;
 				continue;
+			}
+			if(square != 0 && typeof square == 'number') {
+				text = new PIXI.Text(String(square),{fontFamily: squareFont, fontSize: 12, fill : 0x000000, align : 'left'});
+				clueNumber = square;
+				squareContainer.clue = clueNumber;
+				crosswordSquare.clue = clueNumber;
+				text.x = 1;
+				text.y = -1;
+				text.name = `numberedSquare`;
+				
 			}
 			let squareContainer = new PIXI.Container();
 			app.stage.addChild(squareContainer);
@@ -107,16 +119,11 @@ function createBoard(info) {
 			crosswordSquare.on('click', (event) => onSquareClick(crosswordSquare));
 			squarePosition++;
 			squareContainer.addChild(crosswordSquare);
-			if(square != 0 && typeof square == 'number') {
-				const text = new PIXI.Text(String(square),{fontFamily: squareFont, fontSize: 12, fill : 0x000000, align : 'left'});
-				clueNumber = square;
-				squareContainer.clue = clueNumber;
-				crosswordSquare.clue = clueNumber;
-				text.x = 1;
-				text.y = -1;
-				text.name = `numberedSquare`;
+			if(text){
 				crosswordSquare.addChild(text);
 			}
+			
+
 		}
 	}
 
@@ -191,6 +198,7 @@ function createBoard(info) {
 	scrollbuttonAcross.beginFill(0x7e7e7e);
 	scrollbuttonAcross.drawRect(0, 0, scrollbarWidth, scrollbuttonSizeAcross);
 	scrollbuttonAcross.interactive = true;
+	acrossClueContainer.on('pointerover', (event) => onOver(scrollbuttonAcross, event, acrossClueContainer, across));
 	scrollbuttonAcross.on('pointerover', (event) => onScrollOver(scrollbuttonAcross));
 	scrollbuttonAcross.on('pointerdown', (event) => onScrollClick(scrollbuttonAcross, event, across));
 	scrollbuttonAcross.on('pointermove', (event) => onScrollDrag(scrollbuttonAcross, event, acrossClueContainer));
@@ -269,6 +277,7 @@ function createBoard(info) {
 	scrollbuttonDown.beginFill(0x7e7e7e);
 	scrollbuttonDown.drawRect(0, 0, scrollbarWidth, scrollbuttonSizeDown);
 	scrollbuttonDown.interactive = true;
+	downClueContainer.on('pointerover', (event) => onOver(scrollbuttonDown, event, downClueContainer, down));
 	scrollbuttonDown.on('pointerover', (event) => onScrollOver(scrollbuttonDown));
 	scrollbuttonDown.on('pointerdown', (event) => onScrollClick(scrollbuttonDown, event, down));
 	scrollbuttonDown.on('pointermove', (event) => onScrollDrag(scrollbuttonDown, event, downClueContainer));
@@ -346,7 +355,16 @@ function adjustCluePosition(scrollbutton, clueContainer) {
 	clueContainer.y = -scrolledToY;
 }
 
+//Clue Functions
 
+function onOver(scrollbutton, event, clueContainer, clueApp) {
+	clueApp.view.onwheel = (e) => {
+		console.log(event);
+		scrollbutton.y += e.DeltaY;
+		adjustCluePosition(scrollbutton, clueContainer);
+	};
+
+}
 
 
 
