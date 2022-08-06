@@ -594,9 +594,8 @@ function setHighlight(clickee) {
 	}
 	currentHighlight.object = clickee;
 	clickee.tint = 0xfae522;
-	console.log(clickee);
-	let clueAcross = acrossClueContainer.getChildByName(clickee.clues.across);
-	let clueDown = downClueContainer.getChildByName(clickee.clues.down);
+	let clueAcross = acrossClueContainer.getChildByName(clickee.parent.clues.across);
+	let clueDown = downClueContainer.getChildByName(clickee.parent.clues.down);
 	clueAcross.children[0].tint = 0xbfe5ff;
 	clueDown.children[0].tint = 0xbfe5ff;
 	let scrollAbutton = across.stage.getChildByName(`scrollbarContainerAcross`).getChildByName(`scrollbuttonAcross`);
