@@ -371,7 +371,6 @@ function generateSquareNumbers() {
 		childSquare.clues = {across:null, down:null};
 		childSquare.clues.across = findClueNum(squarePos, 'left');
 		childSquare.clues.down = findClueNum(squarePos, 'up');
-		console.log(childSquare.clues);
 	})
 }
 
