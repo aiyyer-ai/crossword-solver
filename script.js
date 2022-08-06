@@ -361,11 +361,13 @@ function adjustCluePosition(scrollbutton, clueContainer) {
 function adjustScrollBar(desiredY, scrollbutton, clueContainer) {
 	let scrollbuttonRect = scrollbutton.getLocalBounds();
 	let shrunkY = (desiredY/clueContainer.distanceDown) * ((boardHeight * 36) + 2);
-	if((shrunkY + scrollbutton.heightDifference) > 0 && (shrunkY + scrollbutton.heightDifference + scrollbuttonRect.height) < ((boardHeight * 36) + 2)) {
+	if((shrunkY) > 0 && (shrunkY + scrollbuttonRect.height) < ((boardHeight * 36) + 2)) {
 		scrollbutton.y = shrunkY;
+		console.log(scrollbutton.y);
 		adjustCluePosition(scrollbutton, clueContainer);
 	} else {
 		scrollbutton.y = ((shrunkY + scrollbutton.heightDifference) <= 0) ? 0 : (((boardHeight * 36) + 2) - scrollbuttonRect.height);
+		console.log(scrollbutton.y);
 		adjustCluePosition(scrollbutton, clueContainer);
 	}
 }
@@ -603,14 +605,20 @@ function setHighlight(clickee) {
 	clickee.tint = 0xfae522;
 	let clueAcross = acrossClueContainer.getChildByName(clickee.parent.clues.across);
 	let clueDown = downClueContainer.getChildByName(clickee.parent.clues.down);
-	clueAcross.children[0].tint = 0xbfe5ff;
-	clueDown.children[0].tint = 0xbfe5ff;
-	currentHighlight.otherSquares.push(clueAcross.children[0]);
-	currentHighlight.otherSquares.push(clueDown.children[0]);
-	let scrollAbutton = across.stage.getChildByName(`scrollbarContainerAcross`).getChildByName(`scrollbuttonAcross`);
-	let scrollBbutton = down.stage.getChildByName(`scrollbarContainerDown`).getChildByName(`scrollbuttonDown`);
-	adjustScrollBar(clueAcross.y - clueStartHeight, scrollAbutton, acrossClueContainer);
-	adjustScrollBar(clueDown.y - clueStartHeight, scrollBbutton, downClueContainer);
+	if(currentClue.across != clueAcross.children[0]) {
+		clueAcross.children[0].tint = 0xbfe5ff;
+		currentClue.across = clueAcross.children[0];
+		currentHighlight.otherSquares.push(clueAcross.children[0]);
+		let scrollAbutton = across.stage.getChildByName(`scrollbarContainerAcross`).getChildByName(`scrollbuttonAcross`);
+		adjustScrollBar(clueAcross.y - clueStartHeight, scrollAbutton, acrossClueContainer);
+	}
+	if(currentClue.down != clueDown.children[0]) {
+		clueDown.children[0].tint = 0xbfe5ff;
+		currentClue.down = clueDown.children[0];
+		currentHighlight.otherSquares.push(clueDown.children[0]);
+		let scrollBbutton = down.stage.getChildByName(`scrollbarContainerDown`).getChildByName(`scrollbuttonDown`);
+		adjustScrollBar(clueDown.y - clueStartHeight, scrollBbutton, downClueContainer);
+	}
 	//tints the line of squares around
 	let clickedPos = clickee.name.split(",");
 	//clickedPos[0] = x // clickedPos[1] = y //
