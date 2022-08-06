@@ -208,14 +208,15 @@ function createBoard(info) {
 
 function onScrollbarClick(scrollbutton, event) {
 	let scrollbuttonRect = scrollbutton.getLocalBounds();
-	if((event.data.global.y + scrollbuttonRect.height/2) > ((boardHeight * 36) + 2)) {
+	let halfwayScrollbutton = Math.floor(scrollbuttonRect.height/2);
+	if((event.data.global.y + halfwayScrollbutton) > ((boardHeight * 36) + 2)) {
 		scrollbutton.y = ((boardHeight * 36) + 2) - scrollbuttonRect.height;
 		adjustCluePosition(scrollbutton, acrossClueContainer);
-	} else if((event.data.global.y - scrollbuttonRect.height/2) < 0) {
+	} else if((event.data.global.y - halfwayScrollbutton) < 0) {
 		scrollbutton.y = 0;
 		adjustCluePosition(scrollbutton, acrossClueContainer);
 	} else {
-		scrollbutton.y = event.data.global.y - (scrollbuttonRect.height/2);
+		scrollbutton.y = event.data.global.y - halfwayScrollbutton;
 		adjustCluePosition(scrollbutton, acrossClueContainer);
 	}
 }
@@ -233,6 +234,8 @@ function onScrollDrag(scrollbutton, event) {
 		if((event.data.global.y + scrollbutton.heightDifference) > 0 && (event.data.global.y + scrollbutton.heightDifference + scrollbuttonRect.height) < ((boardHeight * 36) + 2)) {
 			scrollbutton.y = event.data.global.y + scrollbutton.heightDifference;
 			adjustCluePosition(scrollbutton, acrossClueContainer);
+		} else {
+			scrollbutton.y = ((event.data.global.y + scrollbutton.heightDifference) <= 0) ? 0 : (((boardHeight * 36) + 2) - scrollbuttonRect.height);
 		}
 	}
 }
@@ -255,8 +258,7 @@ function offScrollOver(scrollbutton) {
 }
 
 function adjustCluePosition(scrollbutton, clueContainer) {
-	console.log(scrollbutton.y);
-	let scrolledToY = scrollbutton.y/((boardHeight * 36) + 2) * distanceDownAcross;
+	let scrolledToY = Math.floor(scrollbutton.y/((boardHeight * 36) + 2)) * distanceDownAcross;
 	clueContainer.y = -scrolledToY + clueStartHeight;
 }
 
