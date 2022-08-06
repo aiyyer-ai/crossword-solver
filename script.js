@@ -583,7 +583,7 @@ function onClueClick(object) {
 
 	let randomSquare = object.parent.squares[0].squareData.name.split(",");
 	let firstSquare = findClueNum(randomSquare, object.dir, true);
-	setHighlight(firstSquare, false);
+	setHighlight(firstSquare, object.dir);
 
 }
 
@@ -592,7 +592,7 @@ function onSquareClick(object) {
 }
 
 
-function setHighlight(clickee, adjust = true) {
+function setHighlight(clickee, adjust = false) {
 	//checks if its a double click, if so, swap across value
 	if(clickee == currentHighlight.object) {
 		currentHighlight.across = !currentHighlight.across;
@@ -614,10 +614,21 @@ function setHighlight(clickee, adjust = true) {
 		clueDown.children[0].tint = 0xbfe5ff;
 		currentHighlight.otherSquares.push(clueDown.children[0]);
 		let scrollBbutton = down.stage.getChildByName(`scrollbarContainerDown`).getChildByName(`scrollbuttonDown`);
-		if(adjust) {
+		switch(adjust) {
+		  case `down`:
+		    adjustScrollBar(clueAcross.y - clueStartHeight, scrollAbutton, acrossClueContainer);
+		    break;
+		  case `left`:
+		    adjustScrollBar(clueDown.y - clueStartHeight, scrollBbutton, downClueContainer);
+		    break;
+		  case false:
+		  default:
 			adjustScrollBar(clueAcross.y - clueStartHeight, scrollAbutton, acrossClueContainer);
 			adjustScrollBar(clueDown.y - clueStartHeight, scrollBbutton, downClueContainer);
-		}
+		} 
+			
+			
+
 	//tints the line of squares around
 	let clickedPos = clickee.name.split(",");
 	//clickedPos[0] = x // clickedPos[1] = y //
