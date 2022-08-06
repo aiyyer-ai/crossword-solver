@@ -98,6 +98,11 @@ function createBoard(info) {
 			let crosswordSquare = new PIXI.Graphics();
 			crosswordSquare.beginFill(0xffffff);
 			crosswordSquare.drawRect(0, 0, squareSize, squareSize);
+			if (square.cell) {
+				crosswordSquare.lineStyle(2, 0x000000, 1);
+				crosswordSquare.drawCircle(0, 0, (squareSize/2)-1);
+				square = square.cell;
+			}
 			crosswordSquare.interactive = true;
 			crosswordSquare.sizeX = squareSize;
 			crosswordSquare.sizeY = squareSize;
