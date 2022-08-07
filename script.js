@@ -392,6 +392,7 @@ function generateSquareNumbers() {
 		childSquare.clues.across = findClueNum(squarePos, 'left', false);
 		childSquare.clues.down = findClueNum(squarePos, 'up', false);
 		let acrossRegister = acrossClueContainer.getChildByName(childSquare.clues.across);
+		console.log(Object.toString(childSquare.clues));
 		acrossRegister.squares[Object.toString(childSquare.clues)] = [false, childSquare];
 		let downRegister = downClueContainer.getChildByName(childSquare.clues.down);
 		acrossRegister.squares[Object.toString(childSquare.clues)] = [false, childSquare];
