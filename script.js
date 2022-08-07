@@ -573,6 +573,7 @@ function keyPress(key, info) {
 		if (key.length == 1) {
 				if(currentHighlight.object.children[0] ? (currentHighlight.object.children[currentHighlight.object.children.length - 1].name == 'guess') : currentHighlight.object.children[0])  {
 					console.log(currentHighlight.object.children[currentHighlight.object.children.length - 1].text, info.solution[clickedPos[1]][clickedPos[0]]);
+					console.log(filledAnswers.indexOf(true), filledAnswers.indexOf(clickedPos));
 					if(currentHighlight.object.children[currentHighlight.object.children.length - 1].text == info.solution[clickedPos[1]][clickedPos[0]]) {
 						filledAnswers.splice(filledAnswers.indexOf(true), 1);
 					} else {
