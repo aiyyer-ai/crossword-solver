@@ -551,6 +551,10 @@ function keyPress(key) {
 				let clueDown = downClueContainer.getChildByName(currentHighlight.object.parent.clues.down);
 				clueAcross.squares[currentHighlight.object.parent.clues.name][0] = false;
 				clueDown.squares[currentHighlight.object.parent.clues.name][0] = false;
+				clueAcross.children[0].children[0].style.fill = 0x333333;
+				clueAcross.children[0].children[1].style.fill = 0x333333;
+				clueDown.children[0].children[0].style.fill = 0x333333;
+				clueDown.children[0].children[1].style.fill = 0x333333;
 			}
 			let newSpot = allSquares.getChildByName((currentHighlight.across ? `${parseInt(clickedPos[0]) - 1},${clickedPos[1]}` : `${clickedPos[0]},${parseInt(clickedPos[1]) - 1}`));
 			if(newSpot) {
@@ -564,6 +568,10 @@ function keyPress(key) {
 					let clueDown = downClueContainer.getChildByName(currentHighlight.object.parent.clues.down);
 					clueAcross.squares[currentHighlight.object.parent.clues.name][0] = false;
 					clueDown.squares[currentHighlight.object.parent.clues.name][0] = false;
+					clueAcross.children[0].children[0].style.fill = 0x333333;
+					clueAcross.children[0].children[1].style.fill = 0x333333;
+					clueDown.children[0].children[0].style.fill = 0x333333;
+					clueDown.children[0].children[1].style.fill = 0x333333;
 				}
 				const letter = new PIXI.Text(key.toUpperCase(),{fontFamily : squareFont, fontSize: 26, fill : 0x000000, align : 'left'});
 				letter.anchor.set(0.5);
@@ -573,9 +581,16 @@ function keyPress(key) {
 				currentHighlight.object.addChild(letter);
 				let clueAcross = acrossClueContainer.getChildByName(currentHighlight.object.parent.clues.across);
 				let clueDown = downClueContainer.getChildByName(currentHighlight.object.parent.clues.down);
-				console.log(clueDown);
 				clueAcross.squares[currentHighlight.object.parent.clues.name][0] = true;
 				clueDown.squares[currentHighlight.object.parent.clues.name][0] = true;
+				if(clueAcross.squares.every((squareVar) => {return squareVar[0];})) {
+					clueAcross.children[0].children[0].style.fill = 0x616161;
+					clueAcross.children[0].children[1].style.fill = 0x616161;
+				}
+				if(clueDown.squares.every((squareVar) => {return squareVar[0];})) {
+					clueDown.children[0].children[0].style.fill = 0x616161;
+					clueDown.children[0].children[1].style.fill = 0x616161;
+				}
 				let newSpot = allSquares.getChildByName((currentHighlight.across ? `${parseInt(clickedPos[0]) + 1},${clickedPos[1]}` : `${clickedPos[0]},${parseInt(clickedPos[1]) + 1}`));
 				if(newSpot) {
 					return setHighlight(newSpot.children[0]);
