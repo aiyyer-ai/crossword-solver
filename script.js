@@ -388,14 +388,15 @@ function onOver(scrollbutton, event, clueContainer, clueApp) {
 function generateSquareNumbers() {
 	allSquares.children.forEach( (childSquare) => {
 		let squarePos = childSquare.name.split(",");
-		childSquare.clues = {across:null, down:null};
+		childSquare.clues = {name:null , across:null, down:null};
 		childSquare.clues.across = findClueNum(squarePos, 'left', false);
 		childSquare.clues.down = findClueNum(squarePos, 'up', false);
+		childSquare.clues.name = `${childSquare.clues.across},${childSquare.clues.down}`;
 		let acrossRegister = acrossClueContainer.getChildByName(childSquare.clues.across);
-		console.log(childSquare.clues.toString());
-		acrossRegister.squares[childSquare.clues.toString()] = [false, childSquare];
+		console.log(childSquare.clues.name);
+		acrossRegister.squares[childSquare.clues.name] = [false, childSquare];
 		let downRegister = downClueContainer.getChildByName(childSquare.clues.down);
-		acrossRegister.squares[childSquare.clues.toString()] = [false, childSquare];
+		acrossRegister.squares[childSquare.clues.name] = [false, childSquare];
 	});
 }
 
@@ -552,8 +553,8 @@ function keyPress(key) {
 				currentHighlight.object.children[currentHighlight.object.children.length - 1].destroy();
 				let clueAcross = acrossClueContainer.getChildByName(currentHighlight.object.parent.clues.across);
 				let clueDown = downClueContainer.getChildByName(currentHighlight.object.parent.clues.down);
-				clueAcross.squares[currentHighlight.object.parent.clues.clues.toString()][0] = false;
-				clueDown.squares[currentHighlight.object.parent.clues.clues.toString()][0] = false;
+				clueAcross.squares[currentHighlight.object.parent.clues.clues.name][0] = false;
+				clueDown.squares[currentHighlight.object.parent.clues.clues.name][0] = false;
 			}
 			let newSpot = allSquares.getChildByName((currentHighlight.across ? `${parseInt(clickedPos[0]) - 1},${clickedPos[1]}` : `${clickedPos[0]},${parseInt(clickedPos[1]) - 1}`));
 			if(newSpot) {
@@ -565,8 +566,8 @@ function keyPress(key) {
 					currentHighlight.object.children[currentHighlight.object.children.length - 1].destroy();
 					let clueAcross = acrossClueContainer.getChildByName(currentHighlight.object.parent.clues.across);
 					let clueDown = downClueContainer.getChildByName(currentHighlight.object.parent.clues.down);
-					clueAcross.squares[currentHighlight.object.parent.clues.clues.toString()][0] = false;
-					clueDown.squares[currentHighlight.object.parent.clues.clues.toString()][0] = false;
+					clueAcross.squares[currentHighlight.object.parent.clues.clues.name][0] = false;
+					clueDown.squares[currentHighlight.object.parent.clues.clues.name][0] = false;
 				}
 				const letter = new PIXI.Text(key.toUpperCase(),{fontFamily : squareFont, fontSize: 26, fill : 0x000000, align : 'left'});
 				letter.anchor.set(0.5);
@@ -577,8 +578,8 @@ function keyPress(key) {
 				let clueAcross = acrossClueContainer.getChildByName(currentHighlight.object.parent.clues.across);
 				let clueDown = downClueContainer.getChildByName(currentHighlight.object.parent.clues.down);
 				console.log(clueDown);
-				clueAcross.squares[currentHighlight.object.parent.clues.clues.toString()][0] = true;
-				clueDown.squares[currentHighlight.object.parent.clues.clues.toString()][0] = true;
+				clueAcross.squares[currentHighlight.object.parent.clues.clues.name][0] = true;
+				clueDown.squares[currentHighlight.object.parent.clues.clues.name][0] = true;
 				let newSpot = allSquares.getChildByName((currentHighlight.across ? `${parseInt(clickedPos[0]) + 1},${clickedPos[1]}` : `${clickedPos[0]},${parseInt(clickedPos[1]) + 1}`));
 				if(newSpot) {
 					return setHighlight(newSpot.children[0]);
