@@ -393,10 +393,12 @@ function generateSquareNumbers() {
 		childSquare.clues.down = findClueNum(squarePos, 'up', false);
 		childSquare.clues.name = `${childSquare.clues.across},${childSquare.clues.down}`;
 		let acrossRegister = acrossClueContainer.getChildByName(childSquare.clues.across);
-		console.log(childSquare.clues.name);
-		acrossRegister.squares[childSquare.clues.name] = [false, childSquare];
+		let objectKey = childSquare.clues.name;
+		console.log(objectKey);
+		acrossRegister.squares[objectKey] = [false, childSquare];
+		console.log(acrossRegister.squares[objectKey]);
 		let downRegister = downClueContainer.getChildByName(childSquare.clues.down);
-		acrossRegister.squares[childSquare.clues.name] = [false, childSquare];
+		acrossRegister.squares[objectKey] = [false, childSquare];
 	});
 }
 
