@@ -554,42 +554,14 @@ function keyPress(key, info) {
 			}
 		}
 		if(key == "Delete" || key == "Backspace") {
-			if(currentHighlight.object.children[0] ? (currentHighlight.object.children[currentHighlight.object.children.length - 1].name == 'guess') : currentHighlight.object.children[0])  {
-				currentHighlight.object.children[currentHighlight.object.children.length - 1].destroy();
-				let clueAcross = acrossClueContainer.getChildByName(currentHighlight.object.parent.clues.across);
-				let clueDown = downClueContainer.getChildByName(currentHighlight.object.parent.clues.down);
-				clueAcross.squares[currentHighlight.object.parent.clues.name][0] = false;
-				clueDown.squares[currentHighlight.object.parent.clues.name][0] = false;
-				clueAcross.children[0].children[0].style.fill = 0x333333;
-				clueAcross.children[0].children[1].style.fill = 0x333333;
-				clueDown.children[0].children[0].style.fill = 0x333333;
-				clueDown.children[0].children[1].style.fill = 0x333333;
-			}
+			removeOldText();
 			let newSpot = allSquares.getChildByName((currentHighlight.across ? `${parseInt(clickedPos[0]) - 1},${clickedPos[1]}` : `${clickedPos[0]},${parseInt(clickedPos[1]) - 1}`));
 			if(newSpot) {
 				return setHighlight(newSpot.children[0]);
 			}
 		}
 		if (key.length == 1) {
-				if(currentHighlight.object.children[0] ? (currentHighlight.object.children[currentHighlight.object.children.length - 1].name == 'guess') : currentHighlight.object.children[0])  {
-					console.log(currentHighlight.object.children[currentHighlight.object.children.length - 1].text, info.solution[clickedPos[1]][clickedPos[0]]);
-					console.log(filledAnswers.indexOf(true), filledAnswers.indexOf(String(clickedPos)));
-					if(currentHighlight.object.children[currentHighlight.object.children.length - 1].text == info.solution[clickedPos[1]][clickedPos[0]]) {
-						filledAnswers.splice(filledAnswers.indexOf(true), 1);
-					} else {
-						filledAnswers.splice(filledAnswers.indexOf(String(clickedPos)), 1);
-					}
-					console.log(`Before Enter: ${filledAnswers}`);
-					currentHighlight.object.children[currentHighlight.object.children.length - 1].destroy();
-					let clueAcross = acrossClueContainer.getChildByName(currentHighlight.object.parent.clues.across);
-					let clueDown = downClueContainer.getChildByName(currentHighlight.object.parent.clues.down);
-					clueAcross.squares[currentHighlight.object.parent.clues.name][0] = false;
-					clueDown.squares[currentHighlight.object.parent.clues.name][0] = false;
-					clueAcross.children[0].children[0].style.fill = 0x333333;
-					clueAcross.children[0].children[1].style.fill = 0x333333;
-					clueDown.children[0].children[0].style.fill = 0x333333;
-					clueDown.children[0].children[1].style.fill = 0x333333;
-				}
+				removeOldText();
 				const letter = new PIXI.Text(key.toUpperCase(),{fontFamily : squareFont, fontSize: 26, fill : 0x000000, align : 'left'});
 				letter.anchor.set(0.5);
 				letter.x = currentHighlight.object.sizeX/2;
@@ -622,13 +594,11 @@ function keyPress(key, info) {
 				}
 
 				//solution checker
-				console.log(String(key.toUpperCase()), info.solution[clickedPos[1]][clickedPos[0]]);
 				if(String(key.toUpperCase()) == info.solution[clickedPos[1]][clickedPos[0]]) {
 					filledAnswers.push(true);
 				} else {
 					filledAnswers.push(String(clickedPos));
 				}
-				console.log(`After Enter: ${filledAnswers}`);
 				//end solution checker
 				let newSpot = allSquares.getChildByName((currentHighlight.across ? `${parseInt(clickedPos[0]) + 1},${clickedPos[1]}` : `${clickedPos[0]},${parseInt(clickedPos[1]) + 1}`));
 				if(newSpot) {
@@ -656,6 +626,24 @@ function onSquareClick(object) {
 	setHighlight(object);
 }
 
+function removeOldText() {
+	if(currentHighlight.object.children[0] ? (currentHighlight.object.children[currentHighlight.object.children.length - 1].name == 'guess') : currentHighlight.object.children[0])  {
+		if(currentHighlight.object.children[currentHighlight.object.children.length - 1].text == info.solution[clickedPos[1]][clickedPos[0]]) {
+			filledAnswers.splice(filledAnswers.indexOf(true), 1);
+		} else {
+			filledAnswers.splice(filledAnswers.indexOf(String(clickedPos)), 1);
+		}
+		currentHighlight.object.children[currentHighlight.object.children.length - 1].destroy();
+		let clueAcross = acrossClueContainer.getChildByName(currentHighlight.object.parent.clues.across);
+		let clueDown = downClueContainer.getChildByName(currentHighlight.object.parent.clues.down);
+		clueAcross.squares[currentHighlight.object.parent.clues.name][0] = false;
+		clueDown.squares[currentHighlight.object.parent.clues.name][0] = false;
+		clueAcross.children[0].children[0].style.fill = 0x333333;
+		clueAcross.children[0].children[1].style.fill = 0x333333;
+		clueDown.children[0].children[0].style.fill = 0x333333;
+		clueDown.children[0].children[1].style.fill = 0x333333;
+	}
+}
 
 function setHighlight(clickee, adjust = false) {
 	//checks if its a double click, if so, swap across value
