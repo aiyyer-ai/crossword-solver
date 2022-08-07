@@ -599,6 +599,8 @@ function keyPress(key, info) {
 				} else {
 					filledAnswers.push(String(clickedPos));
 				}
+				console.log(filledAnswers.length);
+				console.log(allSquares.children.length);
 				//end solution checker
 				let newSpot = allSquares.getChildByName((currentHighlight.across ? `${parseInt(clickedPos[0]) + 1},${clickedPos[1]}` : `${clickedPos[0]},${parseInt(clickedPos[1]) + 1}`));
 				if(newSpot) {
