@@ -93,11 +93,13 @@ function createBoard(info) {
 	document.getElementById("row2").querySelectorAll(".title")[0].style.height = `${50}px`;
 
 	//titleStuff
-
+	let titleContainer = new PIXI.Container();
+	title.stage.addChild(titleContainer);
 	let titleFiller = new PIXI.Graphics();
 	titleFiller.beginFill(0xffffff);
 	titleFiller.drawRect(0, 0, 50, (boardWidth * 36) + (clueWidth * 2) + 2);
 	titleFiller.zIndex = 0;
+	titleContainer.addChild(titleFiller);
 
 	let titleText = new PIXI.Text(` ${info.title} `,{fontFamily: squareFont, fontSize: 36, fill : 0x333333, align : 'left',  fontWeight : 'bold' });
 	let authorText = new PIXI.Text(`by ${info.author}`,{fontFamily: squareFont, fontSize: 24, fill : 0x333333, align : 'left' });
