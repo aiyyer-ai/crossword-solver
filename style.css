@@ -54,7 +54,9 @@ html {
     width: 70px;
     font-size: 1.0em;
     display: block;
-    margin: 10px;
+    margin: 5px auto;
+    padding-bottom: 10px;
+    margin-bottom: 10px;
     padding: 7px;
     border: 0;
     color: #fff;

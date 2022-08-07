@@ -748,7 +748,6 @@ function custom_alert(alert_message) {
     // Set the position of the alert box using
     // scrollTop, scrollWidth, and offsetWidth
     let distanceUp = ((boardHeight * 36) + 2)/2;
-    console.log(distanceUp);
     alert_box.style.top = distanceUp/2 + "px";
     let distanceLeft = ((boardWidth * 36) + 2 - alert_box.offsetWidth) / 2;
     if(distanceLeft < 0) {
