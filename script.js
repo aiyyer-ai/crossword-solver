@@ -741,7 +741,7 @@ function custom_alert(alert_message) {
     alert_container.id = "alert_container";
     alert_container.className = "alert_container"
 
-    let div_for_alert_box = document.createElement("div")
+    let div_for_alert_box = document.createElement("div");
     let alert_box = alert_container.appendChild(div_for_alert_box);
     alert_box.className = "alert_box";
 
