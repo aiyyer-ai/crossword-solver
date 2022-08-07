@@ -599,8 +599,9 @@ function keyPress(key, info) {
 				} else {
 					filledAnswers.push(String(clickedPos));
 				}
-				console.log(filledAnswers.length);
-				console.log(allSquares.children.length);
+				if(filledAnswers.filter((value) => value == true).length == allSquares.children.length) {
+					alert('Congratulations! You completed the Puzzle!');
+				}
 				//end solution checker
 				let newSpot = allSquares.getChildByName((currentHighlight.across ? `${parseInt(clickedPos[0]) + 1},${clickedPos[1]}` : `${clickedPos[0]},${parseInt(clickedPos[1]) + 1}`));
 				if(newSpot) {
@@ -717,4 +718,65 @@ function setHighlight(clickee, adjust = false) {
 			squareDistance++;
 		}
 
+}
+
+window.alert = function (alert_message) {
+	custom_alert(alert_message);
+}
+
+function custom_alert(alert_message) {
+
+    const ALERT_TITLE = "Alert Message";
+    const ALERT_BUTTON_TEXT = "OK";
+
+    let is_alert_container_exist = document.getElementById("alert_container");
+    if (is_alert_container_exist) {
+        return;
+    }
+
+    let get_body_element = document.querySelector("body");
+    let div_for_alert_container = document.createElement("div");
+    let alert_container = get_body_element.appendChild(div_for_alert_container);
+
+    alert_container.id = "alert_container";
+    alert_container.className = "alert_container"
+
+    let div_for_alert_box = document.createElement("div")
+    let alert_box = alert_container.appendChild(div_for_alert_box);
+    alert_box.className = "alert_box";
+
+    // Set the position of the alert box using
+    // scrollTop, scrollWidth, and offsetWidth
+    alert_box.style.top = document.documentElement.scrollTop + "px";
+    alert_box.style.left = (document.documentElement.scrollWidth - alert_box.offsetWidth) / 2 + "px";
+
+    let alert_header_tag = document.createElement("h1");
+    let alert_title_text = document.createTextNode(ALERT_TITLE)
+    let alert_title= alert_box.appendChild(alert_header_tag);
+    alert_title.appendChild(alert_title_text);
+
+    // Create a paragraph element to hold the
+    // alert message
+    let alert_paragraph_tag = document.createElement("p");
+    let alert_message_container = alert_box.appendChild(alert_paragraph_tag);
+    alert_message_container.textContent = alert_message;
+
+    // Create the OK button
+    let ok_button_tag = document.createElement("button");
+    let ok_button_text = document.createTextNode(ALERT_BUTTON_TEXT)
+    let ok_button = alert_box.appendChild(ok_button_tag);
+    ok_button.className = "close_btn";
+    ok_button.appendChild(ok_button_text);
+
+    // Add an event listener that'll close the
+    // custom alert
+    ok_button.addEventListener("click", function () {
+        remove_custom_alert();
+    }, false);
+}
+
+function remove_custom_alert() {
+    let HTML_body = document.querySelector("body");
+    let alert_container = document.getElementById("alert_container");
+    HTML_body.removeChild(alert_container);
 }
