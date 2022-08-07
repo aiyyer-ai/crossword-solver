@@ -614,8 +614,8 @@ function keyPress(key, info) {
 				}
 
 				//solution checker
-				console.log(clickedPos, String(key.toUpperCase()), info.solution[clickedPos[0]][clickedPos[1]]);
-				if(String(key.toUpperCase()) == info.solution[clickedPos[0]][clickedPos[1]]) {
+				console.log(clickedPos, String(key.toUpperCase()), info.solution[clickedPos[1]][clickedPos[0]]);
+				if(String(key.toUpperCase()) == info.solution[clickedPos[1]][clickedPos[0]]) {
 					filledAnswers.push(true);
 				} else {
 					filledAnswers.push(clickedPos);
