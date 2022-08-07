@@ -387,8 +387,14 @@ function adjustScrollBar(desiredY, scrollbutton, clueContainer) {
 
 function onOver(scrollbutton, event, clueContainer, clueApp) {
 	clueApp.view.onwheel = (e) => {
-		scrollbutton.y += e.DeltaY;
-		adjustCluePosition(scrollbutton, clueContainer);
+		console.log(e);
+		if((e.DeltaY) >= 0 && (e.DeltaY + scrollbuttonRect.height) <= ((boardHeight * 36) + 2)) {
+			scrollbutton.y = e.DeltaY;
+			adjustCluePosition(scrollbutton, clueContainer);
+		} else {
+			scrollbutton.y = ((e.DeltaY + scrollbutton.heightDifference) <= 0) ? 0 : (((boardHeight * 36) + 2) - scrollbuttonRect.height);
+			adjustCluePosition(scrollbutton, clueContainer);
+		}
 	};
 }
 
