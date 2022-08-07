@@ -295,7 +295,7 @@ function createBoard(info) {
 			let objectKey = squareContainer.clues.name;
 			acrossRegister.squares[objectKey] = [false, squareContainer];
 			let downRegister = downClueContainer.getChildByName(squareContainer.clues.down);
-			acrossRegister.squares[objectKey] = [false, squareContainer];
+			downRegister.squares[objectKey] = [false, squareContainer];
 		}
 	}
 
@@ -592,8 +592,6 @@ function onClueClick(object) {
 		currentHighlight.across = true;
 	}
 	let squareKey = Object.keys(object.parent.squares);
-	console.log(object.parent.squares);
-	console.log(object.parent.squares[squareKey[0]]);
 	let randomSquare = object.parent.squares[squareKey[0]][1].name.split(",");
 	let firstSquare = findClueNum(randomSquare, object.dir, true);
 	setHighlight(firstSquare, object.dir);
