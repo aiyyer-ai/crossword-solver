@@ -88,9 +88,9 @@ function createBoard(info) {
 	document.body.addEventListener("keydown", (event) => keyPress(event.key, info));
 
     const titleField = document.getElementById("row2").querySelectorAll(".title")[0].querySelectorAll(".timer")[0];
-	document.getElementById("row").querySelectorAll(".title")[0].insertBefore(title.view, titleField);
-	document.getElementById("row").querySelectorAll(".title")[0].style.width = `${(boardWidth * 36) + (clueWidth * 2) + 2}px`;
-	document.getElementById("row").querySelectorAll(".title")[0].style.height = `${100}px`;
+	document.getElementById("row2").querySelectorAll(".title")[0].insertBefore(title.view, titleField);
+	document.getElementById("row2").querySelectorAll(".title")[0].style.width = `${(boardWidth * 36) + (clueWidth * 2) + 2}px`;
+	document.getElementById("row2").querySelectorAll(".title")[0].style.height = `${100}px`;
 
 	//acrossClues
 	let acrossContainer = new PIXI.Container();
