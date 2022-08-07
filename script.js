@@ -585,7 +585,6 @@ function keyPress(key) {
 				clueDown.squares[currentHighlight.object.parent.clues.name][0] = true;
 				let allFull = true;
 				for(let squareVar in clueAcross.squares) {
-					console.log(clueAcross.squares[squareVar][0]);
 					if(!clueAcross.squares[squareVar][0]) {
 						allFull = false;
 					}
@@ -596,7 +595,7 @@ function keyPress(key) {
 				}
 				allFull = true;
 				for(let squareVar in clueDown.squares) {
-					if(!squareVar[0]) {
+					if(!clueDown.squares[squareVar][0]) {
 						allFull = false;
 					}
 				}
