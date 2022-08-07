@@ -18,6 +18,7 @@ let app = null;
 let allSquares = null;
 let across = null;
 let down = null;
+let title = null;
 let acrossClueContainer = null;
 let scrollbuttonAcross = null;
 let downClueContainer = null;
@@ -40,6 +41,7 @@ function createBoard(info) {
 	app = new PIXI.Application({ width: (boardWidth * 36) + 2, height: (boardHeight * 36) + 2, resolution: 4, antialias: true });
 	across = new PIXI.Application({ width: clueWidth, height: (boardHeight * 36) + 2, resolution: 4, antialias: true });
 	down = new PIXI.Application({ width: clueWidth, height: (boardHeight * 36) + 2, resolution: 4, antialias: true });
+	title = new PIXI.Application({ width: ((boardWidth * 36) + (clueWidth * 2) + 2), height: 100, resolution: 4, antialias: true });
 	let render = app.renderer;
 	render.backgroundColor = 0x000000;
     render.view.style.position = "absolute";
@@ -62,6 +64,13 @@ function createBoard(info) {
 		    downRender.view.style.width = `${clueWidth}px`;
 		    downRender.autoResize = true;
 		    down.render();
+				let titleRender = title.renderer;
+				titleRender.backgroundColor = 0xffff00;
+			    titleRender.view.style.position = "absolute";
+			    titleRender.view.style.display = "block";
+			    titleRender.view.style.width = `${(boardWidth * 36) + (clueWidth * 2) + 2}px`;
+			    titleRender.autoResize = true;
+			    title.render();
 
     const inputField = document.getElementById("row").querySelectorAll(".puzzle")[0].querySelectorAll(".input")[0];
 	document.getElementById("row").querySelectorAll(".puzzle")[0].insertBefore(app.view, inputField);
@@ -77,6 +86,11 @@ function createBoard(info) {
 	document.getElementById("row").querySelectorAll(".clues")[1].style.height = `${(boardHeight * 36) + 2}px`;
 
 	document.body.addEventListener("keydown", (event) => keyPress(event.key, info));
+
+    const titleField = document.getElementById("row2").querySelectorAll(".title")[0].querySelectorAll(".timer")[0];
+	document.getElementById("row").querySelectorAll(".title")[0].insertBefore(title.view, inputField);
+	document.getElementById("row").querySelectorAll(".title")[0].style.width = `${(boardWidth * 36) + (clueWidth * 2) + 2}px`;
+	document.getElementById("row").querySelectorAll(".title")[0].style.height = `${100}px`;
 
 	//acrossClues
 	let acrossContainer = new PIXI.Container();
