@@ -572,12 +572,13 @@ function keyPress(key, info) {
 		}
 		if (key.length == 1) {
 				if(currentHighlight.object.children[0] ? (currentHighlight.object.children[currentHighlight.object.children.length - 1].name == 'guess') : currentHighlight.object.children[0])  {
-					console.log(currentHighlight.object.children[currentHighlight.object.children.length - 1]);
+					console.log(currentHighlight.object.children[currentHighlight.object.children.length - 1].text, info.solution[clickedPos[1]][clickedPos[0]]);
 					if(currentHighlight.object.children[currentHighlight.object.children.length - 1].text == info.solution[clickedPos[1]][clickedPos[0]]) {
 						filledAnswers.splice(filledAnswers.indexOf(true), 1);
 					} else {
 						filledAnswers.splice(filledAnswers.indexOf(clickedPos), 1);
 					}
+					console.log(`Before Enter: ${filledAnswers}`);
 					currentHighlight.object.children[currentHighlight.object.children.length - 1].destroy();
 					let clueAcross = acrossClueContainer.getChildByName(currentHighlight.object.parent.clues.across);
 					let clueDown = downClueContainer.getChildByName(currentHighlight.object.parent.clues.down);
@@ -620,12 +621,13 @@ function keyPress(key, info) {
 				}
 
 				//solution checker
+				console.log(String(key.toUpperCase()), info.solution[clickedPos[1]][clickedPos[0]]);
 				if(String(key.toUpperCase()) == info.solution[clickedPos[1]][clickedPos[0]]) {
 					filledAnswers.push(true);
 				} else {
 					filledAnswers.push(clickedPos);
 				}
-				console.log(filledAnswers);
+				console.log(`After Enter: ${filledAnswers}`);
 				//end solution checker
 				let newSpot = allSquares.getChildByName((currentHighlight.across ? `${parseInt(clickedPos[0]) + 1},${clickedPos[1]}` : `${clickedPos[0]},${parseInt(clickedPos[1]) + 1}`));
 				if(newSpot) {
