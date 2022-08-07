@@ -97,7 +97,7 @@ function createBoard(info) {
 	title.stage.addChild(titleContainer);
 	let titleFiller = new PIXI.Graphics();
 	titleFiller.beginFill(0xffffff);
-	titleFiller.drawRect(0, 0, 50, (boardWidth * 36) + (clueWidth * 2) + 2);
+	titleFiller.drawRect(0, 0, (boardWidth * 36) + (clueWidth * 2) + 2, 50);
 	titleFiller.zIndex = 0;
 	titleContainer.addChild(titleFiller);
 
