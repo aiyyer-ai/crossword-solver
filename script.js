@@ -600,7 +600,7 @@ function keyPress(key, info) {
 					filledAnswers.push(String(clickedPos));
 				}
 				if(filledAnswers.filter((value) => value == true).length == allSquares.children.length) {
-					alert('Congratulations! You completed the Puzzle!');
+					alert('You completed the Puzzle!');
 				}
 				//end solution checker
 				let newSpot = allSquares.getChildByName((currentHighlight.across ? `${parseInt(clickedPos[0]) + 1},${clickedPos[1]}` : `${clickedPos[0]},${parseInt(clickedPos[1]) + 1}`));
@@ -726,7 +726,7 @@ window.alert = function (alert_message) {
 
 function custom_alert(alert_message) {
 
-    const ALERT_TITLE = "Alert Message";
+    const ALERT_TITLE = "Congratulations!";
     const ALERT_BUTTON_TEXT = "OK";
 
     let is_alert_container_exist = document.getElementById("alert_container");
