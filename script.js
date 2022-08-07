@@ -573,12 +573,11 @@ function keyPress(key, info) {
 		if (key.length == 1) {
 				if(currentHighlight.object.children[0] ? (currentHighlight.object.children[currentHighlight.object.children.length - 1].name == 'guess') : currentHighlight.object.children[0])  {
 					console.log(currentHighlight.object.children[currentHighlight.object.children.length - 1].text, info.solution[clickedPos[1]][clickedPos[0]]);
-					console.log(filledAnswers.indexOf(true), filledAnswers.indexOf(clickedPos));
-					console.log(clickedPos);
+					console.log(filledAnswers.indexOf(true), filledAnswers.indexOf(String(clickedPos)));
 					if(currentHighlight.object.children[currentHighlight.object.children.length - 1].text == info.solution[clickedPos[1]][clickedPos[0]]) {
 						filledAnswers.splice(filledAnswers.indexOf(true), 1);
 					} else {
-						filledAnswers.splice(filledAnswers.indexOf(clickedPos), 1);
+						filledAnswers.splice(filledAnswers.indexOf(String(clickedPos)), 1);
 					}
 					console.log(`Before Enter: ${filledAnswers}`);
 					currentHighlight.object.children[currentHighlight.object.children.length - 1].destroy();
@@ -627,7 +626,7 @@ function keyPress(key, info) {
 				if(String(key.toUpperCase()) == info.solution[clickedPos[1]][clickedPos[0]]) {
 					filledAnswers.push(true);
 				} else {
-					filledAnswers.push(clickedPos);
+					filledAnswers.push(String(clickedPos));
 				}
 				console.log(`After Enter: ${filledAnswers}`);
 				//end solution checker
