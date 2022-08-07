@@ -203,7 +203,7 @@ function createBoard(info) {
 		clueInfo.drawRect(0, 0, 250, clueSpotHeight);
 		clueInfo.interactive = true;
 		clueInfo.name = `${downClue[0]}`;
-		clueInfo.dir = `down`;
+		clueInfo.dir = `up`;
 		clueInfo.on('click', (event) => onClueClick(clueInfo));
 		clueContainer.addChild(clueInfo);
 		clue.anchor.set(0, 0.5);
@@ -586,7 +586,7 @@ function keyPress(key) {
 
 let currentHighlight = {across:true, object:null, otherSquares:[]};
 function onClueClick(object) {
-	if(object.dir == `down`) {
+	if(object.dir == `up`) {
 		currentHighlight.across = false;
 	} else {
 		currentHighlight.across = true;
@@ -626,7 +626,7 @@ function setHighlight(clickee, adjust = false) {
 		currentHighlight.otherSquares.push(clueDown.children[0]);
 		let scrollBbutton = down.stage.getChildByName(`scrollbarContainerDown`).getChildByName(`scrollbuttonDown`);
 		switch(adjust) {
-		  case `down`:
+		  case `up`:
 		    adjustScrollBar(clueAcross.y - clueStartHeight, scrollAbutton, acrossClueContainer);
 		    break;
 		  case `left`:
