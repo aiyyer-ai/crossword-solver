@@ -1,4 +1,7 @@
 
+html {
+   font-family: Arial, Helvetica, sans-serif;
+}
 .column {
   float: left;
   padding: 3px;
@@ -26,7 +29,6 @@
     width: 300px;
     min-height: 100px;
     margin-top: 50px;
-    border: 1px solid #666;
     background-color: #fff;
 }
 
