@@ -41,7 +41,7 @@ function createBoard(info) {
 	app = new PIXI.Application({ width: (boardWidth * 36) + 2, height: (boardHeight * 36) + 2, resolution: 4, antialias: true });
 	across = new PIXI.Application({ width: clueWidth, height: (boardHeight * 36) + 2, resolution: 4, antialias: true });
 	down = new PIXI.Application({ width: clueWidth, height: (boardHeight * 36) + 2, resolution: 4, antialias: true });
-	title = new PIXI.Application({ width: ((boardWidth * 36) + (clueWidth * 2) + 2), height: 100, resolution: 4, antialias: true });
+	title = new PIXI.Application({ width: ((boardWidth * 36) + (clueWidth * 2) + 2), height: 50, resolution: 4, antialias: true });
 	let render = app.renderer;
 	render.backgroundColor = 0x000000;
     render.view.style.position = "absolute";
@@ -90,7 +90,7 @@ function createBoard(info) {
     const titleField = document.getElementById("row2").querySelectorAll(".title")[0].querySelectorAll(".timer")[0];
 	document.getElementById("row2").querySelectorAll(".title")[0].insertBefore(title.view, titleField);
 	document.getElementById("row2").querySelectorAll(".title")[0].style.width = `${(boardWidth * 36) + (clueWidth * 2) + 2}px`;
-	document.getElementById("row2").querySelectorAll(".title")[0].style.height = `${100}px`;
+	document.getElementById("row2").querySelectorAll(".title")[0].style.height = `${50}px`;
 
 	//acrossClues
 	let acrossContainer = new PIXI.Container();
