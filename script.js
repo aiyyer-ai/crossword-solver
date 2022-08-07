@@ -416,8 +416,9 @@ function findClueNum(position, dir, raw) {
 	if(raw) {
 		return newSpot.children[0];
 	}
-	console.log(newSpot);
 	return newSpot.children[0].children[0].name;
+
+
 }
 
 
@@ -591,7 +592,7 @@ function onClueClick(object) {
 		currentHighlight.across = true;
 	}
 	let squareKey = Object.keys(object.parent.squares);
-	console.log(squareKey);
+	console.log(object.parent.squares[squareKey[0]]);
 	let randomSquare = object.parent.squares[squareKey[0]].squareData.name.split(",");
 	let firstSquare = findClueNum(randomSquare, object.dir, true);
 	setHighlight(firstSquare, object.dir);
