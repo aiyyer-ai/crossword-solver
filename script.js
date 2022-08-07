@@ -22,6 +22,7 @@ let acrossClueContainer = null;
 let scrollbuttonAcross = null;
 let downClueContainer = null;
 let scrollbuttonDown = null;
+let filledAnswers = [];
 let clueStartHeight = 0;
 let squareSize = 34;
 let squareFont = 'Arial';
@@ -75,7 +76,7 @@ function createBoard(info) {
 	document.getElementById("row").querySelectorAll(".clues")[1].insertBefore(down.view, downField);
 	document.getElementById("row").querySelectorAll(".clues")[1].style.height = `${(boardHeight * 36) + 2}px`;
 
-	document.body.addEventListener("keydown", (event) => keyPress(event.key));
+	document.body.addEventListener("keydown", (event) => keyPress(event.key, info));
 
 	//acrossClues
 	let acrossContainer = new PIXI.Container();
@@ -492,7 +493,7 @@ function findNextAvailableSpot(position, dir) {
 	return newSpot.children[0];
 }
 
-function keyPress(key) {
+function keyPress(key, info) {
 	if(currentHighlight.object) {
 		let clickedPos = currentHighlight.object.name.split(",");
 		//Arrow Movement
@@ -585,7 +586,7 @@ function keyPress(key) {
 				letter.anchor.set(0.5);
 				letter.x = currentHighlight.object.sizeX/2;
 				letter.y = (currentHighlight.object.sizeY/8) * 5;
-				letter.name = 'guess';
+				letter.name = String(key.toUpperCase());
 				currentHighlight.object.addChild(letter);
 				let clueAcross = acrossClueContainer.getChildByName(currentHighlight.object.parent.clues.across);
 				let clueDown = downClueContainer.getChildByName(currentHighlight.object.parent.clues.down);
@@ -611,6 +612,16 @@ function keyPress(key) {
 					clueDown.children[0].children[0].style.fill = 0xaeaeae;
 					clueDown.children[0].children[1].style.fill = 0xaeaeae;
 				}
+
+				//solution checker
+				console.log(clickedPos, letter.name, info.solution[clickedPos[0]][clickedPos[1]]);
+				if(letter.name == info.solution[clickedPos[0]][clickedPos[1]]) {
+					filledAnswers.push(true);
+				} else {
+					filledAnswers.push(clickedPos);
+				}
+				console.log(filledAnswers);
+				//end solution checker
 				let newSpot = allSquares.getChildByName((currentHighlight.across ? `${parseInt(clickedPos[0]) + 1},${clickedPos[1]}` : `${clickedPos[0]},${parseInt(clickedPos[1]) + 1}`));
 				if(newSpot) {
 					return setHighlight(newSpot.children[0]);
