@@ -387,11 +387,8 @@ function adjustScrollBar(desiredY, scrollbutton, clueContainer) {
 
 function onOver(scrollbutton, event, clueContainer, clueApp) {
 	clueApp.view.onwheel = (e) => {
-		console.log(e);
 		let scrollbuttonRect = scrollbutton.getLocalBounds();
-		console.log(scrollbutton.y);
-		let moveDist = e.deltaY * 0.1;
-		console.log
+		let moveDist = e.deltaY * 0.2;
 		if((scrollbutton.y + moveDist) >= 0 && (scrollbutton.y + moveDist + scrollbuttonRect.height) <= ((boardHeight * 36) + 2)) {
 			scrollbutton.y += moveDist;
 			adjustCluePosition(scrollbutton, clueContainer);
