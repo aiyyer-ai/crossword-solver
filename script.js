@@ -627,6 +627,7 @@ function onSquareClick(object) {
 }
 
 function removeOldText(info) {
+	let clickedPos = currentHighlight.object.name.split(",");
 	if(currentHighlight.object.children[0] ? (currentHighlight.object.children[currentHighlight.object.children.length - 1].name == 'guess') : currentHighlight.object.children[0])  {
 		if(currentHighlight.object.children[currentHighlight.object.children.length - 1].text == info.solution[clickedPos[1]][clickedPos[0]]) {
 			filledAnswers.splice(filledAnswers.indexOf(true), 1);
