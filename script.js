@@ -388,11 +388,12 @@ function adjustScrollBar(desiredY, scrollbutton, clueContainer) {
 function onOver(scrollbutton, event, clueContainer, clueApp) {
 	clueApp.view.onwheel = (e) => {
 		console.log(e);
-		if((e.DeltaY) >= 0 && (e.DeltaY + scrollbuttonRect.height) <= ((boardHeight * 36) + 2)) {
-			scrollbutton.y = e.DeltaY;
+		let moveDist = e.DeltaY * 0.01
+		if((moveDist) >= 0 && (moveDist + scrollbuttonRect.height) <= ((boardHeight * 36) + 2)) {
+			scrollbutton.y = moveDist;
 			adjustCluePosition(scrollbutton, clueContainer);
 		} else {
-			scrollbutton.y = ((e.DeltaY + scrollbutton.heightDifference) <= 0) ? 0 : (((boardHeight * 36) + 2) - scrollbuttonRect.height);
+			scrollbutton.y = ((moveDist + scrollbutton.heightDifference) <= 0) ? 0 : (((boardHeight * 36) + 2) - scrollbuttonRect.height);
 			adjustCluePosition(scrollbutton, clueContainer);
 		}
 	};
