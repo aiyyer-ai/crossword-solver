@@ -105,11 +105,13 @@ function createBoard(info) {
 	let authorText = new PIXI.Text(`by ${info.author}`,{fontFamily: squareFont, fontSize: 18, fill : 0x333333, align : 'left' });
 	let titleBounds = titleText.getLocalBounds();
 	titleText.zIndex = 1;
+	titleText.anchor.set(0,1);
 	titleText.y = (titleFiller.height - 36)/2;
-	titleText.x = 50;
+	titleText.x = 0;
 	authorText.zIndex = 1;
+	authorText.anchor.set(0,1);
 	authorText.y = (titleFiller.height - 36)/2;
-	authorText.x = 50 + titleBounds.width;
+	authorText.x = 0 + titleBounds.width;
 	titleFiller.addChild(titleText, authorText);
 
 	//acrossClues
