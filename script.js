@@ -77,52 +77,6 @@ function createBoard(info) {
 
 	document.body.addEventListener("keydown", (event) => keyPress(event.key));
 
-	allSquares = new PIXI.Container();
-	app.stage.addChild(allSquares);
-	for (let row in info.puzzle) {
-		let squarePosition = 0;
-		for (let [index, square] of Object.entries(info.puzzle[row])) {
-			if (square == "#") {
-				squarePosition++;
-				continue;
-			}
-			let squareContainer = new PIXI.Container();
-			allSquares.addChild(squareContainer);
-			let squareX = (squarePosition * (squareSize + 2)) + 2;
-			let squareY = (row * (squareSize + 2)) + 2;
-			squareContainer.x = squareX;
-			squareContainer.y = squareY;
-			squareContainer.height = squareSize;
-			squareContainer.width = squareSize;
-			squareContainer.name = `${squarePosition},${row}`;
-			let crosswordSquare = new PIXI.Graphics();
-			crosswordSquare.beginFill(0xffffff);
-			crosswordSquare.drawRect(0, 0, squareSize, squareSize);
-			if (square.style) {
-				crosswordSquare.lineStyle(1, 0x000000, 1);
-				crosswordSquare.drawCircle(squareSize/2, squareSize/2, (squareSize/2));
-				square = square.cell;
-			}
-			crosswordSquare.interactive = true;
-			crosswordSquare.sizeX = squareSize;
-			crosswordSquare.sizeY = squareSize;
-			crosswordSquare.squareX = squareX;
-			crosswordSquare.squareY = squareY;
-			crosswordSquare.name = `${squarePosition},${row}`;
-			crosswordSquare.on('click', (event) => onSquareClick(crosswordSquare));
-			squarePosition++;
-			squareContainer.addChild(crosswordSquare);
-			if(square != 0 && typeof square == 'number') {
-				const text = new PIXI.Text(String(square),{fontFamily: squareFont, fontSize: 12, fill : 0x000000, align : 'left'});
-				clueNumber = square;
-				text.x = 1;
-				text.y = -1;
-				text.name = String(square);
-				crosswordSquare.addChild(text);
-			}
-		}
-	}
-
 	//acrossClues
 	let acrossContainer = new PIXI.Container();
 	acrossClueContainer = new PIXI.Container();
@@ -289,7 +243,62 @@ function createBoard(info) {
 
 	document.body.onpointerup = (event) => offScrollClick(scrollbuttonAcross, scrollbuttonDown, event);
 
-	generateSquareNumbers();
+	allSquares = new PIXI.Container();
+	app.stage.addChild(allSquares);
+	for (let row in info.puzzle) {
+		let squarePosition = 0;
+		for (let [index, square] of Object.entries(info.puzzle[row])) {
+			if (square == "#") {
+				squarePosition++;
+				continue;
+			}
+			let squareContainer = new PIXI.Container();
+			allSquares.addChild(squareContainer);
+			let squareX = (squarePosition * (squareSize + 2)) + 2;
+			let squareY = (row * (squareSize + 2)) + 2;
+			squareContainer.x = squareX;
+			squareContainer.y = squareY;
+			squareContainer.height = squareSize;
+			squareContainer.width = squareSize;
+			squareContainer.name = `${squarePosition},${row}`;
+			let squarePos = squareContainer.name.split(",");
+			squareContainer.clues = {name:null , across:null, down:null};
+			squareContainer.clues.across = findClueNum(squarePos, 'left', false);
+			squareContainer.clues.down = findClueNum(squarePos, 'up', false);
+			squareContainer.clues.name = `${squareContainer.clues.across},${squareContainer.clues.down}`;
+			let acrossRegister = acrossClueContainer.getChildByName(squareContainer.clues.across);
+			let objectKey = squareContainer.clues.name;
+			acrossRegister.squares[objectKey] = [false, squareContainer];
+			let downRegister = downClueContainer.getChildByName(squareContainer.clues.down);
+			acrossRegister.squares[objectKey] = [false, squareContainer];
+			let crosswordSquare = new PIXI.Graphics();
+			crosswordSquare.beginFill(0xffffff);
+			crosswordSquare.drawRect(0, 0, squareSize, squareSize);
+			if (square.style) {
+				crosswordSquare.lineStyle(1, 0x000000, 1);
+				crosswordSquare.drawCircle(squareSize/2, squareSize/2, (squareSize/2));
+				square = square.cell;
+			}
+			crosswordSquare.interactive = true;
+			crosswordSquare.sizeX = squareSize;
+			crosswordSquare.sizeY = squareSize;
+			crosswordSquare.squareX = squareX;
+			crosswordSquare.squareY = squareY;
+			crosswordSquare.name = `${squarePosition},${row}`;
+			crosswordSquare.on('click', (event) => onSquareClick(crosswordSquare));
+			squarePosition++;
+			squareContainer.addChild(crosswordSquare);
+			if(square != 0 && typeof square == 'number') {
+				const text = new PIXI.Text(String(square),{fontFamily: squareFont, fontSize: 12, fill : 0x000000, align : 'left'});
+				clueNumber = square;
+				text.x = 1;
+				text.y = -1;
+				text.name = String(square);
+				crosswordSquare.addChild(text);
+			}
+		}
+	}
+
 
 	//end
 }
@@ -384,23 +393,6 @@ function onOver(scrollbutton, event, clueContainer, clueApp) {
 
 
 //on Start Function
-
-function generateSquareNumbers() {
-	allSquares.children.forEach( (childSquare) => {
-		let squarePos = childSquare.name.split(",");
-		childSquare.clues = {name:null , across:null, down:null};
-		childSquare.clues.across = findClueNum(squarePos, 'left', false);
-		childSquare.clues.down = findClueNum(squarePos, 'up', false);
-		childSquare.clues.name = `${childSquare.clues.across},${childSquare.clues.down}`;
-		let acrossRegister = acrossClueContainer.getChildByName(childSquare.clues.across);
-		let objectKey = childSquare.clues.name;
-		console.log(objectKey);
-		acrossRegister.squares[objectKey] = [false, childSquare];
-		console.log(acrossRegister.squares[objectKey]);
-		let downRegister = downClueContainer.getChildByName(childSquare.clues.down);
-		acrossRegister.squares[objectKey] = [false, childSquare];
-	});
-}
 
 function findClueNum(position, dir, raw) {
 	let newSpot = null;
