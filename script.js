@@ -585,13 +585,14 @@ function keyPress(key) {
 				clueDown.squares[currentHighlight.object.parent.clues.name][0] = true;
 				let allFull = true;
 				for(let squareVar in clueAcross.squares) {
+					console.log(squareVar);
 					if(!squareVar[0]) {
 						allFull = false;
 					}
 				}
 				if(allFull) {
-					clueAcross.children[0].children[0].style.fill = 0x616161;
-					clueAcross.children[0].children[1].style.fill = 0x616161;
+					clueAcross.children[0].children[0].style.fill = 0xaeaeae;
+					clueAcross.children[0].children[1].style.fill = 0xaeaeae;
 				}
 				allFull = true;
 				for(let squareVar in clueDown.squares) {
@@ -600,8 +601,8 @@ function keyPress(key) {
 					}
 				}
 				if(allFull) {
-					clueDown.children[0].children[0].style.fill = 0x616161;
-					clueDown.children[0].children[1].style.fill = 0x616161;
+					clueDown.children[0].children[0].style.fill = 0xaeaeae;
+					clueDown.children[0].children[1].style.fill = 0xaeaeae;
 				}
 				let newSpot = allSquares.getChildByName((currentHighlight.across ? `${parseInt(clickedPos[0]) + 1},${clickedPos[1]}` : `${clickedPos[0]},${parseInt(clickedPos[1]) + 1}`));
 				if(newSpot) {
