@@ -92,6 +92,24 @@ function createBoard(info) {
 	document.getElementById("row2").querySelectorAll(".title")[0].style.width = `${(boardWidth * 36) + (clueWidth * 2) + 2}px`;
 	document.getElementById("row2").querySelectorAll(".title")[0].style.height = `${50}px`;
 
+	//titleStuff
+
+	let titleFiller = new PIXI.Graphics();
+	titleBacking.beginFill(0xffffff);
+	titleBacking.drawRect(0, 0, 50, (boardWidth * 36) + (clueWidth * 2) + 2);
+	titleBacking.zIndex = 0;
+
+	let titleText = new PIXI.Text(` ${info.title} `,{fontFamily: squareFont, fontSize: 36, fill : 0x333333, align : 'left',  fontWeight : 'bold' });
+	let authorText = new PIXI.Text(`by ${info.author}`,{fontFamily: squareFont, fontSize: 24, fill : 0x333333, align : 'left' });
+	let titleBounds = titleText.getLocalBounds();
+	titleText.zIndex = 1;
+	titleText.y = (titleBacking.height + 36)/2;
+	titleText.x = 50;
+	authorText.zIndex = 1;
+	authorText.y = (titleBacking.height + 36)/2;
+	authorText.x = 50 + titleBounds.width;
+	titleBacking.addChild(titleText, authorText);
+
 	//acrossClues
 	let acrossContainer = new PIXI.Container();
 	acrossClueContainer = new PIXI.Container();
