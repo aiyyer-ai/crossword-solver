@@ -54,13 +54,11 @@ html {
     width: 70px;
     font-size: 1.0em;
     display: block;
-    margin: 5px auto;
+    margin: 10px;
     padding: 7px;
     border: 0;
     color: #fff;
     background-color: #1560bd;
     border-radius: 3px;
     cursor: pointer;
-    top: 10px;
-    bottom: 10px;
 }

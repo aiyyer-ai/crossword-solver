@@ -749,10 +749,9 @@ function custom_alert(alert_message) {
     // scrollTop, scrollWidth, and offsetWidth
     let distanceUp = ((boardHeight * 36) + 2)/2;
     console.log(distanceUp);
-    alert_box.style.top = distanceUp + "px";
+    alert_box.style.top = distanceUp/2 + "px";
     let distanceLeft = ((boardWidth * 36) + 2 - alert_box.offsetWidth) / 2;
-    console.log(distanceLeft, alert_box.offsetWidth);
-    if(distanceLeft - alert_box.offsetWidth < 0) {
+    if(distanceLeft < 0) {
     	distanceLeft = ((boardWidth * 36) + 2 + (280 * 2) - alert_box.offsetWidth) / 2;
     }
     alert_box.style.left = distanceLeft + "px";
