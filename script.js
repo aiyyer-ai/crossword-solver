@@ -395,7 +395,7 @@ function onOver(scrollbutton, event, clueContainer, clueApp) {
 			scrollbutton.y += moveDist;
 			adjustCluePosition(scrollbutton, clueContainer);
 		} else {
-			scrollbutton.y += ((scrollbutton.y + moveDist + scrollbutton.heightDifference) <= 0) ? 0 : (((boardHeight * 36) + 2) - scrollbuttonRect.height);
+			scrollbutton.y = ((scrollbutton.y + moveDist + scrollbutton.heightDifference) <= 0) ? 0 : (((boardHeight * 36) + 2) - scrollbuttonRect.height);
 			adjustCluePosition(scrollbutton, clueContainer);
 		}
 	};
