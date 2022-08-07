@@ -86,6 +86,7 @@ function createBoard(info) {
 	let acrossTextRect = acrossText.getLocalBounds();
 	clueStartHeight = acrossTextRect.height;
 	acrossClueContainer.distanceDown = clueStartHeight;
+	acrossClueContainer.interactive = true;
 	let acrossBacking = new PIXI.Graphics();
 	acrossBacking.beginFill(0xffffff);
 	acrossBacking.drawRect(0, 0, 250, acrossTextRect.height);
@@ -151,7 +152,7 @@ function createBoard(info) {
 	scrollbuttonAcross.drawRect(0, 0, scrollbarWidth, scrollbuttonSizeAcross);
 	scrollbuttonAcross.interactive = true;
 	scrollbuttonAcross.name = `scrollbuttonAcross`;
-	//acrossClueContainer.on('pointerover', (event) => onOver(scrollbuttonAcross, event, acrossClueContainer, across));
+	acrossClueContainer.on('pointerover', (event) => onOver(scrollbuttonAcross, event, acrossClueContainer, across));
 	scrollbuttonAcross.on('pointerover', (event) => onScrollOver(scrollbuttonAcross));
 	scrollbuttonAcross.on('pointerdown', (event) => onScrollClick(scrollbuttonAcross, event, across));
 	scrollbuttonAcross.on('pointermove', (event) => onScrollDrag(scrollbuttonAcross, event, acrossClueContainer));
@@ -168,6 +169,7 @@ function createBoard(info) {
 	let downText = new PIXI.Text(` DOWN `,{fontFamily: squareFont, fontSize: 18, fill : 0x333333, align : 'left',  fontWeight : 'bold' });
 	let downTextRect = downText.getLocalBounds();
 	downClueContainer.distanceDown = clueStartHeight;
+	downClueContainer.interactive = true;
 	let downBacking = new PIXI.Graphics();
 	downBacking.beginFill(0xffffff);
 	downBacking.drawRect(0, 0, 250, clueStartHeight);
@@ -234,7 +236,7 @@ function createBoard(info) {
 	scrollbuttonDown.drawRect(0, 0, scrollbarWidth, scrollbuttonSizeDown);
 	scrollbuttonDown.interactive = true;
 	scrollbuttonDown.name = `scrollbuttonDown`;
-	//downClueContainer.on('pointerover', (event) => onOver(scrollbuttonDown, event, downClueContainer, down));
+	downClueContainer.on('pointerover', (event) => onOver(scrollbuttonDown, event, downClueContainer, down));
 	scrollbuttonDown.on('pointerover', (event) => onScrollOver(scrollbuttonDown));
 	scrollbuttonDown.on('pointerdown', (event) => onScrollClick(scrollbuttonDown, event, down));
 	scrollbuttonDown.on('pointermove', (event) => onScrollDrag(scrollbuttonDown, event, downClueContainer));
@@ -388,7 +390,6 @@ function onOver(scrollbutton, event, clueContainer, clueApp) {
 		scrollbutton.y += e.DeltaY;
 		adjustCluePosition(scrollbutton, clueContainer);
 	};
-
 }
 
 
