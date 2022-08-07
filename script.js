@@ -391,6 +391,7 @@ function onOver(scrollbutton, event, clueContainer, clueApp) {
 		let scrollbuttonRect = scrollbutton.getLocalBounds();
 		console.log(scrollbutton.y);
 		let moveDist = e.DeltaY * 0.01;
+		console.log(moveDist);
 		if((scrollbutton.y + moveDist) >= 0 && (scrollbutton.y + moveDist + scrollbuttonRect.height) <= ((boardHeight * 36) + 2)) {
 			scrollbutton.y += moveDist;
 			adjustCluePosition(scrollbutton, clueContainer);
