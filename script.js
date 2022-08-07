@@ -586,7 +586,7 @@ function keyPress(key, info) {
 				letter.anchor.set(0.5);
 				letter.x = currentHighlight.object.sizeX/2;
 				letter.y = (currentHighlight.object.sizeY/8) * 5;
-				letter.name = String(key.toUpperCase());
+				letter.name = 'guess';
 				currentHighlight.object.addChild(letter);
 				let clueAcross = acrossClueContainer.getChildByName(currentHighlight.object.parent.clues.across);
 				let clueDown = downClueContainer.getChildByName(currentHighlight.object.parent.clues.down);
@@ -614,8 +614,8 @@ function keyPress(key, info) {
 				}
 
 				//solution checker
-				console.log(clickedPos, letter.name, info.solution[clickedPos[0]][clickedPos[1]]);
-				if(letter.name == info.solution[clickedPos[0]][clickedPos[1]]) {
+				console.log(clickedPos, String(key.toUpperCase()), info.solution[clickedPos[0]][clickedPos[1]]);
+				if(String(key.toUpperCase()) == info.solution[clickedPos[0]][clickedPos[1]]) {
 					filledAnswers.push(true);
 				} else {
 					filledAnswers.push(clickedPos);
