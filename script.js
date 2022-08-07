@@ -585,8 +585,8 @@ function keyPress(key) {
 				clueDown.squares[currentHighlight.object.parent.clues.name][0] = true;
 				let allFull = true;
 				for(let squareVar in clueAcross.squares) {
-					console.log(squareVar);
-					if(!squareVar[0]) {
+					console.log(clueAcross.squares[squareVar][0]);
+					if(!clueAcross.squares[squareVar][0]) {
 						allFull = false;
 					}
 				}
