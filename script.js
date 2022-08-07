@@ -747,8 +747,8 @@ function custom_alert(alert_message) {
 
     // Set the position of the alert box using
     // scrollTop, scrollWidth, and offsetWidth
-    alert_box.style.top = document.documentElement.scrollTop + "px";
-    alert_box.style.left = (document.documentElement.scrollWidth - alert_box.offsetWidth) / 2 + "px";
+    alert_box.style.top = boardHeight + "px";
+    alert_box.style.left = (boardWidth - alert_box.offsetWidth) / 2 + "px";
 
     let alert_header_tag = document.createElement("h1");
     let alert_title_text = document.createTextNode(ALERT_TITLE)

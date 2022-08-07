@@ -45,7 +45,7 @@ html {
 
 .alert_box p {
     font-size: 1.0em;
-    height: 20px;
+    height: 15px;
     margin-left: 55px;
     padding-left: 5px;
 }
@@ -61,4 +61,6 @@ html {
     background-color: #1560bd;
     border-radius: 3px;
     cursor: pointer;
+    top: 10px;
+    bottom: 10px;
 }
