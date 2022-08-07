@@ -583,11 +583,23 @@ function keyPress(key) {
 				let clueDown = downClueContainer.getChildByName(currentHighlight.object.parent.clues.down);
 				clueAcross.squares[currentHighlight.object.parent.clues.name][0] = true;
 				clueDown.squares[currentHighlight.object.parent.clues.name][0] = true;
-				if(clueAcross.squares.every((squareVar) => {return squareVar[0];})) {
+				let allFull = true;
+				for(let squareVar in clueAcross.squares) {
+					if(!squareVar[0]) {
+						allFull = false;
+					}
+				}
+				if(allFull) {
 					clueAcross.children[0].children[0].style.fill = 0x616161;
 					clueAcross.children[0].children[1].style.fill = 0x616161;
 				}
-				if(clueDown.squares.every((squareVar) => {return squareVar[0];})) {
+				allFull = true;
+				for(let squareVar in clueDown.squares) {
+					if(!squareVar[0]) {
+						allFull = false;
+					}
+				}
+				if(allFull) {
 					clueDown.children[0].children[0].style.fill = 0x616161;
 					clueDown.children[0].children[1].style.fill = 0x616161;
 				}
