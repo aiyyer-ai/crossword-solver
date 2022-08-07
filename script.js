@@ -592,6 +592,7 @@ function onClueClick(object) {
 		currentHighlight.across = true;
 	}
 	let squareKey = Object.keys(object.parent.squares);
+	console.log(object.parent.squares);
 	console.log(object.parent.squares[squareKey[0]]);
 	let randomSquare = object.parent.squares[squareKey[0]][1].name.split(",");
 	let firstSquare = findClueNum(randomSquare, object.dir, true);
