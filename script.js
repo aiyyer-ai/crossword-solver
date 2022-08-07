@@ -727,7 +727,7 @@ window.alert = function (alert_message) {
 function custom_alert(alert_message) {
 
     const ALERT_TITLE = "Congratulations!";
-    const ALERT_BUTTON_TEXT = "OK";
+    const ALERT_BUTTON_TEXT = "Woo!";
 
     let is_alert_container_exist = document.getElementById("alert_container");
     if (is_alert_container_exist) {
