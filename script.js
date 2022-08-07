@@ -261,16 +261,6 @@ function createBoard(info) {
 			squareContainer.height = squareSize;
 			squareContainer.width = squareSize;
 			squareContainer.name = `${squarePosition},${row}`;
-			let squarePos = squareContainer.name.split(",");
-			squareContainer.clues = {name:null , across:null, down:null};
-			squareContainer.clues.across = findClueNum(squarePos, 'left', false);
-			squareContainer.clues.down = findClueNum(squarePos, 'up', false);
-			squareContainer.clues.name = `${squareContainer.clues.across},${squareContainer.clues.down}`;
-			let acrossRegister = acrossClueContainer.getChildByName(squareContainer.clues.across);
-			let objectKey = squareContainer.clues.name;
-			acrossRegister.squares[objectKey] = [false, squareContainer];
-			let downRegister = downClueContainer.getChildByName(squareContainer.clues.down);
-			acrossRegister.squares[objectKey] = [false, squareContainer];
 			let crosswordSquare = new PIXI.Graphics();
 			crosswordSquare.beginFill(0xffffff);
 			crosswordSquare.drawRect(0, 0, squareSize, squareSize);
@@ -288,6 +278,16 @@ function createBoard(info) {
 			crosswordSquare.on('click', (event) => onSquareClick(crosswordSquare));
 			squarePosition++;
 			squareContainer.addChild(crosswordSquare);
+			let squarePos = squareContainer.name.split(",");
+			squareContainer.clues = {name:null , across:null, down:null};
+			squareContainer.clues.across = findClueNum(squarePos, 'left', false);
+			squareContainer.clues.down = findClueNum(squarePos, 'up', false);
+			squareContainer.clues.name = `${squareContainer.clues.across},${squareContainer.clues.down}`;
+			let acrossRegister = acrossClueContainer.getChildByName(squareContainer.clues.across);
+			let objectKey = squareContainer.clues.name;
+			acrossRegister.squares[objectKey] = [false, squareContainer];
+			let downRegister = downClueContainer.getChildByName(squareContainer.clues.down);
+			acrossRegister.squares[objectKey] = [false, squareContainer];
 			if(square != 0 && typeof square == 'number') {
 				const text = new PIXI.Text(String(square),{fontFamily: squareFont, fontSize: 12, fill : 0x000000, align : 'left'});
 				clueNumber = square;
