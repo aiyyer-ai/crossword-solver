@@ -554,14 +554,14 @@ function keyPress(key, info) {
 			}
 		}
 		if(key == "Delete" || key == "Backspace") {
-			removeOldText();
+			removeOldText(info);
 			let newSpot = allSquares.getChildByName((currentHighlight.across ? `${parseInt(clickedPos[0]) - 1},${clickedPos[1]}` : `${clickedPos[0]},${parseInt(clickedPos[1]) - 1}`));
 			if(newSpot) {
 				return setHighlight(newSpot.children[0]);
 			}
 		}
 		if (key.length == 1) {
-				removeOldText();
+				removeOldText(info);
 				const letter = new PIXI.Text(key.toUpperCase(),{fontFamily : squareFont, fontSize: 26, fill : 0x000000, align : 'left'});
 				letter.anchor.set(0.5);
 				letter.x = currentHighlight.object.sizeX/2;
@@ -626,7 +626,7 @@ function onSquareClick(object) {
 	setHighlight(object);
 }
 
-function removeOldText() {
+function removeOldText(info) {
 	if(currentHighlight.object.children[0] ? (currentHighlight.object.children[currentHighlight.object.children.length - 1].name == 'guess') : currentHighlight.object.children[0])  {
 		if(currentHighlight.object.children[currentHighlight.object.children.length - 1].text == info.solution[clickedPos[1]][clickedPos[0]]) {
 			filledAnswers.splice(filledAnswers.indexOf(true), 1);
