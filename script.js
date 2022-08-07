@@ -378,7 +378,7 @@ function adjustScrollBar(desiredY, scrollbutton, clueContainer) {
 		scrollbutton.y = shrunkY;
 		adjustCluePosition(scrollbutton, clueContainer);
 	} else {
-		scrollbutton.y = ((shrunkY + scrollbutton.heightDifference) <= 0) ? 0 : (((boardHeight * 36) + 2) - scrollbuttonRect.height);
+		scrollbutton.y = ((shrunkY) <= 0) ? 0 : (((boardHeight * 36) + 2) - scrollbuttonRect.height);
 		adjustCluePosition(scrollbutton, clueContainer);
 	}
 }
@@ -391,12 +391,12 @@ function onOver(scrollbutton, event, clueContainer, clueApp) {
 		let scrollbuttonRect = scrollbutton.getLocalBounds();
 		console.log(scrollbutton.y);
 		let moveDist = e.deltaY * 0.1;
-		console.log(moveDist);
+		console.log
 		if((scrollbutton.y + moveDist) >= 0 && (scrollbutton.y + moveDist + scrollbuttonRect.height) <= ((boardHeight * 36) + 2)) {
 			scrollbutton.y += moveDist;
 			adjustCluePosition(scrollbutton, clueContainer);
 		} else {
-			scrollbutton.y = ((scrollbutton.y + moveDist + scrollbutton.heightDifference) <= 0) ? 0 : (((boardHeight * 36) + 2) - scrollbuttonRect.height);
+			scrollbutton.y = ((scrollbutton.y + moveDist) <= 0) ? 0 : (((boardHeight * 36) + 2) - scrollbuttonRect.height);
 			adjustCluePosition(scrollbutton, clueContainer);
 		}
 	};
