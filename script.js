@@ -367,7 +367,7 @@ function createBoard(info) {
 			wrong.lineStyle(2, 0xff4d4d, 1);
 			wrong.lineTo(squareSize, squareSize);
 			squareContainer.addChild(wrong);
-			//wrong.visible = false;
+			wrong.visible = false;
 			let squarePos = squareContainer.name.split(",");
 			squareContainer.clues = {name:null , across:null, down:null};
 			squareContainer.clues.across = findClueNum(squarePos, 'left', false);
@@ -891,6 +891,6 @@ function checkAnswers(info) {
 		console.log(wrongAnswerPosition);
 		let wrongAnswer = allSquares.getChildByName(wrongAnswerPosition);
 		console.log(wrongAnswer);
-		
+		wrongAnswer.wrong.visible = true;
 	}
 }
