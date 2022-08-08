@@ -25,6 +25,7 @@ let downClueContainer = null;
 let scrollbuttonDown = null;
 let filledAnswers = [];
 let correctAnswers = [];
+let checkedCorrect = [];
 let clueStartHeight = 0;
 let squareSize = 34;
 let squareFont = 'Arial';
@@ -568,6 +569,10 @@ function findNextAvailableSpot(position, dir) {
 		if(spotCheck[1] < 0 || spotCheck[1] > boardHeight) {
 			spotCheck = [parseInt(position[0]), parseInt(position[1])];
 		}
+		console.log(checkedCorrect[toString(spotCheck)]);
+		if(checkedCorrect[toString(spotCheck)]) {
+			spotCheck = null
+		}
 		newSpot = allSquares.getChildByName(`${spotCheck[0]},${spotCheck[1]}`);
 	}	
 	return newSpot.children[0];
@@ -585,53 +590,29 @@ function keyPress(key, info) {
 			if(!currentHighlight.across) {
 				return setHighlight(currentHighlight.object);
 			}
-			let newSpot = allSquares.getChildByName(`${parseInt(clickedPos[0]) - 1},${clickedPos[1]}`);
-			if(newSpot) {
-				currentHighlight.across = true;
-				return setHighlight(newSpot.children[0]);
-			} else {
-				let newSpot = findNextAvailableSpot(clickedPos, `left`);
-				return setHighlight(newSpot);
-			}
+			let newSpot = findNextAvailableSpot(clickedPos, `left`);
+			return setHighlight(newSpot);
 		}
 		if(key == "ArrowRight") {
 			if(!currentHighlight.across) {
 				return setHighlight(currentHighlight.object);
 			}
-			let newSpot = allSquares.getChildByName(`${parseInt(clickedPos[0]) + 1},${clickedPos[1]}`);
-			if(newSpot) {
-				currentHighlight.across = true;
-				return setHighlight(newSpot.children[0]);
-			} else {
-				let newSpot = findNextAvailableSpot(clickedPos, `right`);
-				return setHighlight(newSpot);
-			}
+			let newSpot = findNextAvailableSpot(clickedPos, `right`);
+			return setHighlight(newSpot);
 		}
 		if(key == "ArrowDown") {
 			if(currentHighlight.across) {
 				return setHighlight(currentHighlight.object);
 			}
-			let newSpot = allSquares.getChildByName(`${clickedPos[0]},${parseInt(clickedPos[1]) + 1}`);
-			if(newSpot) {
-				currentHighlight.across = false;
-				return setHighlight(newSpot.children[0]);
-			} else {
-				let newSpot = findNextAvailableSpot(clickedPos, `down`);
-				return setHighlight(newSpot);
-			}
+			let newSpot = findNextAvailableSpot(clickedPos, `down`);
+			return setHighlight(newSpot);
 		}
 		if(key == "ArrowUp") {
 			if(currentHighlight.across) {
 				return setHighlight(currentHighlight.object);
 			}
-			let newSpot = allSquares.getChildByName(`${clickedPos[0]},${parseInt(clickedPos[1]) - 1}`);
-			if(newSpot) {
-				currentHighlight.across = false;
-				return setHighlight(newSpot.children[0]);
-			} else {
-				let newSpot = findNextAvailableSpot(clickedPos, `up`);
-				return setHighlight(newSpot);
-			}
+			let newSpot = findNextAvailableSpot(clickedPos, `up`);
+			return setHighlight(newSpot);
 		}
 		if(key == "Delete" || key == "Backspace") {
 			removeOldText(info);
@@ -900,6 +881,6 @@ function checkAnswers(info) {
 		let correctAnswer = allSquares.getChildByName(correctAnswerPosition);
 		correctAnswer.children[0].interactive = false;
 		correctAnswer.children[0].children[1].style.fill = 0x1785cf;
+		checkedCorrect.push(correctAnswerPosition);
 	}	
-
 }
