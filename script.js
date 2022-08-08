@@ -881,7 +881,8 @@ function offButtonClick(button, event, info) {
 }
 
 function checkAnswers(info) {
-	for(const wrongAnswerPosition in filledAnswers.filter((value) => value != true)) {
+	console.log(filledAnswers);
+	for(const wrongAnswerPosition of filledAnswers.filter((value) => value != true)) {
 		console.log(wrongAnswerPosition);
 		let wrongAnswer = allSquares.getChildByName(wrongAnswerPosition);
 		console.log(wrongAnswer);
