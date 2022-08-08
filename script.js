@@ -114,7 +114,9 @@ function createBoard(info) {
 	authorText.anchor.set(0,1);
 	authorText.y = (titleFiller.height)/2;
 	authorText.x = 0 + titleBounds.width;
-	titleFiller.addChild(titleText, authorText);
+	titleContainer.addChild(titleText);
+	titleContainer.addChild(authorText);
+	
 
 	let buttonContainer = new PIXI.Container();
 	titleContainer.addChild(buttonContainer);
