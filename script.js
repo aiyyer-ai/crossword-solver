@@ -617,8 +617,7 @@ function keyPress(key, info) {
 		if(key == "Delete" || key == "Backspace") {
 			if(checkedCorrect.indexOf(clickedPos.toString()) == -1) {
 				removeOldText(info);
-				let newSpot = findNextAvailableSpot(clickedPos, currentHighlight.across ? `left` : 'up');
-				return setHighlight(newSpot);
+				findSpot(clickedPos, false);
 			}
 
 		}
@@ -667,9 +666,24 @@ function keyPress(key, info) {
 					alert('You completed the Puzzle!');
 				}
 				//end solution checker
-				let newSpot = findNextAvailableSpot(clickedPos, currentHighlight.across ? `right` : 'down');
-				return setHighlight(newSpot);
+					findSpot(clickedPos, true);
 			}
+		}
+	}
+}
+
+function findSpot(clickedPos, add) {
+	if(add) {
+		let spotCheck = currentHighlight.across ? [clickedPos[0] + 1, clickedPos[1]] : [clickedPos[0], clickedPos[1] + 1];
+	} else {
+		let spotCheck = currentHighlight.across ? [clickedPos[0] - 1, clickedPos[1]] : [clickedPos[0], clickedPos[1] - 1];
+	}
+	let newSpot = allSquares.getChildByName(spotCheck).children[0];
+	if(newSpot) {
+		if(checkedCorrect.indexOf(spotCheck.toString()) == -1) {
+			return setHighlight(newSpot);
+		} else {
+			return findSpot(spotCheck, add);
 		}
 	}
 }
