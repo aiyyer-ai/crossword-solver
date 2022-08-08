@@ -675,9 +675,9 @@ function keyPress(key, info) {
 function findSpot(clickedPos, insert) {
 	let spotCheck;
 	if(insert) {
-		spotCheck = currentHighlight.across ? [clickedPos[0] + 1, clickedPos[1]] : [clickedPos[0], clickedPos[1] + 1];
+		spotCheck = currentHighlight.across ? [parseInt(clickedPos[0]) + 1, parseInt(clickedPos[1])] : [parseInt(clickedPos[0]), parseInt(clickedPos[1]) + 1];
 	} else {
-		spotCheck = currentHighlight.across ? [clickedPos[0] - 1, clickedPos[1]] : [clickedPos[0], clickedPos[1] - 1];
+		spotCheck = currentHighlight.across ? [parseInt(clickedPos[0]) - 1, parseInt(clickedPos[1])] : [parseInt(clickedPos[0]), parseInt(clickedPos[1]) - 1];
 	}
 	console.log(spotCheck);
 	console.log(`${spotCheck[0]},${spotCheck[1]}`);
