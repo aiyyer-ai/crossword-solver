@@ -145,6 +145,7 @@ function createBoard(info) {
 	checkButton.on('pointerover', (event) => onButtonOver(checkButton, checkButtonIconOpen, checkButtonIconClosed));
 	checkButton.on('pointerout', (event) => offButtonOver(checkButton, checkButtonIconOpen, checkButtonIconClosed));
 	checkButton.on('pointerdown', (event) => onButtonClick(checkButton, event, info));
+	checkButton.on('pointerup', (event) => offButtonClick(checkButton));
 
 
 
@@ -874,4 +875,8 @@ function offButtonOver(button, open, closed) {
 
 function onButtonClick(button, event, info) {
 	button.tint = 0x33adff;
+}
+
+function offButtonClick(button, event, info) {
+	button.tint = 0xffffff;
 }
