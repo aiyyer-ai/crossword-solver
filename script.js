@@ -33,7 +33,6 @@ let boardWidth;
 let boardHeight;
 PIXI.settings.FILTER_RESOLUTION = 4;
 function createBoard(info) {
-	console.log(info);
 	boardWidth = info.dimensions.width;
 	boardHeight = info.dimensions.height;
 	let acrossClueHeight = info.clues.Across.length;
@@ -712,10 +711,14 @@ function removeOldText(info) {
 	if(currentHighlight.object.children[0] ? (currentHighlight.object.children[currentHighlight.object.children.length - 1].name == 'guess') : currentHighlight.object.children[0])  {
 		if(currentHighlight.object.children[currentHighlight.object.children.length - 1].text == info.solution[clickedPos[1]][clickedPos[0]]) {
 			filledAnswers.splice(filledAnswers.indexOf(true), 1);
-			correctAnswers.splice(correctAnswers.indexOf(String(clickedPos)), 1);
+			if(correctAnswers.indexOf(String(clickedPos)) != -1) {
+				correctAnswers.splice(correctAnswers.indexOf(String(clickedPos)), 1);
+			} 
 		} else {
 			filledAnswers.splice(filledAnswers.indexOf(String(clickedPos)), 1);
-			correctAnswers.splice(correctAnswers.indexOf(String(clickedPos)), 1);
+			if(correctAnswers.indexOf(String(clickedPos)) != -1) {
+				correctAnswers.splice(correctAnswers.indexOf(String(clickedPos)), 1);
+			} 
 		}
 		currentHighlight.object.children[currentHighlight.object.children.length - 1].destroy();
 		currentHighlight.object.parent.children[1].visible = false;
@@ -900,9 +903,7 @@ function checkAnswers(info) {
 		wrongAnswer.children[1].visible = true;
 	}
 	for(const correctAnswerPosition of correctAnswers) {
-		console.log(correctAnswerPosition);
 		let correctAnswer = allSquares.getChildByName(correctAnswerPosition);
-		console.log(correctAnswer);
 		correctAnswer.children[0].interactive = false;
 		correctAnswer.children[0].children[correctAnswer.children[0].children.length - 1].style.fill = 0x005c99;
 		checkedCorrect.push(correctAnswerPosition);
