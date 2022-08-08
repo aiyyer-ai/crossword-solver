@@ -622,14 +622,13 @@ function keyPress(event, info) {
 		}
 		if(key == "Delete" || key == "Backspace") {
 			if(checkedCorrect.indexOf(clickedPos.toString()) == -1) {
-				removeOldText(info);
-				findSpot(clickedPos, false);
+				removeOldText(info, true, false);
 			}
 
 		}
 		if (key.length == 1) {
 			if(checkedCorrect.indexOf(clickedPos.toString()) == -1) {
-				removeOldText(info);
+				removeOldText(info, false, false);
 				const letter = new PIXI.Text(key.toUpperCase(),{fontFamily : squareFont, fontSize: 26, fill : 0x000000, align : 'left'});
 				letter.anchor.set(0.5);
 				letter.x = currentHighlight.object.sizeX/2;
@@ -713,7 +712,7 @@ function onSquareClick(object) {
 	setHighlight(object);
 }
 
-function removeOldText(info) {
+function removeOldText(info, del, recursion) {
 	let clickedPos = currentHighlight.object.name.split(",");
 	if(currentHighlight.object.children[0] ? (currentHighlight.object.children[currentHighlight.object.children.length - 1].name == 'guess') : currentHighlight.object.children[0])  {
 		if(currentHighlight.object.children[currentHighlight.object.children.length - 1].text == info.solution[clickedPos[1]][clickedPos[0]]) {
@@ -737,6 +736,12 @@ function removeOldText(info) {
 		clueAcross.children[0].children[1].style.fill = 0x333333;
 		clueDown.children[0].children[0].style.fill = 0x333333;
 		clueDown.children[0].children[1].style.fill = 0x333333;
+	} else if (del) {
+		if(!recursion) {
+			if(findSpot(clickedPos, false)) {
+				removeOldText(info, true, true);
+			}			
+		}
 	}
 }
 
@@ -808,7 +813,7 @@ function setHighlight(clickee, adjust = false) {
 
 			squareDistance++;
 		}
-
+	return true;
 }
 
 window.alert = function (alert_message) {
