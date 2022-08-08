@@ -122,7 +122,7 @@ function createBoard(info) {
 	checkButton.interactive = true;
 	let buttonRect = checkButton.getLocalBounds();
 	buttonContainer.addChild(checkButton);
-	buttonContainer.y = (titleFiller.height)/2  - (buttonRect/2);
+	buttonContainer.y = (titleFiller.height)/2;
 	buttonContainer.x = ((boardWidth * 36) + (clueWidth * 2) + 2) - 60;
 	let checkButtonIconClosedTexture = PIXI.Texture.from('assets/eyeclosed.png');
 	let checkButtonIconOpenTexture = PIXI.Texture.from('assets/eyeopen.png');
