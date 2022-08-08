@@ -131,6 +131,10 @@ function createBoard(info) {
 	let checkButtonIconOpen = new PIXI.Sprite(checkButtonIconOpenTexture);
 	checkButtonIconClosed.anchor.set(0.5, 0.5);
 	checkButtonIconOpen.anchor.set(0.5, 0.5);
+	checkButtonIconClosed.height = 40;
+	checkButtonIconOpen.height = 40;
+	checkButtonIconClosed.width = 40;
+	checkButtonIconOpen.width = 40;
 	checkButtonIconOpen.visible = false;
 	checkButton.addChild(checkButtonIconClosed, checkButtonIconOpen);
 	checkButtonIconClosed.y = checkButton.height/2;
