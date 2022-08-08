@@ -873,8 +873,18 @@ function offButtonOver(button, open, closed) {
 
 function onButtonClick(button, event, info) {
 	button.tint = 0xbfe5ff;
+	checkAnswers(info);
 }
 
 function offButtonClick(button, event, info) {
 	button.tint = 0xffffff;
+}
+
+function checkAnswers(info) {
+	for(const wrongAnswerPosition in filledAnswers.filter((value) => value != true)) {
+		console.log(wrongAnswerPosition);
+		let wrongAnswer = allSquares.getChildByName(wrongAnswerPosition);
+		console.log(wrongAnswer);
+		wrongAnswer.tint = 0xffbdbd;
+	}
 }
