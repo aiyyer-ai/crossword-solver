@@ -136,8 +136,8 @@ function createBoard(info) {
 	checkButtonIconClosed.width = 40;
 	checkButtonIconOpen.width = 40;
 	checkButtonIconOpen.visible = false;
-	checkButton.addChild(checkButtonIconClosed);
-	checkButton.addChild(checkButtonIconOpen);
+	buttonContainer.addChild(checkButtonIconClosed);
+	buttonContainer.addChild(checkButtonIconOpen);
 	checkButtonIconClosed.y = checkButton.height/2;
 	checkButtonIconClosed.x = checkButton.width/2;
 	checkButtonIconOpen.y = checkButton.height/2;
