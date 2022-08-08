@@ -873,5 +873,5 @@ function offButtonOver(button, open, closed) {
 }
 
 function onButtonClick(button, event, info) {
-
+	button.tint = 0x33adff;
 }
