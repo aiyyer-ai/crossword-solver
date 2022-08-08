@@ -679,12 +679,10 @@ function findSpot(clickedPos, insert) {
 	} else {
 		spotCheck = currentHighlight.across ? [parseInt(clickedPos[0]) - 1, parseInt(clickedPos[1])] : [parseInt(clickedPos[0]), parseInt(clickedPos[1]) - 1];
 	}
-	console.log(spotCheck);
-	console.log(`${spotCheck[0]},${spotCheck[1]}`);
-	let newSpot = allSquares.getChildByName(`${spotCheck[0]},${spotCheck[1]}`).children[0];
+	let newSpot = allSquares.getChildByName(`${spotCheck[0]},${spotCheck[1]}`);
 	if(newSpot) {
 		if(checkedCorrect.indexOf(spotCheck.toString()) == -1) {
-			return setHighlight(newSpot);
+			return setHighlight(newSpot.children[0]);
 		} else {
 			return findSpot(spotCheck, insert);
 		}
