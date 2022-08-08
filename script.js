@@ -117,7 +117,7 @@ function createBoard(info) {
 	let buttonContainer = new PIXI.Container();
 	titleContainer.addChild(buttonContainer);
 	let checkButton = new PIXI.Graphics();
-	checkButton.beginFill(0xffffff);
+	checkButton.beginFill(0xeeeeee);
 	checkButton.lineStyle(2, 0xe5e5e5, 1);
 	checkButton.drawRoundedRect(0, 0, 65, 40, 5);
 	checkButton.interactive = true;
@@ -136,7 +136,8 @@ function createBoard(info) {
 	checkButtonIconClosed.width = 40;
 	checkButtonIconOpen.width = 40;
 	checkButtonIconOpen.visible = false;
-	checkButton.addChild(checkButtonIconClosed, checkButtonIconOpen);
+	checkButton.addChild(checkButtonIconClosed);
+	checkButton.addChild(checkButtonIconOpen);
 	checkButtonIconClosed.y = checkButton.height/2;
 	checkButtonIconClosed.x = checkButton.width/2;
 	checkButtonIconOpen.y = checkButton.height/2;
