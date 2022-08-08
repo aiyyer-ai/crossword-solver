@@ -114,6 +114,35 @@ function createBoard(info) {
 	authorText.x = 0 + titleBounds.width;
 	titleFiller.addChild(titleText, authorText);
 
+	let checkButton = new PIXI.Graphics();
+	checkButton.beginFill(0xffffff);
+	checkButton.drawFilletRect(0, 0, 65, 40, 10);
+	checkButton.interactive = true;
+	titleFiller.addChild(checkButton);
+	checkButton.anchor.set(0.5, 0.5);
+	checkButton.y = (titleFiller.height)/2;
+	checkButton.x = ((boardWidth * 36) + (clueWidth * 2) + 2) - 60;
+	let checkButtonIconClosedTexture = PIXI.Texture.from('assets/eyeclosed.png');
+	let checkButtonIconOpenTexture = PIXI.Texture.from('assets/eyeopen.png');
+	let checkButtonIconClosed = new PIXI.Sprite(checkButtonIconClosedTexture);
+	let checkButtonIconOpen = new PIXI.Sprite(checkButtonIconOpenTexture);
+	checkButtonIconClosed.anchor.set(0.5, 0.5);
+	checkButtonIconOpen.anchor.set(0.5, 0.5);
+	checkButtonIconOpen.visible = false;
+	checkButton.addChild(checkButtonIconClosed, checkButtonIconOpen);
+	checkButtonIconClosed.y = checkButton.height/2;
+	checkButtonIconClosed.x = checkButton.width/2;
+	checkButtonIconOpen.y = checkButton.height/2;
+	checkButtonIconOpen.x = checkButton.width/2;
+	checkButton.on('pointerover', (event) => onButtonOver(checkButton, checkButtonIconOpen, checkButtonIconClosed));
+	checkButton.on('pointerout', (event) => offButtonOver(checkButton, checkButtonIconOpen, checkButtonIconClosed));
+	checkButton.on('pointerdown', (event) => onButtonClick(checkButton, event, info));
+
+
+
+
+
+
 	//acrossClues
 	let acrossContainer = new PIXI.Container();
 	acrossClueContainer = new PIXI.Container();
@@ -820,4 +849,21 @@ function remove_custom_alert() {
     let HTML_body = document.querySelector("body");
     let alert_container = document.getElementById("alert_container");
     HTML_body.removeChild(alert_container);
+}
+
+
+function onButtonOver(button, open, closed) {
+	button.tint = 0xbfe5ff;
+	open.visible = true;
+	closed.visible = false;
+}
+
+function offButtonOver(button, open, closed) {
+	button.tint = 0xffffff;
+	closed.visible = true;
+	open.visible = false;
+}
+
+function onButtonClick(button, event, info) {
+
 }
