@@ -617,10 +617,9 @@ function keyPress(key, info) {
 		}
 		if(key == "Delete" || key == "Backspace") {
 			removeOldText(info);
-			let newSpot = allSquares.getChildByName((currentHighlight.across ? `${parseInt(clickedPos[0]) - 1},${clickedPos[1]}` : `${clickedPos[0]},${parseInt(clickedPos[1]) - 1}`));
-			if(newSpot) {
-				return setHighlight(newSpot.children[0]);
-			}
+			let newSpot = findNextAvailableSpot(clickedPos, currentHighlight.across ? `left` : 'up');
+			return setHighlight(newSpot);
+
 		}
 		if (key.length == 1) {
 				removeOldText(info);
@@ -666,10 +665,8 @@ function keyPress(key, info) {
 					alert('You completed the Puzzle!');
 				}
 				//end solution checker
-				let newSpot = allSquares.getChildByName((currentHighlight.across ? `${parseInt(clickedPos[0]) + 1},${clickedPos[1]}` : `${clickedPos[0]},${parseInt(clickedPos[1]) + 1}`));
-				if(newSpot) {
-					return setHighlight(newSpot.children[0]);
-				}
+				let newSpot = findNextAvailableSpot(clickedPos, currentHighlight.across ? `right` : 'down');
+				return setHighlight(newSpot);
 		}
 	}
 }
@@ -886,6 +883,8 @@ function checkAnswers(info) {
 	}
 	for(const correctAnswerPosition of correctAnswers.filter((value) => value != true)) {
 		let correctAnswer = allSquares.getChildByName(correctAnswerPosition);
+		console.log(correctAnswerPosition);
+		console.log(correctAnswer);
 		correctAnswer.children[0].interactive = false;
 		correctAnswer.children[0].children[correctAnswer.children[0].children.length - 1].style.fill = 0x005c99;
 		checkedCorrect.push(correctAnswerPosition);
