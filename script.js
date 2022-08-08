@@ -673,10 +673,11 @@ function keyPress(key, info) {
 }
 
 function findSpot(clickedPos, add) {
+	let spotCheck;
 	if(add) {
-		let spotCheck = currentHighlight.across ? [clickedPos[0] + 1, clickedPos[1]] : [clickedPos[0], clickedPos[1] + 1];
+		spotCheck = currentHighlight.across ? [clickedPos[0] + 1, clickedPos[1]] : [clickedPos[0], clickedPos[1] + 1];
 	} else {
-		let spotCheck = currentHighlight.across ? [clickedPos[0] - 1, clickedPos[1]] : [clickedPos[0], clickedPos[1] - 1];
+		spotCheck = currentHighlight.across ? [clickedPos[0] - 1, clickedPos[1]] : [clickedPos[0], clickedPos[1] - 1];
 	}
 	let newSpot = allSquares.getChildByName(spotCheck).children[0];
 	if(newSpot) {
