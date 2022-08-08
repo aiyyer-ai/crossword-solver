@@ -123,13 +123,15 @@ function createBoard(info) {
 	let buttonRect = checkButton.getLocalBounds();
 	buttonContainer.addChild(checkButton);
 	buttonContainer.y = (titleFiller.height)/2;
-	buttonContainer.x = ((boardWidth * 36) + (clueWidth * 2) + 2) - 60;
+	buttonContainer.x = ((boardWidth * 36) + (clueWidth * 2) + 2) - 100;
 	let checkButtonIconClosedTexture = PIXI.Texture.from('assets/eyeclosed.png');
 	let checkButtonIconOpenTexture = PIXI.Texture.from('assets/eyeopen.png');
 	let checkButtonIconClosed = new PIXI.Sprite(checkButtonIconClosedTexture);
 	let checkButtonIconOpen = new PIXI.Sprite(checkButtonIconOpenTexture);
 	checkButtonIconClosed.anchor.set(0.5, 0.5);
 	checkButtonIconOpen.anchor.set(0.5, 0.5);
+	checkButtonIconClosed.scale = (0.25, 0.25);
+	checkButtonIconOpen.scale = (0.25, 0.25);
 	checkButtonIconOpen.visible = false;
 	checkButton.addChild(checkButtonIconClosed, checkButtonIconOpen);
 	checkButtonIconClosed.y = checkButton.height/2;
