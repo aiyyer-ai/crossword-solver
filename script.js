@@ -129,8 +129,8 @@ function createBoard(info) {
 	let checkButtonIconOpenTexture = PIXI.Texture.from('assets/eyeopen.png');
 	let checkButtonIconClosed = new PIXI.Sprite(checkButtonIconClosedTexture);
 	let checkButtonIconOpen = new PIXI.Sprite(checkButtonIconOpenTexture);
-	checkButtonIconClosed.anchor.set(0.5, 0.5);
 	checkButtonIconOpen.anchor.set(0.5, 0.5);
+	checkButtonIconClosed.anchor.set(0.5, 0.5);
 	checkButtonIconClosed.height = 40;
 	checkButtonIconOpen.height = 40;
 	checkButtonIconClosed.width = 40;
