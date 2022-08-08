@@ -571,10 +571,9 @@ function findNextAvailableSpot(position, dir) {
 		}
 		console.log(checkedCorrect);
 		console.log(toString(spotCheck));
-		if(checkedCorrect[toString(spotCheck)]) {
-			spotCheck = null
+		if(!checkedCorrect[toString(spotCheck)]) {
+			newSpot = allSquares.getChildByName(`${spotCheck[0]},${spotCheck[1]}`);
 		}
-		newSpot = allSquares.getChildByName(`${spotCheck[0]},${spotCheck[1]}`);
 	}	
 	return newSpot.children[0];
 }
