@@ -24,6 +24,7 @@ let scrollbuttonAcross = null;
 let downClueContainer = null;
 let scrollbuttonDown = null;
 let filledAnswers = [];
+let correctAnswers = [];
 let clueStartHeight = 0;
 let squareSize = 34;
 let squareFont = 'Arial';
@@ -675,6 +676,7 @@ function keyPress(key, info) {
 				//solution checker
 				if(String(key.toUpperCase()) == info.solution[clickedPos[1]][clickedPos[0]]) {
 					filledAnswers.push(true);
+					correctAnswers.push(String(clickedPos));
 				} else {
 					filledAnswers.push(String(clickedPos));
 				}
@@ -713,8 +715,10 @@ function removeOldText(info) {
 	if(currentHighlight.object.children[0] ? (currentHighlight.object.children[currentHighlight.object.children.length - 1].name == 'guess') : currentHighlight.object.children[0])  {
 		if(currentHighlight.object.children[currentHighlight.object.children.length - 1].text == info.solution[clickedPos[1]][clickedPos[0]]) {
 			filledAnswers.splice(filledAnswers.indexOf(true), 1);
+			correctAnswers.splice(correctAnswers.indexOf(String(clickedPos)), 1);
 		} else {
 			filledAnswers.splice(filledAnswers.indexOf(String(clickedPos)), 1);
+			correctAnswers.splice(correctAnswers.indexOf(String(clickedPos)), 1);
 		}
 		currentHighlight.object.children[currentHighlight.object.children.length - 1].destroy();
 		currentHighlight.object.parent.children[1].visible = false;
@@ -889,9 +893,13 @@ function offButtonClick(button, event, info) {
 function checkAnswers(info) {
 	console.log(filledAnswers);
 	for(const wrongAnswerPosition of filledAnswers.filter((value) => value != true)) {
-		console.log(wrongAnswerPosition);
 		let wrongAnswer = allSquares.getChildByName(wrongAnswerPosition);
-		console.log(wrongAnswer);
 		wrongAnswer.children[1].visible = true;
 	}
+	for(const correctAnswerPosition of correctAnswers.filter((value) => value != true)) {
+		let correctAnswer = allSquares.getChildByName(correctAnswerPosition);
+		correctAnswer.children[0].interactive = false;
+		correctAnswer.children[0].children[1].style.fill = 0x1785cf;
+	}	
+
 }
