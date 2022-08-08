@@ -2,11 +2,11 @@
 html {
    font-family: Arial, Helvetica, sans-serif;
 }
-.column {
-  float: left;
-  padding: 3px;
-  overflow-y: auto;
-  text-align: center;
+.column, .title {
+    float: left;
+    padding: 3px;
+    overflow-y: auto;
+    text-align: center;
 }
 
 .row:after {
@@ -14,6 +14,43 @@ html {
   display: table;
   clear: both;
   padding: 3px;
+}
+
+.input {
+    background-color: #bfe5ff;
+    outline: 2px dashed black;
+    outline-offset: -10px;
+    width: 500px;
+    height: 310px;
+    position: relative;
+}
+
+.box__file {
+    width: 0.1px;
+    height: 0.1px;
+    opacity: 0;
+    overflow: hidden;
+    position: absolute;
+    z-index: -1;
+}
+
+.box__input {
+    position: absolute;
+    margin: 0;
+    top: 50%;
+    left: 50%;
+    -ms-transform: translate(-50%, -50%);
+    transform: translate(-50%, -50%);
+}
+
+.input.dragover {
+    background-color: #fae522;
+    outline-offset: -15px;
+}
+
+.input.uploaded {
+    display: hidden;
+    visibility: hidden;
 }
 
 .alert_container {

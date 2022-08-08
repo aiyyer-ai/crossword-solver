@@ -6,6 +6,37 @@ document.getElementById('file').addEventListener('change', (e) => {
 	}
 });
 
+
+const box = document.getElementById("row").querySelectorAll(".puzzle")[0].querySelectorAll(".input")[0];
+document.body.ondragover = (event) => dragOverHandler(event);
+document.body.ondragenter = (event) => dragOverHandler(event);
+document.body.ondrop = (event) => drop(event);
+document.body.ondragend = (event) => dragEnd(event);
+document.body.ondragleave = (event) => dragEnd(event);
+
+function dragEnd(event) {
+	event.stopPropagation();
+	event.preventDefault();
+	box.setAttribute("class", "input");
+}
+
+function dragOverHandler(event) {
+	event.stopPropagation();
+	event.preventDefault();
+	box.setAttribute("class", "input dragover");
+}
+
+function drop(event) {
+	event.stopPropagation();
+	event.preventDefault();
+	if (event.dataTransfer.files[0]) {
+		const file = event.dataTransfer.files[0];
+		if (file) {
+			processFile(file);
+		}
+	}
+}
+
 function processFile(file) {
 	(async () => {
 		const fileContent = await file.text();
@@ -33,6 +64,7 @@ let boardWidth;
 let boardHeight;
 PIXI.settings.FILTER_RESOLUTION = 4;
 function createBoard(info) {
+	box.setAttribute("class", "input uploaded");
 	boardWidth = info.dimensions.width;
 	boardHeight = info.dimensions.height;
 	let acrossClueHeight = info.clues.Across.length;
@@ -623,6 +655,8 @@ function keyPress(event, info) {
 		if(key == "Delete" || key == "Backspace") {
 			if(checkedCorrect.indexOf(clickedPos.toString()) == -1) {
 				removeOldText(info, true, false);
+			} else {
+				findSpot(clickedPos, false);
 			}
 
 		}
@@ -671,8 +705,8 @@ function keyPress(event, info) {
 					alert('You completed the Puzzle!');
 				}
 				//end solution checker
-					findSpot(clickedPos, true);
 			}
+			findSpot(clickedPos, true);
 		}
 	}
 }
@@ -686,11 +720,7 @@ function findSpot(clickedPos, insert) {
 	}
 	let newSpot = allSquares.getChildByName(`${spotCheck[0]},${spotCheck[1]}`);
 	if(newSpot) {
-		if(checkedCorrect.indexOf(spotCheck.toString()) == -1) {
-			return setHighlight(newSpot.children[0]);
-		} else {
-			return findSpot(spotCheck, insert);
-		}
+		return setHighlight(newSpot.children[0]);
 	}
 }
 
@@ -739,7 +769,9 @@ function removeOldText(info, del, recursion) {
 	} else if (del) {
 		if(!recursion) {
 			if(findSpot(clickedPos, false)) {
-				removeOldText(info, true, true);
+				if(checkedCorrect.indexOf(currentHighlight.object.name) == -1) {
+					removeOldText(info, true, true);
+				}
 			}			
 		}
 	}
@@ -916,7 +948,6 @@ function checkAnswers(info) {
 	}
 	for(const correctAnswerPosition of correctAnswers) {
 		let correctAnswer = allSquares.getChildByName(correctAnswerPosition);
-		correctAnswer.children[0].interactive = false;
 		correctAnswer.children[0].children[correctAnswer.children[0].children.length - 1].style.fill = 0x005c99;
 		checkedCorrect.push(correctAnswerPosition);
 	}
