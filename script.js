@@ -102,7 +102,7 @@ function createBoard(info) {
 	titleContainer.addChild(titleFiller);
 
 	let titleText = new PIXI.Text(` ${info.title} `,{fontFamily: squareFont, fontSize: 24, fill : 0x333333, align : 'left',  fontWeight : 'bold' });
-	let authorText = new PIXI.Text(`by ${info.author}`,{fontFamily: squareFont, fontSize: 18, fill : 0x333333, align : 'left' });
+	let authorText = new PIXI.Text(`by ${info.author}`,{fontFamily: squareFont, fontSize: 18, fill : 0x333333, align : 'left'});
 	let titleBounds = titleText.getLocalBounds();
 	titleText.zIndex = 1;
 	titleText.anchor.set(0,1);
@@ -114,14 +114,16 @@ function createBoard(info) {
 	authorText.x = 0 + titleBounds.width;
 	titleFiller.addChild(titleText, authorText);
 
+	let buttonContainer = new PIXI.Container();
+	titleContainer.addChild(buttonContainer);
 	let checkButton = new PIXI.Graphics();
 	checkButton.beginFill(0xffffff);
 	checkButton.drawRoundedRect(0, 0, 65, 40, 10);
 	checkButton.interactive = true;
-	titleFiller.addChild(checkButton);
-	checkButton.anchor.set(0.5, 0.5);
-	checkButton.y = (titleFiller.height)/2;
-	checkButton.x = ((boardWidth * 36) + (clueWidth * 2) + 2) - 60;
+	buttonContainer.addChild(checkButton);
+	buttonContainer.anchor.set(0.5, 0.5);
+	buttonContainer.y = (titleFiller.height)/2;
+	buttonContainer.x = ((boardWidth * 36) + (clueWidth * 2) + 2) - 60;
 	let checkButtonIconClosedTexture = PIXI.Texture.from('assets/eyeclosed.png');
 	let checkButtonIconOpenTexture = PIXI.Texture.from('assets/eyeopen.png');
 	let checkButtonIconClosed = new PIXI.Sprite(checkButtonIconClosedTexture);
