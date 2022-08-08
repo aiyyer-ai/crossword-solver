@@ -899,8 +899,10 @@ function checkAnswers(info) {
 		let wrongAnswer = allSquares.getChildByName(wrongAnswerPosition);
 		wrongAnswer.children[1].visible = true;
 	}
-	for(const correctAnswerPosition of correctAnswers.filter((value) => value != true)) {
+	for(const correctAnswerPosition of correctAnswers) {
+		console.log(correctAnswerPosition);
 		let correctAnswer = allSquares.getChildByName(correctAnswerPosition);
+		console.log(correctAnswer);
 		correctAnswer.children[0].interactive = false;
 		correctAnswer.children[0].children[correctAnswer.children[0].children.length - 1].style.fill = 0x005c99;
 		checkedCorrect.push(correctAnswerPosition);
