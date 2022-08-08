@@ -615,7 +615,7 @@ function keyPress(key, info) {
 			return setHighlight(newSpot);
 		}
 		if(key == "Delete" || key == "Backspace") {
-			if(checkedCorrect.indexOf(clickedPos) != -1) {
+			if(checkedCorrect.indexOf(clickedPos) == -1) {
 				removeOldText(info);
 				let newSpot = findNextAvailableSpot(clickedPos, currentHighlight.across ? `left` : 'up');
 				return setHighlight(newSpot);
@@ -623,7 +623,7 @@ function keyPress(key, info) {
 
 		}
 		if (key.length == 1) {
-			if(checkedCorrect.indexOf(clickedPos) != -1) {
+			if(checkedCorrect.indexOf(clickedPos) == -1) {
 				removeOldText(info);
 				const letter = new PIXI.Text(key.toUpperCase(),{fontFamily : squareFont, fontSize: 26, fill : 0x000000, align : 'left'});
 				letter.anchor.set(0.5);
