@@ -569,7 +569,8 @@ function findNextAvailableSpot(position, dir) {
 		if(spotCheck[1] < 0 || spotCheck[1] > boardHeight) {
 			spotCheck = [parseInt(position[0]), parseInt(position[1])];
 		}
-		console.log(checkedCorrect[toString(spotCheck)]);
+		console.log(checkedCorrect);
+		console.log(toString(spotCheck));
 		if(checkedCorrect[toString(spotCheck)]) {
 			spotCheck = null
 		}
@@ -872,7 +873,13 @@ function offButtonClick(button, event, info) {
 }
 
 function checkAnswers(info) {
-	console.log(filledAnswers);
+	if(currentHighlight.object) {
+		currentHighlight.object.tint = 0xffffff;
+		for (const blueLight of currentHighlight.otherSquares) {
+			blueLight.tint = 0xffffff;
+		}
+	}
+	currentHighlight = {across:true, object:null, otherSquares:[]};
 	for(const wrongAnswerPosition of filledAnswers.filter((value) => value != true)) {
 		let wrongAnswer = allSquares.getChildByName(wrongAnswerPosition);
 		wrongAnswer.children[1].visible = true;
@@ -882,5 +889,5 @@ function checkAnswers(info) {
 		correctAnswer.children[0].interactive = false;
 		correctAnswer.children[0].children[correctAnswer.children[0].children.length - 1].style.fill = 0x005c99;
 		checkedCorrect.push(correctAnswerPosition);
-	}	
+	}
 }
