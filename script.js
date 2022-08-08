@@ -717,6 +717,7 @@ function removeOldText(info) {
 			filledAnswers.splice(filledAnswers.indexOf(String(clickedPos)), 1);
 		}
 		currentHighlight.object.children[currentHighlight.object.children.length - 1].destroy();
+		currentHighlight.object.parent.children[1].visible = false;
 		let clueAcross = acrossClueContainer.getChildByName(currentHighlight.object.parent.clues.across);
 		let clueDown = downClueContainer.getChildByName(currentHighlight.object.parent.clues.down);
 		clueAcross.squares[currentHighlight.object.parent.clues.name][0] = false;
@@ -891,6 +892,6 @@ function checkAnswers(info) {
 		console.log(wrongAnswerPosition);
 		let wrongAnswer = allSquares.getChildByName(wrongAnswerPosition);
 		console.log(wrongAnswer);
-		wrongAnswer.wrong.visible = true;
+		wrongAnswer.children[1].visible = true;
 	}
 }
