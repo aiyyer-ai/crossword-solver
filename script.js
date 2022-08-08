@@ -116,7 +116,7 @@ function createBoard(info) {
 
 	let checkButton = new PIXI.Graphics();
 	checkButton.beginFill(0xffffff);
-	checkButton.drawFilletRect(0, 0, 65, 40, 10);
+	checkButton.drawRoundedRect(0, 0, 65, 40, 10);
 	checkButton.interactive = true;
 	titleFiller.addChild(checkButton);
 	checkButton.anchor.set(0.5, 0.5);
