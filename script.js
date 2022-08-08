@@ -569,9 +569,9 @@ function findNextAvailableSpot(position, dir) {
 		if(spotCheck[1] < 0 || spotCheck[1] > boardHeight) {
 			spotCheck = [parseInt(position[0]), parseInt(position[1])];
 		}
-		console.log(checkedCorrect);
-		console.log(spotCheck.toString());
-		if(!checkedCorrect[spotCheck.toString()]) {
+		console.log(checkedCorrect, spotCheck.toString());
+		console.log(checkedCorrect.indexOf(spotCheck.toString()));
+		if(!checkedCorrect.indexOf(spotCheck.toString())) {
 			newSpot = allSquares.getChildByName(`${spotCheck[0]},${spotCheck[1]}`);
 		}
 	}	
