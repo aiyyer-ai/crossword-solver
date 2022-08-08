@@ -679,8 +679,7 @@ function findSpot(clickedPos, insert) {
 	} else {
 		spotCheck = currentHighlight.across ? [clickedPos[0] - 1, clickedPos[1]] : [clickedPos[0], clickedPos[1] - 1];
 	}
-	console.log(spotCheck);
-	let newSpot = allSquares.getChildByName(spotCheck).children[0];
+	let newSpot = allSquares.getChildByName(spotCheck.toString()).children[0];
 	if(newSpot) {
 		if(checkedCorrect.indexOf(spotCheck.toString()) == -1) {
 			return setHighlight(newSpot);
