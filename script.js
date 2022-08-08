@@ -6,8 +6,27 @@ document.getElementById('file').addEventListener('change', (e) => {
 	}
 });
 
+const properArray = {
+  "solution": [],
+  "kind": ["http://ipuz.org/crossword#1"],
+  "author": "",
+  "puzzle": [],
+  "origin": "CrossFire encoder v1",
+  "block": "#",
+  "title": "",
+  "version": "http://ipuz.org/v2",
+  "empty": "0",
+  "dimensions": {
+    "width": 0,
+    "height": 0
+  },
+  "clues": {
+    "Down": [],
+    "Across": []
+  }
+};
 
-const box = document.getElementById("row").querySelectorAll(".puzzle")[0].querySelectorAll(".input")[0];
+const box = document.getElementById("input");
 document.body.ondragover = (event) => dragOverHandler(event);
 document.body.ondragenter = (event) => dragOverHandler(event);
 document.body.ondrop = (event) => drop(event);
@@ -40,9 +59,43 @@ function drop(event) {
 function processFile(file) {
 	(async () => {
 		const fileContent = await file.text();
-		const puzzleInfo = JSON.parse(fileContent);
-		createBoard(puzzleInfo);
+		try {
+			const puzzleInfo = JSON.parse(fileContent);
+			let UsedInfo = checkJSONContent(puzzleInfo, properArray);
+			if(UsedInfo) {
+				createBoard(UsedInfo);
+			} else {
+				throw 'Error: Invalid JSON';
+			}
+
+		} catch(e) {
+			let choice = document.getElementById("choice");
+			let wrong = document.getElementById("wrong");
+			choice.setAttribute("class", "box__file");
+			wrong.setAttribute("class", "wrong");
+		}
 	})();
+}
+
+function checkJSONContent(info, propArray) {
+	var safeInfo = {};
+	try {
+		if(typeof info.kind[0] !== "string") {
+			return null;
+		}
+		if(info.kind[0] !== propArray.kind[0]) {
+			return null;
+		}
+        Object.keys(propArray).forEach(function(prop) {
+            if (info.hasOwnProperty(prop)) {
+                safeInfo[prop] = info[prop];
+            }
+        });
+        return safeInfo;
+	} catch(e) {
+		console.log(e);
+		return null;
+	}
 }
 
 let app = null;
@@ -50,6 +103,7 @@ let allSquares = null;
 let across = null;
 let down = null;
 let title = null;
+let titleContainer = null;
 let acrossClueContainer = null;
 let scrollbuttonAcross = null;
 let downClueContainer = null;
@@ -62,6 +116,7 @@ let squareSize = 34;
 let squareFont = 'Arial';
 let boardWidth;
 let boardHeight;
+let stopTimer = false;
 PIXI.settings.FILTER_RESOLUTION = 4;
 function createBoard(info) {
 	box.setAttribute("class", "input uploaded");
@@ -105,28 +160,28 @@ function createBoard(info) {
 			    titleRender.autoResize = true;
 			    title.render();
 
-    const inputField = document.getElementById("row").querySelectorAll(".puzzle")[0].querySelectorAll(".input")[0];
-	document.getElementById("row").querySelectorAll(".puzzle")[0].insertBefore(app.view, inputField);
-	document.getElementById("row").querySelectorAll(".puzzle")[0].style.width = `${(boardWidth * 36) + 2}px`;
-	document.getElementById("row").querySelectorAll(".puzzle")[0].style.height = `${(boardHeight * 36) + 2}px`;
+    const inputField = document.getElementById("input");
+	document.getElementById("puzzle").insertBefore(app.view, inputField);
+	document.getElementById("puzzle").style.width = `${(boardWidth * 36) + 2}px`;
+	document.getElementById("puzzle").style.height = `${(boardHeight * 36) + 2}px`;
 
-	const acrossField = document.getElementById("row").querySelectorAll(".clues")[0].querySelectorAll(".across")[0];
-	document.getElementById("row").querySelectorAll(".clues")[0].insertBefore(across.view, acrossField);
-	document.getElementById("row").querySelectorAll(".clues")[0].style.height = `${(boardHeight * 36) + 2}px`;
+	const acrossField = document.getElementById("across");
+	document.getElementById("acrossclue").insertBefore(across.view, acrossField);
+	document.getElementById("acrossclue").style.height = `${(boardHeight * 36) + 2}px`;
 
-	const downField = document.getElementById("row").querySelectorAll(".clues")[1].querySelectorAll(".down")[0];
-	document.getElementById("row").querySelectorAll(".clues")[1].insertBefore(down.view, downField);
-	document.getElementById("row").querySelectorAll(".clues")[1].style.height = `${(boardHeight * 36) + 2}px`;
+	const downField = document.getElementById("down");
+	document.getElementById("downclue").insertBefore(down.view, downField);
+	document.getElementById("downclue").style.height = `${(boardHeight * 36) + 2}px`;
 
 	document.body.addEventListener("keydown", (event) => keyPress(event, info));
 
-    const titleField = document.getElementById("row2").querySelectorAll(".title")[0].querySelectorAll(".timer")[0];
-	document.getElementById("row2").querySelectorAll(".title")[0].insertBefore(title.view, titleField);
-	document.getElementById("row2").querySelectorAll(".title")[0].style.width = `${(boardWidth * 36) + (clueWidth * 2) + 2}px`;
-	document.getElementById("row2").querySelectorAll(".title")[0].style.height = `${50}px`;
+    const titleField = document.getElementById("timer");
+	document.getElementById("title").insertBefore(title.view, titleField);
+	document.getElementById("title").style.width = `${(boardWidth * 36) + (clueWidth * 2) + 2}px`;
+	document.getElementById("title").style.height = `${50}px`;
 
 	//titleStuff
-	let titleContainer = new PIXI.Container();
+	titleContainer = new PIXI.Container();
 	title.stage.addChild(titleContainer);
 	let titleFiller = new PIXI.Graphics();
 	titleFiller.beginFill(0xffffff);
@@ -136,6 +191,7 @@ function createBoard(info) {
 
 	let titleText = new PIXI.Text(` ${info.title} `,{fontFamily: squareFont, fontSize: 24, fill : 0x333333, align : 'left',  fontWeight : 'bold' });
 	let authorText = new PIXI.Text(`by ${info.author}`,{fontFamily: squareFont, fontSize: 18, fill : 0x333333, align : 'left'});
+	let timerText = new PIXI.Text(`0:00`,{fontFamily: squareFont, fontSize: 18, fill : 0x333333, align : 'left'});
 	let titleBounds = titleText.getLocalBounds();
 	titleText.zIndex = 1;
 	titleText.anchor.set(0,1);
@@ -143,10 +199,17 @@ function createBoard(info) {
 	titleText.x = 0;
 	authorText.zIndex = 1;
 	authorText.anchor.set(0,1);
-	authorText.y = (titleFiller.height)/2;
+	authorText.y = (titleFiller.height)/2 - (24 - 18)/2;
 	authorText.x = 0 + titleBounds.width;
+	timerText.zIndex = 1;
+	timerText.anchor.set(0,1);
+	timerText.y = (titleFiller.height)/2 - (24 - 18)/2;
+	timerText.x = (titleFiller.width)/2;
+	timerText.name = 'clock';
 	titleContainer.addChild(titleText);
+	titleContainer.addChild(timerText);
 	titleContainer.addChild(authorText);
+	initializeClock(new Date());
 	
 
 	let buttonContainer = new PIXI.Container();
@@ -702,7 +765,9 @@ function keyPress(event, info) {
 					filledAnswers.push(String(clickedPos));
 				}
 				if(filledAnswers.filter((value) => value == true).length == allSquares.children.length) {
-					alert('You completed the Puzzle!');
+					stopTimer = true;
+					let timeTaken = titleContainer.getChildByName('clock').text;
+					alert(`You finished the puzzle in ${timeTaken}!`);
 				}
 				//end solution checker
 			}
@@ -793,10 +858,18 @@ function setHighlight(clickee, adjust = false) {
 	clickee.tint = 0xfae522;
 	let clueAcross = acrossClueContainer.getChildByName(clickee.parent.clues.across);
 	let clueDown = downClueContainer.getChildByName(clickee.parent.clues.down);
-		clueAcross.children[0].tint = 0xbfe5ff;
+
+		if(currentHighlight.across) {
+			clueAcross.children[0].tint = 0xbfe5ff;	
+			clueDown.children[0].tint = 0xeaf1ff;		
+		} else {
+			clueAcross.children[0].tint = 0xeaf1ff;	
+			clueDown.children[0].tint = 0xbfe5ff;				
+		}
+
 		currentHighlight.otherSquares.push(clueAcross.children[0]);
 		let scrollAbutton = across.stage.getChildByName(`scrollbarContainerAcross`).getChildByName(`scrollbuttonAcross`);
-		clueDown.children[0].tint = 0xbfe5ff;
+
 		currentHighlight.otherSquares.push(clueDown.children[0]);
 		let scrollBbutton = down.stage.getChildByName(`scrollbarContainerDown`).getChildByName(`scrollbuttonDown`);
 		switch(adjust) {
@@ -951,4 +1024,31 @@ function checkAnswers(info) {
 		correctAnswer.children[0].children[correctAnswer.children[0].children.length - 1].style.fill = 0x005c99;
 		checkedCorrect.push(correctAnswerPosition);
 	}
+}
+
+
+Date.daysBetween = function(date1, date2) {
+    let one_sec = 1000;
+    let date1_ms = date1.getTime();
+    let date2_ms = date2.getTime();
+    let difference_ms = date1_ms - date2_ms;
+    return Math.round(difference_ms / one_sec);
+};
+
+function initializeClock(endtime) {
+  
+    function updateClock() {
+      let today = new Date();
+      let secs = Date.daysBetween(today, endtime)+1;
+      let min = Math.floor(secs/60);
+      let sec = (secs % 60).toLocaleString(undefined, {minimumIntegerDigits: 2});
+      let timeString = `${min}:${sec}`;
+      titleContainer.getChildByName('clock').text = timeString;
+      if(stopTimer) {
+      	clearInterval(timeinterval);
+      }
+    }
+  
+    updateClock();
+    let timeinterval = setInterval(updateClock, 1000);
 }

@@ -77,14 +77,14 @@ html {
 
 .alert_box h1 {
     font-size: 1.5em;
-    margin-left: 55px;
-    padding-left: 5px;
+    margin-top: 5px;
+    text-align: center;
 }
 
 .alert_box p {
     font-size: 1.0em;
     height: 15px;
-    margin-left: 55px;
+    text-align: center;
     padding-left: 5px;
 }
 

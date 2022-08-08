@@ -20,10 +20,11 @@
         <div class ="input" id="input">
             <div class="box__input">
               <input class="box__file" type="file" id="file" name="file" accept=".ipuz">
-              <label for="file"><strong>Choose a file</strong><span class="box__dragndrop"> or drag it here</span>.</label>
+              <label id="choice" for="file"><strong>Choose a file</strong> or drag it here</label>
+              <div class="wrong box__file" id="wrong">ERROR with File: <strong>Wrong File Type.</strong> <br> Reload and Try again</div>
             </div>
         </div>
-        <div id="update">Internet Crossword Assistant: Reader Unaided Solver - Version 1.1.0</div>
+        <div id="update">Internet Crossword Assistant: Reader Unaided Solver - Version 1.1.5</div>
       </div>
       <script src="script.js"></script>
       <div class="column clues" id="acrossclue" style="width:270px;">
