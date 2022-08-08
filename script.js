@@ -862,19 +862,17 @@ function remove_custom_alert() {
 
 
 function onButtonOver(button, open, closed) {
-	button.tint = 0xbfe5ff;
 	open.visible = true;
 	closed.visible = false;
 }
 
 function offButtonOver(button, open, closed) {
-	button.tint = 0xffffff;
 	closed.visible = true;
 	open.visible = false;
 }
 
 function onButtonClick(button, event, info) {
-	button.tint = 0x99d6ff;
+	button.tint = 0xbfe5ff;
 }
 
 function offButtonClick(button, event, info) {
