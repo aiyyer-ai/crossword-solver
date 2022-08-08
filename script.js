@@ -86,7 +86,7 @@ function createBoard(info) {
 	document.getElementById("row").querySelectorAll(".clues")[1].insertBefore(down.view, downField);
 	document.getElementById("row").querySelectorAll(".clues")[1].style.height = `${(boardHeight * 36) + 2}px`;
 
-	document.body.addEventListener("keydown", (event) => keyPress(event.key, info));
+	document.body.addEventListener("keydown", (event) => keyPress(event, info));
 
     const titleField = document.getElementById("row2").querySelectorAll(".title")[0].querySelectorAll(".timer")[0];
 	document.getElementById("row2").querySelectorAll(".title")[0].insertBefore(title.view, titleField);
@@ -515,9 +515,9 @@ function findClueNum(position, dir, raw) {
 
 //Crossword Functions
 
-function findWordStart(position) {
+function findWordStart(position, dir) {
 	let newSpot = null;
-	let spotCheck = [parseInt(position[0]) + 1, parseInt(position[1])];
+	let spotCheck = (dir) ? [parseInt(position[0]) - 1, parseInt(position[1])] : [parseInt(position[0]) + 1, parseInt(position[1])];
 	while (!newSpot) {
 		newSpot = allSquares.getChildByName(`${spotCheck[0]},${spotCheck[1]}`);
 		if(!currentHighlight.across) {
@@ -531,14 +531,20 @@ function findWordStart(position) {
 				newSpot = null;
 			}
 		}
-		if(spotCheck[1] >= boardHeight && spotCheck[0] >= boardWidth) {
+		if(spotCheck[1] > boardHeight && spotCheck[0] > boardWidth) {
 			currentHighlight.across = !currentHighlight.across
 			spotCheck = [0, 0];
+		} else if(spotCheck[1] < 0 && spotCheck[0] < 0) {
+			currentHighlight.across = !currentHighlight.across
+			spotCheck = [boardWidth, boardHeight];
 		} else if(!newSpot && spotCheck[0] > boardWidth) {
 			spotCheck[0] = 0;
-			spotCheck[1]++;
+			spotCheck[1] += (dir) ? -1 : 1;
+		} else if(!newSpot && spotCheck[0] < 0) {
+			spotCheck[0] = boardWidth;
+			spotCheck[1] += (dir) ? -1 : 1;
 		} else if(!newSpot) {
-			spotCheck[0]++;
+			spotCheck[0] += (dir) ? -1 : 1;
 		}
 	}	
 	return newSpot.children[0];
@@ -577,12 +583,13 @@ function findNextAvailableSpot(position, dir) {
 	return newSpot.children[0];
 }
 
-function keyPress(key, info) {
+function keyPress(event, info) {
 	if(currentHighlight.object) {
+		let key = event.key;
 		let clickedPos = currentHighlight.object.name.split(",");
 		//Arrow Movement
 		if(key == "Enter") {
-			let newSpot = findWordStart(clickedPos);
+			let newSpot = findWordStart(clickedPos, event.shiftKey);
 			return setHighlight(newSpot);
 		}
 		if(key == "ArrowLeft") {
