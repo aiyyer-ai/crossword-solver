@@ -886,8 +886,6 @@ function checkAnswers(info) {
 	}
 	for(const correctAnswerPosition of correctAnswers.filter((value) => value != true)) {
 		let correctAnswer = allSquares.getChildByName(correctAnswerPosition);
-		console.log(correctAnswerPosition);
-		console.log(correctAnswer);
 		correctAnswer.children[0].interactive = false;
 		correctAnswer.children[0].children[correctAnswer.children[0].children.length - 1].style.fill = 0x005c99;
 		checkedCorrect.push(correctAnswerPosition);
