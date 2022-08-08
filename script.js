@@ -672,19 +672,20 @@ function keyPress(key, info) {
 	}
 }
 
-function findSpot(clickedPos, add) {
+function findSpot(clickedPos, insert) {
 	let spotCheck;
-	if(add) {
+	if(insert) {
 		spotCheck = currentHighlight.across ? [clickedPos[0] + 1, clickedPos[1]] : [clickedPos[0], clickedPos[1] + 1];
 	} else {
 		spotCheck = currentHighlight.across ? [clickedPos[0] - 1, clickedPos[1]] : [clickedPos[0], clickedPos[1] - 1];
 	}
+	console.log(spotCheck);
 	let newSpot = allSquares.getChildByName(spotCheck).children[0];
 	if(newSpot) {
 		if(checkedCorrect.indexOf(spotCheck.toString()) == -1) {
 			return setHighlight(newSpot);
 		} else {
-			return findSpot(spotCheck, add);
+			return findSpot(spotCheck, insert);
 		}
 	}
 }
