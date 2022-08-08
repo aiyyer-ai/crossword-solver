@@ -570,8 +570,8 @@ function findNextAvailableSpot(position, dir) {
 			spotCheck = [parseInt(position[0]), parseInt(position[1])];
 		}
 		console.log(checkedCorrect);
-		console.log(toString(spotCheck));
-		if(!checkedCorrect[toString(spotCheck)]) {
+		console.log(spotCheck.toString());
+		if(!checkedCorrect[spotCheck.toString()]) {
 			newSpot = allSquares.getChildByName(`${spotCheck[0]},${spotCheck[1]}`);
 		}
 	}	
