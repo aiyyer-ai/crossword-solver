@@ -118,11 +118,11 @@ function createBoard(info) {
 	titleContainer.addChild(buttonContainer);
 	let checkButton = new PIXI.Graphics();
 	checkButton.beginFill(0xffffff);
-	checkButton.drawRoundedRect(0, 0, 65, 40, 10);
+	checkButton.drawRoundedRect(0, 0, 65, 40, 5);
 	checkButton.interactive = true;
 	let buttonRect = checkButton.getLocalBounds();
 	buttonContainer.addChild(checkButton);
-	buttonContainer.y = (titleFiller.height)/2;
+	buttonContainer.y = (titleFiller.height)/2 - (buttonRect.height)/2;
 	buttonContainer.x = ((boardWidth * 36) + (clueWidth * 2) + 2) - 100;
 	let checkButtonIconClosedTexture = PIXI.Texture.from('assets/eyeclosed.png');
 	let checkButtonIconOpenTexture = PIXI.Texture.from('assets/eyeopen.png');
@@ -130,8 +130,8 @@ function createBoard(info) {
 	let checkButtonIconOpen = new PIXI.Sprite(checkButtonIconOpenTexture);
 	checkButtonIconClosed.anchor.set(0.5, 0.5);
 	checkButtonIconOpen.anchor.set(0.5, 0.5);
-	checkButtonIconClosed.scale = (0.25, 0.25);
-	checkButtonIconOpen.scale = (0.25, 0.25);
+	checkButtonIconClosed.scale = (0.5, 0.5);
+	checkButtonIconOpen.scale = (0.5, 0.5);
 	checkButtonIconOpen.visible = false;
 	checkButton.addChild(checkButtonIconClosed, checkButtonIconOpen);
 	checkButtonIconClosed.y = checkButton.height/2;
