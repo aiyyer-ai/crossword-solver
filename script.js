@@ -861,9 +861,9 @@ function setHighlight(clickee, adjust = false) {
 
 		if(currentHighlight.across) {
 			clueAcross.children[0].tint = 0xbfe5ff;	
-			clueDown.children[0].tint = 0xeaf1ff;		
+			clueDown.children[0].tint = 0xe5e5e5;		
 		} else {
-			clueAcross.children[0].tint = 0xeaf1ff;	
+			clueAcross.children[0].tint = 0xe5e5e5;	
 			clueDown.children[0].tint = 0xbfe5ff;				
 		}
 
