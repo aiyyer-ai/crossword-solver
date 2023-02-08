@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html id="html">
 
 <head>
   <meta charset="utf-8">
@@ -10,13 +10,13 @@
 
   <!-- References -->
   <link href="style.css" rel="stylesheet" type="text/css" />
-  <script src="pixi/pixi.min.js"></script>
 </head>
 
 <body>
 
   <div class="row" id="row">
       <div class="column puzzle" id="puzzle">
+        <canvas id="gridCanvas" width="0" height="0"></canvas>
         <div class ="input" id="input">
             <div class="box__input">
               <input class="box__file" type="file" id="file" name="file" accept=".ipuz">
@@ -28,10 +28,10 @@
       </div>
       <script src="script.js"></script>
       <div class="column clues" id="acrossclue" style="width:270px;">
-        <div class="across" id="across"></div>
+        <canvas id="acrossCanvas" width="0" height="0"></canvas>
       </div>
       <div class="column clues" id="downclue" style="width:270px;">
-        <div class="down" id="down"></div>
+        <canvas id="downCanvas" width="0" height="0"></canvas>
       </div>
   </div>
 
