@@ -15,8 +15,17 @@
 
 <body>
 
+  <div class="overlay" id="overlay"></div>
+
   <div class="row" id="row">
       <div class="column puzzle" id="puzzle">
+<<<<<<< Updated upstream
+=======
+        <canvas id="gridCanvas" width="0" height="0"></canvas>
+        <canvas id="fakeCanvas" width="0" height="0"></canvas>
+        <canvas id="numberCanvas" width="0" height="0"></canvas>
+        <canvas id="textCanvas" width="0" height="0"></canvas>
+>>>>>>> Stashed changes
         <div class ="input" id="input">
             <div class="box__input">
               <input class="box__file" type="file" id="file" name="file" accept=".ipuz">
@@ -27,11 +36,25 @@
         <div id="update">Internet Crossword Assistant: Reader Unaided Solver - Version 1.1.5</div>
       </div>
       <script src="script.js"></script>
+<<<<<<< Updated upstream
       <div class="column clues" id="acrossclue" style="width:270px;">
         <div class="across" id="across"></div>
       </div>
       <div class="column clues" id="downclue" style="width:270px;">
         <div class="down" id="down"></div>
+=======
+      <div class="column clues" id="acrosscluesholder" style="width:270px;">
+        <div id="acrosstopper"></div>
+        <div id="acrossclue">
+          <div id="insertacross"></div>
+        </div>
+      </div>
+      <div class="column clues" id="downcluesholder" style="width:270px;">
+        <div id="downtopper"></div>
+        <div id="downclue">
+          <div id="insertdown"></div>
+        </div>
+>>>>>>> Stashed changes
       </div>
   </div>
 
