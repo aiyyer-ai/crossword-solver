@@ -575,7 +575,14 @@ function createBoard(info) {
 	  return canvas;
 	}
 
+let timerButton = document.getElementById('update');
+
 	function openTheForm() {
+    clearInterval(stopwatchInterval);
+    stopwatchInterval = null;
+    prevTime = null;
+		timerButton.removeEventListener('click', changeTimer);
+		timerButton.innerHTML = `${timerButton.innerHTML.replace(`◼`, ``)}`;
 		let finishPopup = document.createElement("div");
 		finishPopup.id = "popup";
 		finishPopup.style.display = "block";
@@ -594,7 +601,7 @@ function createBoard(info) {
 		let closeButton = document.createElement("BUTTON");
 		let closeContent = document.createTextNode(`Close`);
 		let popupContent = document.createTextNode(`You finished!`);
-		let popupContent2 = document.createTextNode(`It took you NO TIMER YET to complete.`);
+		let popupContent2 = document.createTextNode(`It took you ${timerButton.innerHTML} to complete.`);
 		finish.appendChild(popupContent);
 		timerFin.appendChild(popupContent2);
 		finish.style.display = `table`;
@@ -632,5 +639,47 @@ function createBoard(info) {
 	  document.getElementById("overlay").style.display = "none";
 	}
 
+  
+
+var prevTime, stopwatchInterval, elapsedTime = 0;
+
+changeTimer();
+  
+timerButton.addEventListener('click', changeTimer);
+
+function changeTimer() {
+  if (!stopwatchInterval) {
+    stopwatchInterval = setInterval(function () {
+      if (!prevTime) {
+        prevTime = Date.now();
+      }
+      
+      elapsedTime += Date.now() - prevTime;
+      prevTime = Date.now();
+      
+      updateTime();
+    }, 100);
+  } else {
+  	timerButton.innerHTML = `${timerButton.innerHTML.replace(`◼`, `▶`)}`;
+    clearInterval(stopwatchInterval);
+    stopwatchInterval = null;
+    prevTime = null;
+  }
+}
+  
+  
+var updateTime = function () {
+  var tempTime = elapsedTime;
+  tempTime = Math.floor(tempTime / 1000);
+  var seconds = tempTime % 60;
+  tempTime = Math.floor(tempTime / 60);
+  var minutes = tempTime % 60;
+  tempTime = Math.floor(tempTime / 60);
+  var hours = tempTime % 60;
+  
+  var time = `${(hours < 10) ? ((hours == 0) ? "" : ("0" + hours) + `:`) : hours + `:`}${(minutes < 10) ? ("0" + minutes) : minutes}:${(seconds < 10) ? ("0" + seconds) : seconds}`;
+  
+  timerButton.innerHTML = `${time} ◼`;
+};
 
 }
