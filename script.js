@@ -119,6 +119,7 @@ let crosswordWrongRed = `#ff4d4d`;
 let crosswordHighlightPrimary = `#fae522`;
 let crosswordHighlightSecondary = `#bfe5ff`;
 let crosswordCorrect = `#005c99`;
+let shiftDown = false;
 
 let squareSize = 34;
 let squareFont = 'Arial';
@@ -310,21 +311,34 @@ function createBoard(info) {
 		if(keyPress == 'ENTER') {
 			let moverData = {};
 			let squareOne = gridLast[gridLast.length - 1] ? gridLast[gridLast.length - 1] : prevClick.join(",");
-			if(acrossDirection) {
-				let acrossValues = Object.values(acrossObject);
-				let findLocation = typeof acrossValues[acrossValues.indexOf(squareOne) + 1] === "undefined" ? -1 : acrossValues.indexOf(squareOne);
-				if(findLocation == -1) { acrossDirection = !acrossDirection }
-				let nextSquareInGrid = acrossValues[findLocation + 1].split(",").map(Number);
-				moverData["pageX"] = (nextSquareInGrid[0] - leftOffset);
-				moverData["pageY"] = (nextSquareInGrid[1] - topOffset);
-			} else {
-				let downValues = Object.values(downObject);
-				let findLocation = typeof downValues[downValues.indexOf(squareOne) + 1] === "undefined" ? -1 : downValues.indexOf(squareOne);
-				if(findLocation == -1) { acrossDirection = !acrossDirection }
-				let nextSquareInGrid = downValues[findLocation + 1].split(",").map(Number);
-				moverData["pageX"] = (nextSquareInGrid[0] - leftOffset);
-				moverData["pageY"] = (nextSquareInGrid[1] - topOffset);
+			let moveDirection = 1;
+			let directionValues;
+			let notDirectionValues;
+			if(shiftDown) {
+				moveDirection = -1;
 			}
+			if(acrossDirection) {
+				directionValues = Object.values(acrossObject);
+				notDirectionValues = Object.values(downObject);
+			} else {
+				directionValues = Object.values(downObject);
+				notDirectionValues = Object.values(acrossObject);
+			}
+			let findLocation = typeof directionValues[directionValues.indexOf(squareOne) + moveDirection] === "undefined" ? -1 : directionValues.indexOf(squareOne);
+			let nextSquareInGrid;
+			if(findLocation == -1) {
+				if(moveDirection == -1) {
+					findLocation = notDirectionValues.length;
+					nextSquareInGrid = notDirectionValues[findLocation + moveDirection].split(",").map(Number);
+				}
+				acrossDirection = !acrossDirection
+			}
+			if(!nextSquareInGrid) {
+				 nextSquareInGrid = directionValues[findLocation + moveDirection].split(",").map(Number);
+			}
+			moverData["pageX"] = (nextSquareInGrid[0] - leftOffset);
+			moverData["pageY"] = (nextSquareInGrid[1] - topOffset);
+
 			selectSquare(moverData);
 			return;
 		}
@@ -361,31 +375,43 @@ function createBoard(info) {
 
 	}, false);
 
+	document.body.addEventListener('keyup', function(event) {
+		switch (event.which) {
+			case 16:
+				shiftDown = false;
+				break;
+			default:
+		}
+	});
+
 	//on keydown event handling, used for arrow keys and backspace
 	document.body.addEventListener('keydown', function(event) {
 		let moverData = {};
 		switch (event.which) {
 		//backspace
 			case 8:
-			if(filledAnswers[prevClick.join(",")]) {
-				textOnGrid.clearRect(prevClick[0], prevClick[1], squareSize + 2, squareSize + 2);
-				filledAnswers[prevClick.join(",")] = false;
-			} else {
-				if(acrossDirection) {		
-					let alteredBox = [prevClick[0] - (squareSize + 2), prevClick[1]];
-					textOnGrid.clearRect(alteredBox[0], alteredBox[1], squareSize + 2, squareSize + 2);
-					filledAnswers[alteredBox.join(",")] = false;
-					moverData["pageX"] = (alteredBox[0] + 10 - leftOffset);
-					moverData["pageY"] = (alteredBox[1] + 5 - topOffset);
+				if(filledAnswers[prevClick.join(",")]) {
+					textOnGrid.clearRect(prevClick[0], prevClick[1], squareSize + 2, squareSize + 2);
+					filledAnswers[prevClick.join(",")] = false;
 				} else {
-					let alteredBox = [prevClick[0], prevClick[1] - (squareSize + 2)];
-					textOnGrid.clearRect(alteredBox[0], alteredBox[1], squareSize + 2, squareSize + 2);
-					filledAnswers[alteredBox.join(",")] = false;
-					moverData["pageX"] = (alteredBox[0] + 5 - leftOffset);
-					moverData["pageY"] = (alteredBox[1] + 10 - topOffset);
+					if(acrossDirection) {		
+						let alteredBox = [prevClick[0] - (squareSize + 2), prevClick[1]];
+						textOnGrid.clearRect(alteredBox[0], alteredBox[1], squareSize + 2, squareSize + 2);
+						filledAnswers[alteredBox.join(",")] = false;
+						moverData["pageX"] = (alteredBox[0] + 10 - leftOffset);
+						moverData["pageY"] = (alteredBox[1] + 5 - topOffset);
+					} else {
+						let alteredBox = [prevClick[0], prevClick[1] - (squareSize + 2)];
+						textOnGrid.clearRect(alteredBox[0], alteredBox[1], squareSize + 2, squareSize + 2);
+						filledAnswers[alteredBox.join(",")] = false;
+						moverData["pageX"] = (alteredBox[0] + 5 - leftOffset);
+						moverData["pageY"] = (alteredBox[1] + 10 - topOffset);
+					}
+					selectSquare(moverData);	
 				}
-				selectSquare(moverData);	
-			}
+				break;
+			case 16:
+				shiftDown = true;
 				break;
 		//left
 			case 37:
