@@ -197,9 +197,9 @@ function createBoard(info) {
 
 			//checks if a circle exists in a spot and draws it
 			if (square.style) {
-				drawOnGrid.beginPath();
-				drawOnGrid.arc(squareX + (squareSize/2), squareY + (squareSize/2), squareSize/2, 0, 2 * Math.PI);
-				drawOnGrid.stroke();
+				numbersOnGrid.beginPath();
+				numbersOnGrid.arc(squareX + (squareSize/2), squareY + (squareSize/2), squareSize/2, 0, 2 * Math.PI);
+				numbersOnGrid.stroke();
 				square = square.cell;
 			}
 
