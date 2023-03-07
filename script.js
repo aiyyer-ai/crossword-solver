@@ -415,27 +415,47 @@ function createBoard(info) {
 				break;
 		//left
 			case 37:
-				moverData["pageX"] = (prevClick[0] - squareSize + 10 - leftOffset);
-				moverData["pageY"] = (prevClick[1] + 5 - topOffset);
+				if(!acrossDirection) {
+					moverData["pageX"] = (prevClick[0] + 10 - leftOffset);
+					moverData["pageY"] = (prevClick[1] + 5 - topOffset);
+				} else {
+					moverData["pageX"] = (prevClick[0] - squareSize + 10 - leftOffset);
+					moverData["pageY"] = (prevClick[1] + 5 - topOffset);					
+				}
 				selectSquare(moverData);
 				break;
 		//up
 			case 38:
-				moverData["pageX"] = (prevClick[0] + 5 - leftOffset);
-				moverData["pageY"] = (prevClick[1] - squareSize + 10 - topOffset);
-				selectSquare(moverData);	
+				if(acrossDirection) {
+					moverData["pageX"] = (prevClick[0] + 10 - leftOffset);
+					moverData["pageY"] = (prevClick[1] + 5 - topOffset);
+				} else {
+					moverData["pageX"] = (prevClick[0] + 5 - leftOffset);
+					moverData["pageY"] = (prevClick[1] - squareSize + 10 - topOffset);				
+				}
+				selectSquare(moverData);
 				break;
 		//right
 			case 39:
-				moverData["pageX"] = (prevClick[0] + squareSize + 10 - leftOffset);
-				moverData["pageY"] = (prevClick[1] + 5 - topOffset);
-				selectSquare(moverData);	
+				if(!acrossDirection) {
+					moverData["pageX"] = (prevClick[0] + 10 - leftOffset);
+					moverData["pageY"] = (prevClick[1] + 5 - topOffset);
+				} else {
+					moverData["pageX"] = (prevClick[0] + squareSize + 10 - leftOffset);
+					moverData["pageY"] = (prevClick[1] + 5 - topOffset);			
+				}
+				selectSquare(moverData);
 				break;
 		//down
 			case 40:
-				moverData["pageX"] = (prevClick[0] + 5 - leftOffset);
-				moverData["pageY"] = (prevClick[1] + squareSize + 10 - topOffset);
-				selectSquare(moverData);	
+				if(acrossDirection) {
+					moverData["pageX"] = (prevClick[0] + 10 - leftOffset);
+					moverData["pageY"] = (prevClick[1] + 5 - topOffset);
+				} else {
+					moverData["pageX"] = (prevClick[0] + 5 - leftOffset);
+					moverData["pageY"] = (prevClick[1] + squareSize + 10 - topOffset);			
+				}
+				selectSquare(moverData);
 				break;
 		//ignore rest
 			default:
