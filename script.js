@@ -252,6 +252,7 @@ function createBoard(info) {
 		clueText.style.fontSize = `18px`;
 		clueWrapper.appendChild(clueNumber);
 		clueWrapper.appendChild(clueText);
+		clueWrapper.style.cursor = "pointer";
 		acrossClueHolder.insertBefore(clueWrapper, lastDivMade);
 		//lastDivMade = document.getElementById(`${String(acrossClue[0])}A`);
 	}
@@ -287,6 +288,7 @@ function createBoard(info) {
 		clueText.style.fontSize = `18px`;
 		clueWrapper.appendChild(clueNumber);
 		clueWrapper.appendChild(clueText);
+		clueWrapper.style.cursor = "pointer";
 		downClueHolder.insertBefore(clueWrapper, lastDivMade);
 		//lastDivMade = document.getElementById(`${String(acrossClue[0])}A`);
 	}
@@ -351,6 +353,13 @@ function createBoard(info) {
 			filledAnswers[prevClick.join(",")] = keyPress;
 		}
 
+		let otherSquaresInWord = gridLast.concat(gridNext);
+		if(otherSquaresInWord.some(gridSquare => (!!filledAnswers[gridSquare]) == false)) {
+			clueLast[0].style.color = "black";
+		} else {
+			clueLast[0].style.color = crosswordScrollButton;
+		}
+
 		textOnGrid.clearRect(prevClick[0], prevClick[1], squareSize + 2, squareSize + 2);
 		textOnGrid.beginPath();
 		textOnGrid.fillStyle = "black";
@@ -362,7 +371,7 @@ function createBoard(info) {
 			openTheForm();
 		}
 
-			let moverData = {};
+		let moverData = {};
 		if(acrossDirection) {		
 			moverData["pageX"] = (prevClick[0] + squareSize + 10 - leftOffset);
 			moverData["pageY"] = (prevClick[1] + 5 - topOffset);
@@ -393,7 +402,9 @@ function createBoard(info) {
 				if(filledAnswers[prevClick.join(",")]) {
 					textOnGrid.clearRect(prevClick[0], prevClick[1], squareSize + 2, squareSize + 2);
 					filledAnswers[prevClick.join(",")] = false;
+					clueLast[0].style.color = "black";
 				} else {
+					if(!gridLast[0]) {break;}
 					if(acrossDirection) {		
 						let alteredBox = [prevClick[0] - (squareSize + 2), prevClick[1]];
 						textOnGrid.clearRect(alteredBox[0], alteredBox[1], squareSize + 2, squareSize + 2);
@@ -406,6 +417,12 @@ function createBoard(info) {
 						filledAnswers[alteredBox.join(",")] = false;
 						moverData["pageX"] = (alteredBox[0] + 5 - leftOffset);
 						moverData["pageY"] = (alteredBox[1] + 10 - topOffset);
+					}
+					let otherSquaresInWord = gridLast.concat(gridNext);
+					if(otherSquaresInWord.some(gridSquare => (!!filledAnswers[gridSquare]) == false)) {
+						clueLast[0].style.color = "black";
+					} else {
+						clueLast[0].style.color = crosswordScrollButton;
 					}
 					selectSquare(moverData);	
 				}
@@ -569,9 +586,19 @@ function createBoard(info) {
 
 	}
 
+	//let checkDirections = {left:true, right:true, up:true, down:true};
 
-	function colorNextSquares(gridX, gridY) {
-		//forward
+	function colorNextSquares(gridX, gridY, changeFromStart = false) {
+		//forwarda
+		//need to create something here to track if its ever stopped before
+		// if(!changeFromStart) {
+		// 	changeFromStart = 0;
+		// }
+		// changeFromStart += (squareSize + 2);
+		// if((Object.values(checkDirections).filter((value) => value == false)).length == Object.values(checkDirections).length) {
+		// 	checkDirections = {left:true, right:true, up:true, down:true}
+		//  return;
+		//  }
 		if(acrossDirection) {
 			if(!Object.keys(gridSquares).includes(`${gridX + (squareSize + 2)},${gridY}`)) { return; }
 			gridNext.push(`${gridX + (squareSize + 2)},${gridY}`);
@@ -590,7 +617,7 @@ function createBoard(info) {
 	}
 
 	function colorLastSquares(gridX, gridY) {
-		//forward
+		//backward
 		if(acrossDirection) {
 			if(!Object.keys(gridSquares).includes(`${gridX - (squareSize + 2)},${gridY}`)) { return; }
 			gridLast.push(`${gridX - (squareSize + 2)},${gridY}`);
@@ -622,6 +649,7 @@ function createBoard(info) {
 	}
 
 let timerButton = document.getElementById('update');
+timerButton.style.cursor = "pointer";
 
 	function openTheForm() {
     clearInterval(stopwatchInterval);
