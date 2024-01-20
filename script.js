@@ -310,6 +310,9 @@ function createBoard(info) {
 		let keyPress = event.key.toUpperCase();
 
 		//handles pressing enter
+		if(keyPress == 'BACKSPACE') {
+			return;
+		}
 		if(keyPress == 'ENTER') {
 			let moverData = {};
 			let squareOne = gridLast[gridLast.length - 1] ? gridLast[gridLast.length - 1] : prevClick.join(",");
@@ -410,6 +413,7 @@ function createBoard(info) {
 		let moverData = {};
 		switch (event.which) {
 		//backspace
+			case 46:
 			case 8:
 				if(filledAnswers[prevClick.join(",")]) {
 					textOnGrid.clearRect(prevClick[0], prevClick[1], squareSize + 2, squareSize + 2);
