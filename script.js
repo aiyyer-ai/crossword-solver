@@ -296,8 +296,8 @@ function createBoard(info) {
 	//On Click event handling
 	var prevClick = [];
 	var clueLast = [];
-	var gridNext = [];
-	var gridLast = [];
+	var gridOppNext = [];
+	var gridOppLast = [];
 	var acrossDirection = true;
 	var leftOffset = -gridCanvas.offsetParent.offsetLeft + gridCanvas.clientLeft;
 	var topOffset = -gridCanvas.offsetParent.offsetTop + gridCanvas.clientTop;
@@ -353,11 +353,23 @@ function createBoard(info) {
 			filledAnswers[prevClick.join(",")] = keyPress;
 		}
 
-		let otherSquaresInWord = gridLast.concat(gridNext);
-		if(otherSquaresInWord.some(gridSquare => (!!filledAnswers[gridSquare]) == false)) {
+		let otherSquaresInWord = [];
+		if(acrossDirection) {
+			otherSquaresInWord[0] = directionalGridNext['right'].concat(directionalGridNext['left']);
+			otherSquaresInWord[1] = directionalGridNext['up'].concat(directionalGridNext['down']);
+		} else {
+			otherSquaresInWord[1] = directionalGridNext['right'].concat(directionalGridNext['left']);
+			otherSquaresInWord[0] = directionalGridNext['up'].concat(directionalGridNext['down']);					
+		}
+		if(otherSquaresInWord[0].some(gridSquare => (!!filledAnswers[gridSquare]) == false)) {
 			clueLast[0].style.color = "black";
 		} else {
 			clueLast[0].style.color = crosswordScrollButton;
+		}
+		if(otherSquaresInWord[1].some(gridSquare => (!!filledAnswers[gridSquare]) == false)) {
+			clueLast[1].style.color = "black";
+		} else {
+			clueLast[1].style.color = crosswordScrollButton;
 		}
 
 		textOnGrid.clearRect(prevClick[0], prevClick[1], squareSize + 2, squareSize + 2);
@@ -403,6 +415,7 @@ function createBoard(info) {
 					textOnGrid.clearRect(prevClick[0], prevClick[1], squareSize + 2, squareSize + 2);
 					filledAnswers[prevClick.join(",")] = false;
 					clueLast[0].style.color = "black";
+					clueLast[1].style.color = "black";
 				} else {
 					if(!gridLast[0]) {break;}
 					if(acrossDirection) {		
@@ -417,12 +430,6 @@ function createBoard(info) {
 						filledAnswers[alteredBox.join(",")] = false;
 						moverData["pageX"] = (alteredBox[0] + 5 - leftOffset);
 						moverData["pageY"] = (alteredBox[1] + 10 - topOffset);
-					}
-					let otherSquaresInWord = gridLast.concat(gridNext);
-					if(otherSquaresInWord.some(gridSquare => (!!filledAnswers[gridSquare]) == false)) {
-						clueLast[0].style.color = "black";
-					} else {
-						clueLast[0].style.color = crosswordScrollButton;
 					}
 					selectSquare(moverData);	
 				}
@@ -520,9 +527,12 @@ function createBoard(info) {
     	drawOnGrid.beginPath();
 			drawOnGrid.fillStyle = crosswordWhite;
 			drawOnGrid.fillRect(prevClick[0], prevClick[1], squareSize, squareSize);
-			const blueSquares = gridLast.concat(gridNext);
-			gridLast = [];
-			gridNext = [];
+			let blueSquares;
+			if(acrossDirection) {
+				blueSquares = directionalGridNext['right'].concat(directionalGridNext['left']);
+			} else {
+				blueSquares = directionalGridNext['up'].concat(directionalGridNext['down']);
+			}
 			for (square of blueSquares) {
 				let blueSquareArray = square.split(",");
 	    	drawOnGrid.beginPath();
@@ -538,8 +548,9 @@ function createBoard(info) {
   	drawOnGrid.beginPath();
 		drawOnGrid.fillStyle = crosswordHighlightPrimary;
 		drawOnGrid.fillRect(gridX, gridY, squareSize, squareSize);
-		colorNextSquares(gridX, gridY);
-		colorLastSquares(gridX, gridY);
+		colorClueSquares(gridX, gridY);
+		//colorNextSquares(gridX, gridY);
+		//colorLastSquares(gridX, gridY);
 
 
     //highlights the clues
@@ -587,53 +598,107 @@ function createBoard(info) {
 	}
 
 	//let checkDirections = {left:true, right:true, up:true, down:true};
-
-	function colorNextSquares(gridX, gridY, changeFromStart = false) {
-		//forwarda
-		//need to create something here to track if its ever stopped before
-		// if(!changeFromStart) {
-		// 	changeFromStart = 0;
-		// }
-		// changeFromStart += (squareSize + 2);
-		// if((Object.values(checkDirections).filter((value) => value == false)).length == Object.values(checkDirections).length) {
-		// 	checkDirections = {left:true, right:true, up:true, down:true}
-		//  return;
-		//  }
-		if(acrossDirection) {
-			if(!Object.keys(gridSquares).includes(`${gridX + (squareSize + 2)},${gridY}`)) { return; }
-			gridNext.push(`${gridX + (squareSize + 2)},${gridY}`);
-			drawOnGrid.beginPath();
-			drawOnGrid.fillStyle = crosswordHighlightSecondary;
-			drawOnGrid.fillRect(gridX + (squareSize + 2), gridY, squareSize, squareSize);
-			colorNextSquares(gridX + (squareSize + 2), gridY);
-		} else {
-			if(!Object.keys(gridSquares).includes(`${gridX},${gridY + (squareSize + 2)}`)) { return; }
-			gridNext.push(`${gridX},${gridY + (squareSize + 2)}`);
-			drawOnGrid.beginPath();
-			drawOnGrid.fillStyle = crosswordHighlightSecondary;
-			drawOnGrid.fillRect(gridX, gridY + (squareSize + 2), squareSize, squareSize);
-			colorNextSquares(gridX, gridY + (squareSize + 2));
+	var directionalSearch = {left:true, right:true, up:true, down:true};
+	var directionalGridNext = {left: [], right: [], up: [], down: []}
+	function colorClueSquares(gridX, gridY) {
+		directionalGridNext = {left: [], right: [], up: [], down: []}
+		let iteration = 1;
+		directionalSearch = {left:true, right:true, up:true, down:true};
+		let stillSearching = true;
+		while(stillSearching) {
+			stillSearching = Object.values(directionalSearch).includes(true);
+			let currentSquares = {left: `${gridX - iteration*(squareSize + 2)},${gridY}`, right: `${gridX + iteration*(squareSize + 2)},${gridY}`, up: `${gridX},${gridY - iteration*(squareSize + 2)}`, down: `${gridX},${gridY + iteration*(squareSize + 2)}`};
+			for (searchDirection in currentSquares) {
+				if(directionalSearch[searchDirection]) {
+					if(!Object.keys(gridSquares).includes(currentSquares[searchDirection])) {
+						directionalSearch[searchDirection] = false;
+						continue;
+					}
+					directionalGridNext[searchDirection].push(currentSquares[searchDirection]);
+				}
+			}
+			iteration++;			
 		}
+		if(acrossDirection) {
+			for(gridLocation of directionalGridNext['right']) {
+				let gridSpots = gridLocation.split(",");
+				drawOnGrid.beginPath();
+				drawOnGrid.fillStyle = crosswordHighlightSecondary;
+				drawOnGrid.fillRect(gridSpots[0], gridSpots[1], squareSize, squareSize);
+			}
+			for(gridLocation of directionalGridNext['left']) {
+				let gridSpots = gridLocation.split(",");
+				drawOnGrid.beginPath();
+				drawOnGrid.fillStyle = crosswordHighlightSecondary;
+				drawOnGrid.fillRect(gridSpots[0], gridSpots[1], squareSize, squareSize);
+			}
+			gridLast = directionalGridNext['left'];
+		} else {
+			for(gridLocation of directionalGridNext['down']) {
+				let gridSpots = gridLocation.split(",");
+				drawOnGrid.beginPath();
+				drawOnGrid.fillStyle = crosswordHighlightSecondary;
+				drawOnGrid.fillRect(gridSpots[0], gridSpots[1], squareSize, squareSize);
+			}
+			for(gridLocation of directionalGridNext['up']) {
+				let gridSpots = gridLocation.split(",");
+				drawOnGrid.beginPath();
+				drawOnGrid.fillStyle = crosswordHighlightSecondary;
+				drawOnGrid.fillRect(gridSpots[0], gridSpots[1], squareSize, squareSize);
+			}
+			gridLast = directionalGridNext['up'];
+		}
+
 	}
 
-	function colorLastSquares(gridX, gridY) {
-		//backward
-		if(acrossDirection) {
-			if(!Object.keys(gridSquares).includes(`${gridX - (squareSize + 2)},${gridY}`)) { return; }
-			gridLast.push(`${gridX - (squareSize + 2)},${gridY}`);
-			drawOnGrid.beginPath();
-			drawOnGrid.fillStyle = crosswordHighlightSecondary;
-			drawOnGrid.fillRect(gridX - (squareSize + 2), gridY, squareSize, squareSize);
-			colorLastSquares(gridX - (squareSize + 2), gridY);
-		} else {
-			if(!Object.keys(gridSquares).includes(`${gridX},${gridY - (squareSize + 2)}`)) { return; }
-			gridLast.push(`${gridX},${gridY - (squareSize + 2)}`);
-			drawOnGrid.beginPath();
-			drawOnGrid.fillStyle = crosswordHighlightSecondary;
-			drawOnGrid.fillRect(gridX, gridY - (squareSize + 2), squareSize, squareSize);
-			colorLastSquares(gridX, gridY - (squareSize + 2));
-		}
-	}
+
+//DEPRECIATED CODE
+	// function colorNextSquares(gridX, gridY, changeFromStart = false) {
+	// 	//forwarda
+	// 	//need to create something here to track if its ever stopped before
+	// 	// if(!changeFromStart) {
+	// 	// 	changeFromStart = 0;
+	// 	// }
+	// 	// changeFromStart += (squareSize + 2);
+	// 	// if((Object.values(checkDirections).filter((value) => value == false)).length == Object.values(checkDirections).length) {
+	// 	// 	checkDirections = {left:true, right:true, up:true, down:true}
+	// 	//  return;
+	// 	//  }
+	// 	if(acrossDirection) {
+	// 		if(!Object.keys(gridSquares).includes(`${gridX + (squareSize + 2)},${gridY}`)) { return; }
+	// 		gridNext.push(`${gridX + (squareSize + 2)},${gridY}`);
+	// 		drawOnGrid.beginPath();
+	// 		drawOnGrid.fillStyle = crosswordHighlightSecondary;
+	// 		drawOnGrid.fillRect(gridX + (squareSize + 2), gridY, squareSize, squareSize);
+	// 		colorNextSquares(gridX + (squareSize + 2), gridY);
+	// 	} else {
+	// 		if(!Object.keys(gridSquares).includes(`${gridX},${gridY + (squareSize + 2)}`)) { return; }
+	// 		gridNext.push(`${gridX},${gridY + (squareSize + 2)}`);
+	// 		drawOnGrid.beginPath();
+	// 		drawOnGrid.fillStyle = crosswordHighlightSecondary;
+	// 		drawOnGrid.fillRect(gridX, gridY + (squareSize + 2), squareSize, squareSize);
+	// 		colorNextSquares(gridX, gridY + (squareSize + 2));
+	// 	}
+	// }
+
+	// function colorLastSquares(gridX, gridY) {
+	// 	//backward
+	// 	if(acrossDirection) {
+	// 		if(!Object.keys(gridSquares).includes(`${gridX - (squareSize + 2)},${gridY}`)) { return; }
+	// 		gridLast.push(`${gridX - (squareSize + 2)},${gridY}`);
+	// 		drawOnGrid.beginPath();
+	// 		drawOnGrid.fillStyle = crosswordHighlightSecondary;
+	// 		drawOnGrid.fillRect(gridX - (squareSize + 2), gridY, squareSize, squareSize);
+	// 		colorLastSquares(gridX - (squareSize + 2), gridY);
+	// 	} else {
+	// 		if(!Object.keys(gridSquares).includes(`${gridX},${gridY - (squareSize + 2)}`)) { return; }
+	// 		gridLast.push(`${gridX},${gridY - (squareSize + 2)}`);
+	// 		drawOnGrid.beginPath();
+	// 		drawOnGrid.fillStyle = crosswordHighlightSecondary;
+	// 		drawOnGrid.fillRect(gridX, gridY - (squareSize + 2), squareSize, squareSize);
+	// 		colorLastSquares(gridX, gridY - (squareSize + 2));
+	// 	}
+	// }
 
 	function createCanvas(width, height, canvasName, set2dTransform = true) {
 	  const ratio = Math.ceil(window.devicePixelRatio) + 3;
@@ -665,7 +730,7 @@ flexy.insertBefore(checkDiv, timerButton.nextSibling);
 
 	function checkGrid() {
 		for(answerLocation in filledAnswers) {
-			if(filledAnswers[answerLocation] !== true) {
+			if(filledAnswers[answerLocation] !== true && filledAnswers[answerLocation] !== false) {
 				textOnGrid.beginPath();
 				textOnGrid.lineWidth = 2;
 				textOnGrid.strokeStyle = crosswordWrongRed;
