@@ -648,8 +648,37 @@ function createBoard(info) {
 	  return canvas;
 	}
 
+let flexy = document.getElementById('flexy');
 let timerButton = document.getElementById('update');
 timerButton.style.cursor = "pointer";
+
+let checkDiv = document.createElement("div");
+checkDiv.id = "checking";
+let checkButton = document.createElement("button");
+checkButton.innerHTML = "Check";
+checkButton.onclick = function(){
+	checkGrid();
+	return;
+}
+checkDiv.appendChild(checkButton);
+flexy.insertBefore(checkDiv, timerButton.nextSibling);
+
+	function checkGrid() {
+		for(answerLocation in filledAnswers) {
+			if(filledAnswers[answerLocation] !== true) {
+				textOnGrid.beginPath();
+				textOnGrid.lineWidth = 2;
+				textOnGrid.strokeStyle = crosswordWrongRed;
+				let splitLocation = answerLocation.split(",");
+				textOnGrid.moveTo(splitLocation[0], splitLocation[1]);
+				textOnGrid.lineTo(parseInt(splitLocation[0]) + squareSize, parseInt(splitLocation[1]) + squareSize);
+				textOnGrid.stroke();
+			} else {
+				//this is where I would make blue and unable to interact IF I HAD ONE.
+			}
+		}
+		return;
+	}
 
 	function openTheForm() {
     clearInterval(stopwatchInterval);
