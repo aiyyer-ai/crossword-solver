@@ -721,6 +721,7 @@ let checkDiv = document.createElement("div");
 checkDiv.id = "checking";
 let checkButton = document.createElement("button");
 checkButton.innerHTML = "Check";
+checkButton.id = "button";
 checkButton.onclick = function(){
 	checkGrid();
 	return;

@@ -18,8 +18,33 @@ html {
     flex: 1;
 }
 
+#button {
+    background-color: #e5e5e5;
+    border: none;
+    border-radius: 4px;
+    color: #333333;
+    padding: 8px 16px;
+    text-align: center;
+    font-size: 12px;
+    margin: 0px 4px;
+    opacity: 0.8;
+    transition: 0.3s;
+    display: inline-block;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+#button:hover {
+    opacity: 1   
+}
+
+#button:active {
+    background-color: #7e7e7e;
+}
+
 #update {
     text-align: left;
+    margin: 2px 4px;
 }
 
 #checking {
