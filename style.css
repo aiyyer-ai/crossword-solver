@@ -43,6 +43,30 @@ html {
     background-color: #7e7e7e;
 }
 
+#button2 {
+    background-color: #e5e5e5;
+    border: none;
+    border-radius: 4px;
+    color: #333333;
+    padding: 8px 16px;
+    text-align: center;
+    font-size: 22px;
+    margin: 10px 0px;
+    opacity: 0.8;
+    transition: 0.3s;
+    display: inline-block;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+#button2:hover {
+    opacity: 1   
+}
+
+#button2:active {
+    background-color: #7e7e7e;
+}
+
 #titleDiv {
     font-weight: bold;
     font-size: 24px;
