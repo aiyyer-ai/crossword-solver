@@ -450,7 +450,7 @@ function createBoard(info) {
 					moverData["pageX"] = (prevClick[0] - squareSize + 10 - leftOffset);
 					moverData["pageY"] = (prevClick[1] + 5 - topOffset);					
 				}
-				selectSquare(moverData);
+				selectSquare(moverData, true, -1, 0);
 				break;
 		//up
 			case 38:
@@ -461,7 +461,7 @@ function createBoard(info) {
 					moverData["pageX"] = (prevClick[0] + 5 - leftOffset);
 					moverData["pageY"] = (prevClick[1] - squareSize + 10 - topOffset);				
 				}
-				selectSquare(moverData);
+				selectSquare(moverData, true, 0, -1);
 				break;
 		//right
 			case 39:
@@ -472,7 +472,7 @@ function createBoard(info) {
 					moverData["pageX"] = (prevClick[0] + squareSize + 10 - leftOffset);
 					moverData["pageY"] = (prevClick[1] + 5 - topOffset);			
 				}
-				selectSquare(moverData);
+				selectSquare(moverData, true, 1, 0);
 				break;
 		//down
 			case 40:
@@ -483,7 +483,7 @@ function createBoard(info) {
 					moverData["pageX"] = (prevClick[0] + 5 - leftOffset);
 					moverData["pageY"] = (prevClick[1] + squareSize + 10 - topOffset);			
 				}
-				selectSquare(moverData);
+				selectSquare(moverData, true, 0, 1);
 				break;
 		//ignore rest
 			default:
@@ -492,7 +492,7 @@ function createBoard(info) {
 
 	}, false);
 
-	function selectSquare(event, notFromClue = true) {
+	function selectSquare(event, notFromClue = true, arrowkeyX = false, arrowkeyY = false) {
 
 		var clickX = event.pageX + leftOffset,
         clickY = event.pageY + topOffset;
@@ -521,8 +521,20 @@ function createBoard(info) {
 			moverData["pageY"] = parseInt(cluePosition[1]) - topOffset;
 			return selectSquare(moverData, false);
     }
+    if(!arrowkeyX && !arrowkeyY) {
+    	if(!Object.keys(gridSquares).includes(`${gridX},${gridY}`)) { return false; }    	
+    } else {
+    	if(!Object.keys(gridSquares).includes(`${gridX},${gridY}`)) {
+    		if(gridX < gridCanvas.clientWidth && gridY < gridCanvas.clientHeight && gridX > 0 && gridY > 0) {
+	    		let moverData = {};
+	    		moverData["pageX"] = event.pageX + arrowkeyX * (squareSize);
+	    		moverData["pageY"] = event.pageY + arrowkeyY * (squareSize);
+	    		selectSquare(moverData, true, arrowkeyX, arrowkeyY);
+    		}
+    		return false; 
+    	}
+    }
 
-    if(!Object.keys(gridSquares).includes(`${gridX},${gridY}`)) { return false; }
     if(clueLast[0]) {
     	clueLast[0].style.backgroundColor = "";
     	clueLast[1].style.backgroundColor = "";
@@ -717,21 +729,34 @@ function createBoard(info) {
 	  return canvas;
 	}
 
-let flexy = document.getElementById('flexy');
-let timerButton = document.getElementById('update');
-timerButton.style.cursor = "pointer";
+	let flexy = document.getElementById('flexy');
+	let timerButton = document.getElementById('update');
+	timerButton.style.cursor = "pointer";
 
-let checkDiv = document.createElement("div");
-checkDiv.id = "checking";
-let checkButton = document.createElement("button");
-checkButton.innerHTML = "Check";
-checkButton.id = "button";
-checkButton.onclick = function(){
-	checkGrid();
-	return;
-}
-checkDiv.appendChild(checkButton);
-flexy.insertBefore(checkDiv, timerButton.nextSibling);
+	let checkDiv = document.createElement("div");
+	checkDiv.id = "checking";
+	let checkButton = document.createElement("button");
+	checkButton.innerHTML = "Check";
+	checkButton.id = "button";
+	checkButton.onclick = function(){
+		checkGrid();
+		return;
+	}
+	checkDiv.appendChild(checkButton);
+	if(info.author || info.title) {
+		let infoDiv = document.createElement("div");
+		let titleDiv = document.createElement("div");
+		let authorDiv = document.createElement("div");
+		infoDiv.id = "infoDiv";
+		titleDiv.id = "titleDiv";
+		authorDiv.id = "authorDiv";
+		titleDiv.innerHTML = `${info.title ? info.title : `The Crossword`}`;
+		authorDiv.innerHTML = `by ${info.author ? info.author : `Unknown`}`;
+		infoDiv.appendChild(titleDiv);
+		infoDiv.appendChild(authorDiv);
+		flexy.insertBefore(infoDiv, timerButton);
+	}
+	flexy.insertBefore(checkDiv, timerButton.nextSibling);
 
 	function checkGrid() {
 		for(answerLocation in filledAnswers) {
@@ -821,45 +846,45 @@ flexy.insertBefore(checkDiv, timerButton.nextSibling);
 
   
 
-var prevTime, stopwatchInterval, elapsedTime = 0;
+	var prevTime, stopwatchInterval, elapsedTime = 0;
 
-changeTimer();
-  
-timerButton.addEventListener('click', changeTimer);
+	changeTimer();
+	  
+	timerButton.addEventListener('click', changeTimer);
 
-function changeTimer() {
-  if (!stopwatchInterval) {
-    stopwatchInterval = setInterval(function () {
-      if (!prevTime) {
-        prevTime = Date.now();
-      }
-      
-      elapsedTime += Date.now() - prevTime;
-      prevTime = Date.now();
-      
-      updateTime();
-    }, 100);
-  } else {
-  	timerButton.innerHTML = `${timerButton.innerHTML.replace(`◼`, `▶`)}`;
-    clearInterval(stopwatchInterval);
-    stopwatchInterval = null;
-    prevTime = null;
-  }
-}
+	function changeTimer() {
+	  if (!stopwatchInterval) {
+	    stopwatchInterval = setInterval(function () {
+	      if (!prevTime) {
+	        prevTime = Date.now();
+	      }
+	      
+	      elapsedTime += Date.now() - prevTime;
+	      prevTime = Date.now();
+	      
+	      updateTime();
+	    }, 100);
+	  } else {
+	  	timerButton.innerHTML = `${timerButton.innerHTML.replace(`◼`, `▶`)}`;
+	    clearInterval(stopwatchInterval);
+	    stopwatchInterval = null;
+	    prevTime = null;
+	  }
+	}
   
-  
-var updateTime = function () {
-  var tempTime = elapsedTime;
-  tempTime = Math.floor(tempTime / 1000);
-  var seconds = tempTime % 60;
-  tempTime = Math.floor(tempTime / 60);
-  var minutes = tempTime % 60;
-  tempTime = Math.floor(tempTime / 60);
-  var hours = tempTime % 60;
-  
-  var time = `${(hours < 10) ? ((hours == 0) ? "" : ("0" + hours) + `:`) : hours + `:`}${(minutes < 10) ? ("0" + minutes) : minutes}:${(seconds < 10) ? ("0" + seconds) : seconds}`;
-  
-  timerButton.innerHTML = `${time} ◼`;
-};
+	  
+	var updateTime = function () {
+	  var tempTime = elapsedTime;
+	  tempTime = Math.floor(tempTime / 1000);
+	  var seconds = tempTime % 60;
+	  tempTime = Math.floor(tempTime / 60);
+	  var minutes = tempTime % 60;
+	  tempTime = Math.floor(tempTime / 60);
+	  var hours = tempTime % 60;
+	  
+	  var time = `${(hours < 10) ? ((hours == 0) ? "" : ("0" + hours) + `:`) : hours + `:`}${(minutes < 10) ? ("0" + minutes) : minutes}:${(seconds < 10) ? ("0" + seconds) : seconds}`;
+	  
+	  timerButton.innerHTML = `${time} ◼`;
+	};
 
 }
