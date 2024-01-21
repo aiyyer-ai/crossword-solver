@@ -14,36 +14,38 @@
 
 <body>
   <div class="overlay" id="overlay"></div>
-  <div class="row" id="row">
-      <div class="column puzzle" id="puzzle">
-        <canvas id="gridCanvas" width="0" height="0"></canvas>
-        <canvas id="fakeCanvas" width="0" height="0"></canvas>
-        <canvas id="numberCanvas" width="0" height="0"></canvas>
-        <canvas id="textCanvas" width="0" height="0"></canvas>
-        <div class ="input" id="input">
-            <div class="box__input">
-              <input class="box__file" type="file" id="file" name="file" accept=".ipuz">
-              <label id="choice" for="file" style="cursor:pointer"><strong>Choose a file</strong> or drag it here</label>
-              <div class="wrong box__file" id="wrong">ERROR with File: <strong>Wrong File Type.</strong> <br> Reload and Try again</div>
-            </div>
+  <div class="holdingDiv" id="holder">
+    <div class="row" id="row">
+        <div class="column puzzle" id="puzzle">
+          <canvas class="allCanvas" id="gridCanvas" width="0" height="0"></canvas>
+          <canvas class="allCanvas" id="fakeCanvas" width="0" height="0"></canvas>
+          <canvas class="allCanvas" id="numberCanvas" width="0" height="0"></canvas>
+          <canvas class="allCanvas" id="textCanvas" width="0" height="0"></canvas>
+          <div class ="input" id="input">
+              <div class="box__input">
+                <input class="box__file" type="file" id="file" name="file" accept=".ipuz">
+                <label id="choice" for="file" style="cursor:pointer"><strong>Choose a file</strong> or drag it here</label>
+                <div class="wrong box__file" id="wrong">ERROR with File: <strong>Wrong File Type.</strong> <br> Reload and Try again</div>
+              </div>
+          </div>
+          <div id="flexy">
+            <div id="update">Internet Crossword Assistant: Reader Unaided Solver - Version 2.2.4</div>
+          </div>
         </div>
-        <div id="flexy">
-          <div id="update">Internet Crossword Assistant: Reader Unaided Solver - Version 2.2.1</div>
+        <script src="script.js"></script>
+        <div class="column clues" id="acrosscluesholder" style="width:270px;">
+          <div id="acrosstopper"></div>
+          <div id="acrossclue">
+            <div id="insertacross"></div>
+          </div>
         </div>
-      </div>
-      <script src="script.js"></script>
-      <div class="column clues" id="acrosscluesholder" style="width:270px;">
-        <div id="acrosstopper"></div>
-        <div id="acrossclue">
-          <div id="insertacross"></div>
+        <div class="column clues" id="downcluesholder" style="width:270px;">
+          <div id="downtopper"></div>
+          <div id="downclue">
+            <div id="insertdown"></div>
+          </div>
         </div>
-      </div>
-      <div class="column clues" id="downcluesholder" style="width:270px;">
-        <div id="downtopper"></div>
-        <div id="downclue">
-          <div id="insertdown"></div>
-        </div>
-      </div>
+    </div>
   </div>
 </body>
 

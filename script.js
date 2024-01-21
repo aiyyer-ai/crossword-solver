@@ -158,6 +158,10 @@ function createBoard(info) {
   fakeCanvas = createCanvas((boardWidth * 36) + 2, (boardHeight * 36) + 2, 'fakeCanvas');
   fakeOnGrid = fakeCanvas.getContext('2d');
 
+	titleCard = document.getElementById('flexy');
+	titleCard.style.width = `${(boardWidth * 36) + 2}px`;
+	titleCard.style.height = `${(boardHeight * 36) + 2}px`;
+
   //creates the timer/title region
   //titleCanvas = document.getElementById("timer");
   //drawTitle = titleCanvas.getContext('2d');
@@ -493,7 +497,6 @@ function createBoard(info) {
 	}, false);
 
 	function selectSquare(event, notFromClue = true, arrowkeyX = false, arrowkeyY = false) {
-
 		var clickX = event.pageX + leftOffset,
         clickY = event.pageY + topOffset;
     //find spot on grid to place
@@ -615,7 +618,9 @@ function createBoard(info) {
 
 	//let checkDirections = {left:true, right:true, up:true, down:true};
 	var directionalSearch = {left:true, right:true, up:true, down:true};
-	var directionalGridNext = {left: [], right: [], up: [], down: []}
+	var directionalGridNext = {left: [], right: [], up: [], down: []};
+	let moverData = {"pageX": 10 - leftOffset, "pageY": 5 - topOffset};
+	selectSquare(moverData, true, 1, 0);
 	function colorClueSquares(gridX, gridY) {
 		directionalGridNext = {left: [], right: [], up: [], down: []}
 		let iteration = 1;
@@ -784,11 +789,12 @@ function createBoard(info) {
 		let finishPopup = document.createElement("div");
 		finishPopup.id = "popup";
 		finishPopup.style.display = "block";
-		finishPopup.style.width = `${500/1.3}px`;
-		finishPopup.style.height = `500px`;
+		finishPopup.style.height = `${430/1.3}px`;
+		finishPopup.style.width = `430px`;
 		finishPopup.style.backgroundColor = crosswordWhite;
 		finishPopup.style.position = `fixed`;
 		finishPopup.style.zIndex = `10`;
+		finishPopup.style.textAlign = `center`;
 		finishPopup.style.top = `100px`;
 		finishPopup.style.left = `50%`;
 		finishPopup.style.fontSize = `45px`;
@@ -796,39 +802,28 @@ function createBoard(info) {
 		finishPopup.style.boxShadow = `10px 10px 30px ${crosswordScrollButton}`;
 		let finish = document.createElement("span");
 		let timerFin = document.createElement("span");
-		let closeButton = document.createElement("BUTTON");
-		let closeContent = document.createElement(`div`);
-		closeContent.innerHTML = "Close";
-		closeContent.style.margin = `auto`;
-		closeContent.style.padding = `auto`;
-		let popupContent = document.createTextNode(`You finished!`);
+		let closeButton = document.createElement("button");
+		let popupContent = document.createTextNode(`APPLAUSE.WAV`);
 		let timeSections = timerButton.innerHTML.split(":");
 		let popupContent2 = document.createElement("div");
-		popupContent2.innerHTML = `You solved this crossword in <br>${timeSections.length == 3 ? (parseInt(timeSections[0]) + " hours <br>" + parseInt(timeSections[1]) + " minutes and <br>" + parseInt(timeSections[2]) + " seconds") : (parseInt(timeSections[0]) + " minutes and <br>" + parseInt(timeSections[1]) + " seconds")}.`;
+		popupContent2.innerHTML = `You solved ${info.title ? info.title : `The Crossword`} in <br>${timeSections.length == 3 ? (parseInt(timeSections[0]) + " hours <br>" + parseInt(timeSections[1]) + " minutes and <br>" + parseInt(timeSections[2]) + " seconds") : (parseInt(timeSections[0]) + " minutes and <br>" + parseInt(timeSections[1]) + " seconds")}.`;
 		finish.appendChild(popupContent);
 		timerFin.appendChild(popupContent2);
 		finish.style.display = `table`;
 		timerFin.style.display = `block`;
 		finish.style.margin = `auto`;
-		finish.style.marginTop = `30px`;
+		finish.style.marginTop = `25px`;
 		finish.style.fontWeight = `bold`;
+		timerFin.style.fontSize = `35px`;
 		timerFin.style.textAlign = `center`;
-		timerFin.style.marginTop = `80px`;
-		timerFin.style.paddingLeft = `20px`;
-		timerFin.style.paddingRight = `20px`;
+		timerFin.style.marginTop = `15px`;
+		timerFin.style.paddingLeft = `10px`;
+		timerFin.style.paddingRight = `10px`;
 		timerFin.style.fontFamily = `Arial`;
 		finish.style.fontFamily = `Arial`;
 		closeButton.addEventListener("click", closeTheForm);
-		closeButton.style.width = `${50*1.618}px`;
-		closeButton.style.height = `50px`;
-		closeButton.id = "button";
-		closeButton.style.fontSize = `22px`;
-		closeButton.style.fontFamily = `Arial`;
-		closeButton.style.backgroundColor = crosswordHighlightSecondary;
-		closeButton.style.display = `flex`;
-		closeButton.style.margin = `auto`;
-		closeButton.style.marginTop = `40px`;
-		closeButton.appendChild(closeContent);
+		closeButton.id = `button2`;
+		closeButton.innerHTML = 'Close';
 		finishPopup.appendChild(finish);
 		finishPopup.appendChild(timerFin);
 		finishPopup.appendChild(closeButton);
