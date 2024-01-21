@@ -547,11 +547,7 @@ function createBoard(info) {
 			drawOnGrid.fillStyle = crosswordWhite;
 			drawOnGrid.fillRect(prevClick[0], prevClick[1], squareSize, squareSize);
 			let blueSquares;
-			if(acrossDirection) {
-				blueSquares = directionalGridNext['right'].concat(directionalGridNext['left']);
-			} else {
-				blueSquares = directionalGridNext['up'].concat(directionalGridNext['down']);
-			}
+			blueSquares = directionalGridNext['right'].concat(directionalGridNext['left'].concat(directionalGridNext['up'].concat(directionalGridNext['down'])));
 			for (square of blueSquares) {
 				let blueSquareArray = square.split(",");
 	    	drawOnGrid.beginPath();
