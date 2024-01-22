@@ -555,7 +555,6 @@ function createBoard(info) {
 		}
 
 	}, false);
-
 	function selectSquare(event, notFromClue = true, arrowkeyX = false, arrowkeyY = false) {
 		var clickX = event.pageX + leftOffset,
         clickY = event.pageY + topOffset;
@@ -585,7 +584,16 @@ function createBoard(info) {
 			return selectSquare(moverData, false);
     }
     if(!arrowkeyX && !arrowkeyY) {
-    	if(!Object.keys(gridSquares).includes(`${gridX},${gridY}`)) { return false; }    	
+    	if(!Object.keys(gridSquares).includes(`${gridX},${gridY}`)) {
+    		return false; 
+    	} 
+    	if(filledAnswers[`${gridX},${gridY}`]) {
+    		if(!event.type) {
+	    		moverData["pageX"] = event.pageX + (Number(acrossDirection) * (squareSize + 2));
+	    		moverData["pageY"] = event.pageY + (Number(!acrossDirection) * (squareSize + 2));
+	    		return selectSquare(moverData);
+    		}
+    	}
     } else {
     	if(!Object.keys(gridSquares).includes(`${gridX},${gridY}`)) {
     		if(gridX < gridCanvas.clientWidth && gridY < gridCanvas.clientHeight && gridX > 0 && gridY > 0) {
