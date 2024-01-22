@@ -297,7 +297,6 @@ function createBoard(info) {
 		//lastDivMade = document.getElementById(`${String(acrossClue[0])}A`);
 	}
 
-	//On Click event handling
 	var prevClick = [];
 	var clueLast = [];
 	var gridOppNext = [];
@@ -305,6 +304,7 @@ function createBoard(info) {
 	var acrossDirection = true;
 	var leftOffset = -gridCanvas.offsetParent.offsetLeft + gridCanvas.clientLeft;
 	var topOffset = -gridCanvas.offsetParent.offsetTop + gridCanvas.clientTop;
+	//On Click event handling
 	document.body.addEventListener('click', selectSquare, false);
 
 	//on input event handling
@@ -318,38 +318,98 @@ function createBoard(info) {
 			return;
 		}
 		if(keyPress == 'ENTER') {
-			let moverData = {};
-			let squareOne = gridLast[gridLast.length - 1] ? gridLast[gridLast.length - 1] : prevClick.join(",");
 			let moveDirection = 1;
-			let directionValues;
-			let notDirectionValues;
 			if(shiftDown) {
 				moveDirection = -1;
 			}
-			if(acrossDirection) {
-				directionValues = Object.values(acrossObject);
-				notDirectionValues = Object.values(downObject);
-			} else {
-				directionValues = Object.values(downObject);
-				notDirectionValues = Object.values(acrossObject);
-			}
-			let findLocation = typeof directionValues[directionValues.indexOf(squareOne) + moveDirection] === "undefined" ? -1 : directionValues.indexOf(squareOne);
-			let nextSquareInGrid;
-			if(findLocation == -1) {
-				if(moveDirection == -1) {
-					findLocation = notDirectionValues.length;
-					nextSquareInGrid = notDirectionValues[findLocation + moveDirection].split(",").map(Number);
-				}
-				acrossDirection = !acrossDirection
-			}
-			if(!nextSquareInGrid) {
-				 nextSquareInGrid = directionValues[findLocation + moveDirection].split(",").map(Number);
-			}
-			moverData["pageX"] = (nextSquareInGrid[0] - leftOffset);
-			moverData["pageY"] = (nextSquareInGrid[1] - topOffset);
 
-			selectSquare(moverData);
-			return;
+	    //finds the clue
+	    let clueDirection = acrossDirection ? "A" : "D";
+	    let clueObjectKeys = acrossDirection ? Object.keys(acrossObject) : Object.keys(downObject);
+	    let clueObject = acrossDirection ? acrossObject : downObject;
+	    let clueCoordsClicked = gridLast[gridLast.length - 1] ? gridLast[gridLast.length - 1] : prevClick.join(",");
+	    let clueNumberClicked = clueObjectKeys.find(key => clueObject[key] === clueCoordsClicked);
+	    let firstFind = false;
+	    let iteration = 1;
+	    let directionChange = false;
+	    let clueSearching = true;
+	    let clueTest;
+	    while (clueSearching) {
+		    clueTest = `${parseInt(clueNumberClicked) + iteration*moveDirection}${clueDirection}`;
+		    let clueTo = document.getElementById(`${clueTest},div`);
+		    if(iteration < 100) {
+		    	if(clueTo) {
+		    		if(!firstFind) {
+		    			firstFind = clueTest;
+		    		}
+				    if(!(clueTo.style.color == `rgb(126, 126, 126)`)) {
+				    	clueSearching = false;
+				    }
+		    	}
+			    iteration++;			    	
+		    } else {
+		    	if(!directionChange) {
+		    		acrossDirection = !acrossDirection;
+		    		iteration = 0;
+		    		clueNumberClicked = 1;
+		    		clueDirection = acrossDirection ? "A" : "D";
+		    		directionChange = true;
+		    	} else {
+		    		clueTest = firstFind;
+		    		clueSearching = false;
+		    	}
+		    }
+	    }
+
+    	//gets X and Y locations on the board
+    	let moverData = {};
+    	let cluePosition;
+    	if(clueTest.slice(-1) == "A") {
+    		cluePosition = acrossObject[clueTest.slice(0, -1)].split(",");
+    		acrossDirection = true;
+    	} else {
+    		cluePosition = downObject[clueTest.slice(0, -1)].split(",");
+    		acrossDirection = false;
+    	}
+
+    	//highlights boxes on the board
+    	moverData["pageX"] = parseInt(cluePosition[0]) - leftOffset;
+			moverData["pageY"] = parseInt(cluePosition[1]) - topOffset;
+			return selectSquare(moverData);
+
+
+			// let moverData = {};
+			// let squareOne = gridLast[gridLast.length - 1] ? gridLast[gridLast.length - 1] : prevClick.join(",");
+			// let moveDirection = 1;
+			// let directionValues;
+			// let notDirectionValues;
+			// if(shiftDown) {
+			// 	moveDirection = -1;
+			// }
+			// if(acrossDirection) {
+			// 	directionValues = Object.values(acrossObject);
+			// 	notDirectionValues = Object.values(downObject);
+			// } else {
+			// 	directionValues = Object.values(downObject);
+			// 	notDirectionValues = Object.values(acrossObject);
+			// }
+			// let findLocation = typeof directionValues[directionValues.indexOf(squareOne) + moveDirection] === "undefined" ? -1 : directionValues.indexOf(squareOne);
+			// let nextSquareInGrid;
+			// if(findLocation == -1) {
+			// 	if(moveDirection == -1) {
+			// 		findLocation = notDirectionValues.length;
+			// 		nextSquareInGrid = notDirectionValues[findLocation + moveDirection].split(",").map(Number);
+			// 	}
+			// 	acrossDirection = !acrossDirection
+			// }
+			// if(!nextSquareInGrid) {
+			// 	 nextSquareInGrid = directionValues[findLocation + moveDirection].split(",").map(Number);
+			// }
+			// moverData["pageX"] = (nextSquareInGrid[0] - leftOffset);
+			// moverData["pageY"] = (nextSquareInGrid[1] - topOffset);
+
+			// selectSquare(moverData);
+			// return;
 		}
 
 		//takes all other printable keys
@@ -759,7 +819,7 @@ function createBoard(info) {
 	}
 	flexy.insertBefore(checkDiv, timerButton.nextSibling);
 	flexy.style.height = `100px`;
-	
+
 	function checkGrid() {
 		for(answerLocation in filledAnswers) {
 			if(filledAnswers[answerLocation] !== true && filledAnswers[answerLocation] !== false) {

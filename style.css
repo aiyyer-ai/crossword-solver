@@ -4,9 +4,13 @@ html {
    background-color: #ffffff;
 }
 
+/*
+
 * {
     outline: 1px dotted red;
 }
+
+*/
 
 .column, .title {
     float: left;
