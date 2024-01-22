@@ -672,8 +672,8 @@ function createBoard(info) {
     let clueOpposite = document.getElementById(`${clueOppositeNumberClicked}${clueOppositeDirection},div`);
   	clueThis.style.backgroundColor = crosswordHighlightSecondary;
   	clueOpposite.style.backgroundColor = crosswordScrollBar;
-  	clueThis.scrollIntoView({behavior: "smooth", block: "nearest" });
-  	clueOpposite.scrollIntoView({behavior: "smooth", block: "nearest" });
+  	clueThis.scrollIntoView({behavior: "smooth"});
+  	clueOpposite.scrollIntoView({behavior: "smooth"});
   	clueLast[0] = clueThis;
   	clueLast[1] = clueOpposite;    
 
