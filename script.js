@@ -758,7 +758,8 @@ function createBoard(info) {
 		flexy.insertBefore(infoDiv, timerButton);
 	}
 	flexy.insertBefore(checkDiv, timerButton.nextSibling);
-
+	flexy.style.height = `100px`;
+	
 	function checkGrid() {
 		for(answerLocation in filledAnswers) {
 			if(filledAnswers[answerLocation] !== true && filledAnswers[answerLocation] !== false) {
