@@ -108,7 +108,7 @@ function checkJSONContent(info, propArray) {
 }
 
 //Start game code
-let gridCanvas, drawOnGrid, fileDropArea, acrossCanvas, drawAcrosses, titleField, drawTitle;
+let gridCanvas, drawOnGrid, fileDropArea, acrossCanvas, drawAcrosses, titleField, drawTitle, moverData;
 
 let crosswordBlack = `#000000`;
 let crosswordWhite = `#ffffff`;
@@ -312,7 +312,6 @@ function createBoard(info) {
 	document.body.addEventListener('keypress', function(event) {
 
 		let keyPress = event.key.toUpperCase();
-
 		//handles pressing enter
 		if(keyPress == 'BACKSPACE') {
 			return;
@@ -362,7 +361,7 @@ function createBoard(info) {
 	    }
 
     	//gets X and Y locations on the board
-    	let moverData = {};
+    	moverData = {};
     	let cluePosition;
     	if(clueTest.slice(-1) == "A") {
     		cluePosition = acrossObject[clueTest.slice(0, -1)].split(",");
@@ -450,7 +449,7 @@ function createBoard(info) {
 			openTheForm();
 		}
 
-		let moverData = {};
+		moverData = {};
 		if(acrossDirection) {		
 			moverData["pageX"] = (prevClick[0] + squareSize + 10 - leftOffset);
 			moverData["pageY"] = (prevClick[1] + 5 - topOffset);
@@ -474,8 +473,70 @@ function createBoard(info) {
 
 	//on keydown event handling, used for arrow keys and backspace
 	document.body.addEventListener('keydown', function(event) {
-		let moverData = {};
+		moverData = {};
 		switch (event.which) {
+		//tab
+			case 9:
+				event.preventDefault();
+				let moveDirection = 1;
+				if(shiftDown) {
+					moveDirection = -1;
+				}
+
+		    //finds the clue
+		    let clueDirection = acrossDirection ? "A" : "D";
+		    let clueObjectKeys = acrossDirection ? Object.keys(acrossObject) : Object.keys(downObject);
+		    let clueObject = acrossDirection ? acrossObject : downObject;
+		    let clueCoordsClicked = gridLast[gridLast.length - 1] ? gridLast[gridLast.length - 1] : prevClick.join(",");
+		    let clueNumberClicked = clueObjectKeys.find(key => clueObject[key] === clueCoordsClicked);
+		    let firstFind = false;
+		    let iteration = 1;
+		    let directionChange = false;
+		    let clueSearching = true;
+		    let clueTest;
+		    while (clueSearching) {
+			    clueTest = `${parseInt(clueNumberClicked) + iteration*moveDirection}${clueDirection}`;
+			    let clueTo = document.getElementById(`${clueTest},div`);
+			    if(iteration < 100) {
+			    	if(clueTo) {
+			    		if(!firstFind) {
+			    			firstFind = clueTest;
+			    		}
+					    if(!(clueTo.style.color == `rgb(126, 126, 126)`)) {
+					    	clueSearching = false;
+					    }
+			    	}
+				    iteration++;			    	
+			    } else {
+			    	if(!directionChange) {
+			    		acrossDirection = !acrossDirection;
+			    		iteration = 0;
+			    		clueNumberClicked = 1;
+			    		clueDirection = acrossDirection ? "A" : "D";
+			    		directionChange = true;
+			    	} else {
+			    		clueTest = firstFind;
+			    		clueSearching = false;
+			    	}
+			    }
+		    }
+
+	    	//gets X and Y locations on the board
+	    	moverData = {};
+	    	let cluePosition;
+	    	if(clueTest.slice(-1) == "A") {
+	    		cluePosition = acrossObject[clueTest.slice(0, -1)].split(",");
+	    		acrossDirection = true;
+	    	} else {
+	    		cluePosition = downObject[clueTest.slice(0, -1)].split(",");
+	    		acrossDirection = false;
+	    	}
+
+	    	//highlights boxes on the board
+	    	moverData["pageX"] = parseInt(cluePosition[0]) - leftOffset;
+				moverData["pageY"] = parseInt(cluePosition[1]) - topOffset;
+				selectSquare(moverData);
+				break;
 		//backspace
 			case 46:
 			case 8:
@@ -499,7 +560,8 @@ function createBoard(info) {
 						moverData["pageX"] = (alteredBox[0] + 5 - leftOffset);
 						moverData["pageY"] = (alteredBox[1] + 10 - topOffset);
 					}
-					selectSquare(moverData);	
+					selectSquare(moverData);
+					clueLast[1].style.color = "black";	
 				}
 				break;
 			case 16:
@@ -555,6 +617,8 @@ function createBoard(info) {
 		}
 
 	}, false);
+
+
 	function selectSquare(event, notFromClue = true, arrowkeyX = false, arrowkeyY = false) {
 		var clickX = event.pageX + leftOffset,
         clickY = event.pageY + topOffset;
@@ -568,7 +632,7 @@ function createBoard(info) {
     }
     if(clueTest.match(/^\d/)) {
     	//gets X and Y locations on the board
-    	let moverData = {};
+    	moverData = {};
     	let cluePosition;
     	if(clueTest.slice(-1) == "A") {
     		cluePosition = acrossObject[clueTest.slice(0, -1)].split(",");
@@ -589,15 +653,32 @@ function createBoard(info) {
     	} 
     	if(filledAnswers[`${gridX},${gridY}`]) {
     		if(!event.type) {
-	    		moverData["pageX"] = event.pageX + (Number(acrossDirection) * (squareSize + 2));
-	    		moverData["pageY"] = event.pageY + (Number(!acrossDirection) * (squareSize + 2));
-	    		return selectSquare(moverData);
+    			let wordSearching = true;
+    			let tempGridX = gridX + (Number(acrossDirection) * (squareSize + 2));
+    			let tempGridY = gridY + (Number(!acrossDirection) * (squareSize + 2));
+    			while(wordSearching) {
+			    	if(!Object.keys(gridSquares).includes(`${tempGridX},${tempGridY}`)) {
+			    		wordSearching = false;
+			    		break;
+			    	}
+			    	if(filledAnswers[`${tempGridX},${tempGridY}`]) {
+			    		tempGridX += (Number(acrossDirection) * (squareSize + 2));
+			    		tempGridY += (Number(!acrossDirection) * (squareSize + 2));
+			    	} else {
+			    		wordSearching = false;
+			    		moverData = {};
+	    				moverData["pageX"] = tempGridX - leftOffset;
+	    				moverData["pageY"] = tempGridY - topOffset;
+			    		return selectSquare(moverData);
+			    	}
+    			}
+
     		}
     	}
     } else {
     	if(!Object.keys(gridSquares).includes(`${gridX},${gridY}`)) {
     		if(gridX < gridCanvas.clientWidth && gridY < gridCanvas.clientHeight && gridX > 0 && gridY > 0) {
-	    		let moverData = {};
+	    		moverData = {};
 	    		moverData["pageX"] = event.pageX + arrowkeyX * (squareSize);
 	    		moverData["pageY"] = event.pageY + arrowkeyY * (squareSize);
 	    		selectSquare(moverData, true, arrowkeyX, arrowkeyY);
@@ -685,7 +766,7 @@ function createBoard(info) {
 	//let checkDirections = {left:true, right:true, up:true, down:true};
 	var directionalSearch = {left:true, right:true, up:true, down:true};
 	var directionalGridNext = {left: [], right: [], up: [], down: []};
-	let moverData = {"pageX": 10 - leftOffset, "pageY": 5 - topOffset};
+	moverData = {"pageX": 10 - leftOffset, "pageY": 5 - topOffset};
 	selectSquare(moverData, true, 1, 0);
 	function colorClueSquares(gridX, gridY) {
 		directionalGridNext = {left: [], right: [], up: [], down: []}
