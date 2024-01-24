@@ -121,6 +121,51 @@ hr {
     display: none;
 }
 
+.blurrer {
+    position: fixed;
+    width: 50%;
+    height: 100%;
+    z-index: 4;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    display: none;
+    backdrop-filter: blur(5px);
+}
+
+#popup {
+    display: block;
+    height: 331px;
+    width: 430px;
+    background-color: #ffffff;
+    position:fixed;
+    z-index: 10;
+    text-align: center;
+    top: 0%;
+    left: 0%;
+    font-size: 45px;
+    -ms-transform: translate(-50%, -50%);
+    transform: translate(-50%, -50%);
+    box-shadow: 10px 10px 30px #7e7e7e;
+
+}
+
+#popupTitle {
+    display: table;
+    margin: auto;
+    margin-top: 25px;
+    font-weight: bold;
+}
+
+#popupContent {
+    display: block;
+    font-size: 35px;
+    margin-top: 15px;
+    padding-left: 10px;
+    padding-right: 10px;
+}
+
 #gridCanvas, #textCanvas, #numberCanvas {
     position:absolute; top:0px; left:0px;
 }

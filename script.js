@@ -446,7 +446,7 @@ function createBoard(info) {
 		textOnGrid.fillText(String(keyPress), prevClick[0] + squareSize/2, prevClick[1] + (squareSize * (7/8) + 1));
 
 		if(Object.values(filledAnswers).filter((value) => value == true).length == Object.keys(gridSquares).length) {
-			openTheForm();
+			openCloseForm();
 		}
 
 		moverData = {};
@@ -928,70 +928,60 @@ function createBoard(info) {
 		return;
 	}
 
-	function openTheForm() {
+	function openForm() {
+		let popup = document.getElementById("popup");
+		popup.style.transform =`translate(${((boardWidth * 36) + 2 - leftOffset)/2}px, ${((boardHeight * 36) + 2 - topOffset)/4}px)`;
+		let blurrer = document.getElementById("blurrer");
+		blurrer.style.transform = `translate(${(boardWidth * 36) + 2 - leftOffset}px, 0%)`;
+		blurrer.style.display = "block";
+		let popupTitle = document.getElementById("popupTitle");
+		popupTitle.innerHTML = `${info.title ? info.title : `The Crossword`}`;
+		let popupContent = document.getElementById("popupContent");
+		popupContent.style.marginTop = `75px`;
+		let closeButton = document.getElementById("button2");
+		closeButton.style.marginTop = `65px`;
+		closeButton.addEventListener("click", closeOpenForm);
+		let overlay = document.getElementById("overlay");
+		overlay.style.display = "block";
+	}
+
+	openForm();
+
+	function closeOpenForm() {
+	document.getElementById("popupContent").style.marginTop = "15px";
+	let closeButton = document.getElementById("button2");
+	closeButton.style.marginTop = "10px";
+	closeButton.removeEventListener("click", closeOpenForm);	
+	document.getElementById("overlay").style.display = "none";
+	document.getElementById("blurrer").style.display = "none";
+	changeTimer();
+	}
+
+	function openCloseForm() {
     clearInterval(stopwatchInterval);
     stopwatchInterval = null;
     prevTime = null;
 		timerButton.removeEventListener('click', changeTimer);
 		timerButton.innerHTML = `${timerButton.innerHTML.replace(`◼`, ``)}`;
-		let finishPopup = document.createElement("div");
-		finishPopup.id = "popup";
-		finishPopup.style.display = "block";
-		finishPopup.style.height = `${430/1.3}px`;
-		finishPopup.style.width = `430px`;
-		finishPopup.style.backgroundColor = crosswordWhite;
-		finishPopup.style.position = `fixed`;
-		finishPopup.style.zIndex = `10`;
-		finishPopup.style.textAlign = `center`;
-		finishPopup.style.top = `100px`;
-		finishPopup.style.left = `50%`;
-		finishPopup.style.fontSize = `45px`;
-		finishPopup.style.translate = (`-50%`, `-50%`);
-		finishPopup.style.boxShadow = `10px 10px 30px ${crosswordScrollButton}`;
-		let finish = document.createElement("span");
-		let timerFin = document.createElement("span");
-		let closeButton = document.createElement("button");
-		let popupContent = document.createTextNode(`APPLAUSE.WAV`);
 		let timeSections = timerButton.innerHTML.split(":");
-		let popupContent2 = document.createElement("div");
-		popupContent2.innerHTML = `You solved ${info.title ? info.title : `The Crossword`} in <br>${timeSections.length == 3 ? (parseInt(timeSections[0]) + " hours <br>" + parseInt(timeSections[1]) + " minutes and <br>" + parseInt(timeSections[2]) + " seconds") : (parseInt(timeSections[0]) + " minutes and <br>" + parseInt(timeSections[1]) + " seconds")}.`;
-		finish.appendChild(popupContent);
-		timerFin.appendChild(popupContent2);
-		finish.style.display = `table`;
-		timerFin.style.display = `block`;
-		finish.style.margin = `auto`;
-		finish.style.marginTop = `25px`;
-		finish.style.fontWeight = `bold`;
-		timerFin.style.fontSize = `35px`;
-		timerFin.style.textAlign = `center`;
-		timerFin.style.marginTop = `15px`;
-		timerFin.style.paddingLeft = `10px`;
-		timerFin.style.paddingRight = `10px`;
-		timerFin.style.fontFamily = `Arial`;
-		finish.style.fontFamily = `Arial`;
+		let popupTitle = document.getElementById("popupTitle");
+		popupTitle.innerHTML = "APPLAUSE.WAV";
+		let popupContent = document.getElementById("popupContent");
+		popupContent.innerHTML = `You solved ${info.title ? info.title : `The Crossword`} in <br>${timeSections.length == 3 ? (parseInt(timeSections[0]) + " hours <br>" + parseInt(timeSections[1]) + " minutes and <br>" + parseInt(timeSections[2]) + " seconds") : (parseInt(timeSections[0]) + " minutes and <br>" + parseInt(timeSections[1]) + " seconds")}.`;
+		let closeButton = document.getElementById("button2");
 		closeButton.addEventListener("click", closeTheForm);
-		closeButton.id = `button2`;
-		closeButton.innerHTML = 'Close';
-		finishPopup.appendChild(finish);
-		finishPopup.appendChild(timerFin);
-		finishPopup.appendChild(closeButton);
-		//finishPopup.style.top = `${((boardHeight * 36) + 2)/2 - 250 - topOffset}px`;
-		//finishPopup.style.left = `${((boardWidth * 36) + 2)/2 - (500/1.618)/2 - leftOffset}px`;
 		let overlay = document.getElementById("overlay");
 		overlay.style.display = "block";
-		document.body.insertBefore(finishPopup, overlay);
 	}
 
 	function closeTheForm() {
-	  document.getElementById("popup").style.display = "none";
 	  document.getElementById("overlay").style.display = "none";
+	  document.getElementById("button2").removeEventListener("click", closeTheForm);	
 	}
 
   
 
 	var prevTime, stopwatchInterval, elapsedTime = 0;
-
-	changeTimer();
 	  
 	timerButton.addEventListener('click', changeTimer);
 
