@@ -305,7 +305,6 @@ function createBoard(info) {
 	var leftOffset = -gridCanvas.offsetParent.offsetLeft + gridCanvas.clientLeft;
 	var topOffset = -gridCanvas.offsetParent.offsetTop + gridCanvas.clientTop;
 	//On Click event handling
-	document.body.addEventListener('click', selectSquare, false);
 
 	//on input event handling
 	var inputlist = [];
@@ -955,6 +954,10 @@ function createBoard(info) {
 	document.getElementById("overlay").style.display = "none";
 	document.getElementById("blurrer").style.display = "none";
 	changeTimer();
+  setTimeout(()=> {
+    document.body.addEventListener('click', selectSquare, false);
+  }
+  ,100);
 	}
 
 	function openCloseForm() {
