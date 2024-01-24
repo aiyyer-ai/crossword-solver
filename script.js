@@ -908,7 +908,7 @@ function createBoard(info) {
 		flexy.insertBefore(infoDiv, timerButton);
 	}
 	flexy.insertBefore(checkDiv, timerButton.nextSibling);
-	flexy.style.height = `100px`;
+	flexy.style.height = `20px`;
 
 	function checkGrid() {
 		for(answerLocation in filledAnswers) {
@@ -1001,6 +1001,10 @@ function createBoard(info) {
 	      updateTime();
 	    }, 100);
 	  } else {
+	  	document.body.removeEventListener('click', selectSquare, false);
+			let popupContent = document.getElementById("popupContent");
+			popupContent.innerHTML = `Game Paused`;
+	  	openForm();
 	  	timerButton.innerHTML = `${timerButton.innerHTML.replace(`◼`, `▶`)}`;
 	    clearInterval(stopwatchInterval);
 	    stopwatchInterval = null;
