@@ -77,7 +77,11 @@ html {
 
 #titleDiv {
     font-weight: bold;
-    font-size: 24px;
+    font-size: 1em;
+}
+
+#authorDiv {
+    font-size: 0.9em;
 }
 
 #authorDiv, #titleDiv {
