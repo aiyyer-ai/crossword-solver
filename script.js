@@ -936,9 +936,17 @@ function createBoard(info) {
 		let popupTitle = document.getElementById("popupTitle");
 		popupTitle.innerHTML = `${info.title ? info.title : `The Crossword`}`;
 		let popupContent = document.getElementById("popupContent");
-		popupContent.style.marginTop = `75px`;
+		let popupContent2 = document.getElementById("popupContent2");
+		popupContent2.innerHTML = `• by ${info.author ? info.author : `Unknown`} •`;
 		let closeButton = document.getElementById("button2");
-		closeButton.style.marginTop = `65px`;
+		if(popupContent2.style.display != `none`) {
+			popupContent.style.marginTop = `55px`;
+			closeButton.style.marginTop = `45px`;
+		} else {
+			popupContent.style.marginTop = `65px`;
+			closeButton.style.marginTop = `65px`;			
+		}
+
 		closeButton.addEventListener("click", closeOpenForm);
 		let overlay = document.getElementById("overlay");
 		overlay.style.display = "block";
@@ -952,6 +960,7 @@ function createBoard(info) {
 	closeButton.style.marginTop = "10px";
 	closeButton.removeEventListener("click", closeOpenForm);	
 	document.getElementById("overlay").style.display = "none";
+	document.getElementById("popupContent2").style.display = "none";
 	document.getElementById("blurrer").style.display = "none";
 	changeTimer();
   setTimeout(()=> {
