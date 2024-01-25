@@ -928,13 +928,10 @@ function createBoard(info) {
 	}
 
 	function openForm() {
-		let middleFlex = document.getElementById("update");
-		middleFlex.style.transform =`translate(0%, 0%)`;
-		console.log(middleFlex.style);
+		let popup = document.getElementById("popup");
+		popup.style.transform =`translate(${((boardWidth * 36) + 2 - leftOffset)/2}px, ${((boardHeight * 36) + 2 - topOffset)/4}px)`;
 		let blurrer = document.getElementById("blurrer");
-		let browserVW = Math.max(document.documentElement.clientWidth || 0, window.innerWidth || 0);
-		console.log(( 270 - (boardWidth * 36 + 2)/2));
-		blurrer.style.left = `${50 - ( ( ( 270 - (boardWidth * 36 - 18)/2) / browserVW) * 100)}%`;
+		blurrer.style.transform = `translate(${(boardWidth * 36) + 2 - leftOffset}px, 0%)`;
 		blurrer.style.display = "block";
 		let popupTitle = document.getElementById("popupTitle");
 		popupTitle.innerHTML = `${info.title ? info.title : `The Crossword`}`;
