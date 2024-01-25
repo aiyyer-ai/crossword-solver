@@ -5,12 +5,11 @@ html {
 }
 
 /*
-
 * {
     outline: 1px dotted red;
 }
-
 */
+
 
 .column, .title {
     float: left;
@@ -25,6 +24,11 @@ html {
 
 #checking, #update, #infoDiv {
     flex: 1;
+}
+
+#update {
+    -ms-transform: translate(50%, 0%);
+    transform: translate(50%, 0%);
 }
 
 #button {
@@ -110,6 +114,7 @@ hr {
 
 .puzzle, .clues {
     position: relative;
+    display:inline-block;
 }
 
 .overlay {
@@ -148,10 +153,10 @@ hr {
     z-index: 10;
     text-align: center;
     top: 0%;
-    left: 0%;
+    left: 50%;
     font-size: 45px;
-    -ms-transform: translate(-50%, -50%);
-    transform: translate(-50%, -50%);
+    -ms-transform: translate(-50%, 50%);
+    transform: translate(-50%, 50%);
     box-shadow: 10px 10px 30px #7e7e7e;
 
 }
@@ -197,6 +202,11 @@ hr {
   padding: 3px;
 }
 
+.row {
+    display:flex;
+    justify-content: center;
+}
+
 .input {
     background-color: #bfe5ff;
     outline: 2px dashed black;
@@ -204,6 +214,8 @@ hr {
     width: 500px;
     height: 310px;
     position: relative;
+    -ms-transform: translate(50%, 0%);
+    transform: translate(50%, 0%);
 }
 
 .box__file {
