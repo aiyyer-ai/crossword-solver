@@ -517,13 +517,12 @@ function addInputListeners() {
                         if (event.key.length === 1) {
                               let character = event.key.toUpperCase();
                               let currentSquare = document.querySelector(".highlightPrimary").parentElement;
+                              let positionData = currentSquare.id.split("/").map(Number);
                               if (currentSquare.editable) {
                                     let textBox = currentSquare.querySelector("#text");
                                     textBox.textContent = character;
                                     let wrongSlash = currentSquare.querySelector("#wrong");
                                     wrongSlash.style.visibility = "hidden";
-
-                                    let positionData = currentSquare.id.split("/").map(Number);
 
                                     var directionalSearch = { left: true, right: true, up: true, down: true };
                                     var completeInDirection = { left: false, right: false, up: false, down: false };
@@ -581,24 +580,24 @@ function addInputListeners() {
                                           activeDown.classList.remove("finishedClue");
                                     }
 
-                                    let neighbors = {
-                                          left: `${positionData[0] - 1}/${positionData[1]}`,
-                                          right: `${positionData[0] + 1}/${positionData[1]}`,
-                                          up: `${positionData[0]}/${positionData[1] - 1}`,
-                                          down: `${positionData[0]}/${positionData[1] + 1}`
-                                    };
-                                    let nextCellID;
-                                    if (acrossDirection) {
-                                          nextCellID = neighbors.right;
-                                    } else {
-                                          nextCellID = neighbors.down;
-                                    }
-                                    let cell = document.getElementById(nextCellID);
-                                    if (cell && cell.character != "#") {
-                                          selectCell({ cell: cell });
-                                    }
-
                                     checkIfCorrect({ typed: true });
+                              }
+
+                              let neighbors = {
+                                    left: `${positionData[0] - 1}/${positionData[1]}`,
+                                    right: `${positionData[0] + 1}/${positionData[1]}`,
+                                    up: `${positionData[0]}/${positionData[1] - 1}`,
+                                    down: `${positionData[0]}/${positionData[1] + 1}`
+                              };
+                              let nextCellID;
+                              if (acrossDirection) {
+                                    nextCellID = neighbors.right;
+                              } else {
+                                    nextCellID = neighbors.down;
+                              }
+                              let cell = document.getElementById(nextCellID);
+                              if (cell && cell.character != "#") {
+                                    selectCell({ cell: cell });
                               }
                         }
             }
