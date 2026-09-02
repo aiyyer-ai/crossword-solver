@@ -1,7 +1,6 @@
-
 html {
-   font-family: Arial, Helvetica, sans-serif;
-   background-color: #ffffff;
+      font-family: Arial, Helvetica, sans-serif;
+      background-color: #ffffff;
 }
 
 /*
@@ -10,238 +9,340 @@ html {
 }
 */
 
+body {
+      margin: 0;
+}
 
-.column, .title {
-    float: left;
-    padding: 3px;
-    overflow-y: visible;
-    text-align: center;
+.column,
+.title {
+      float: left;
+      padding: 3px;
+      overflow-y: visible;
+      text-align: center;
+      flex-shrink: 0;
 }
 
 #flexy {
-    display: flex;
+      display: flex;
 }
 
-#checking, #update, #infoDiv {
-    flex: 1;
+#checking,
+#update,
+#infoDiv {
+      flex: 1;
 }
 
 #update {
-    -ms-transform: translate(50%, 0%);
-    transform: translate(50%, 0%);
+      /* -ms-transform: translate(50%, 0%);
+    transform: translate(50%, 0%); */
 }
 
 #button {
-    background-color: #e5e5e5;
-    border: none;
-    border-radius: 4px;
-    color: #333333;
-    padding: 8px 16px;
-    text-align: center;
-    font-size: 12px;
-    margin: 0px 4px;
-    opacity: 0.8;
-    transition: 0.3s;
-    display: inline-block;
-    text-decoration: none;
-    cursor: pointer;
+      background-color: #e5e5e5;
+      border: none;
+      border-radius: 4px;
+      color: #333333;
+      padding: 8px 16px;
+      text-align: center;
+      font-size: 12px;
+      margin: 0px 4px;
+      opacity: 0.8;
+      transition: 0.3s;
+      display: inline-block;
+      text-decoration: none;
+      cursor: pointer;
 }
 
 #button:hover {
-    opacity: 1   
+      opacity: 1
 }
 
 #button:active {
-    background-color: #7e7e7e;
+      background-color: #7e7e7e;
 }
 
 #button2 {
-    background-color: #e5e5e5;
-    border: none;
-    border-radius: 4px;
-    color: #333333;
-    padding: 8px 16px;
-    text-align: center;
-    font-size: 22px;
-    margin: 10px 0px;
-    opacity: 0.8;
-    transition: 0.3s;
-    display: inline-block;
-    text-decoration: none;
-    cursor: pointer;
+      background-color: #e5e5e5;
+      border: none;
+      width: auto;
+      border-radius: 4px;
+      color: #333333;
+      padding: 8px 16px;
+      text-align: center;
+      font-size: 22px;
+      margin: 10px 0px;
+      opacity: 0.8;
+      transition: 0.3s;
+      display: inline-block;
+      text-decoration: none;
+      cursor: pointer;
 }
 
 #button2:hover {
-    opacity: 1   
+      opacity: 1
 }
 
 #button2:active {
-    background-color: #7e7e7e;
+      background-color: #7e7e7e;
 }
 
 #titleDiv {
-    font-weight: bold;
-    font-size: 1em;
+      font-weight: bold;
+      font-size: 1em;
 }
 
 #authorDiv {
-    font-size: 0.9em;
+      font-size: 0.9em;
 }
 
-#authorDiv, #titleDiv {
-    text-align: left;
+#authorDiv,
+#titleDiv {
+      text-align: left;
 }
 
 #checking {
-    text-align: right;
+      text-align: right;
 }
 
 .clues {
-    float: left;
-    padding: 3px;
-    overflow-y: hidden;
-    text-align: left;
-    font-size: 18px;
-    font-family: Arial;
+      float: left;
+      padding: 3px;
+      overflow-y: hidden;
+      text-align: left;
+      font-size: 18px;
+      font-family: Arial;
 }
 
 hr {
-    margin: 0;
-    border-width:0;
-    height: 2px;
-    background-color: #e5e5e5;
+      margin: 0;
+      border-width: 0;
+      height: 2px;
+      background-color: #e5e5e5;
 }
 
-.puzzle, .clues {
-    position: relative;
-    display:inline-block;
+.puzzle,
+.clues {
+      position: relative;
+      display: inline-block;
+}
+
+.puzzle {
+      margin-bottom: 20px;
 }
 
 .overlay {
-    position: fixed;
-    width: 100%;
-    height: 100%;
-    z-index: 5;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background-color: rgba(0,0,0,0.2);
-    display: none;
+      position: fixed;
+      width: 100%;
+      height: 100%;
+      z-index: 5;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background-color: rgba(0, 0, 0, 0.2);
+      display: none;
+}
+
+#clueHolder {
+      position: relative;
+      flex-wrap: nowrap;
 }
 
 .blurrer {
-    position: fixed;
-    width: 50%;
-    height: 100%;
-    z-index: 4;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    display: none;
-    -webkit-backdrop-filter: blur(5px);
-    backdrop-filter: blur(5px);
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      z-index: 4;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      display: none;
+      -webkit-backdrop-filter: blur(5px);
+      backdrop-filter: blur(5px);
 }
 
 #popup {
-    display: block;
-    height: 331px;
-    width: 430px;
-    background-color: #ffffff;
-    position:fixed;
-    z-index: 10;
-    text-align: center;
-    top: 0%;
-    left: 50%;
-    font-size: 45px;
-    -ms-transform: translate(-50%, 50%);
-    transform: translate(-50%, 50%);
-    box-shadow: 10px 10px 30px #7e7e7e;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-around;
+      align-items: center;
+      height: fit-content;
+      width: fit-content;
+      padding: 30px;
+      background-color: #ffffff;
+      position: fixed;
+      z-index: 10;
+      text-align: center;
+      top: 50%;
+      left: 50%;
+      font-size: 45px;
+      border-radius: 0px;
+      outline: 2px dashed #7e7e7e;
+      outline-offset: -10px;
+      border: 10px solid #e5e5e5;
+      -ms-transform: translate(-50%, -50%);
+      transform: translate(-50%, -50%);
+      box-shadow: 10px 10px 30px #7e7e7e;
+      gap:25px;
 
 }
 
 #popupTitle {
-    display: table;
-    margin: auto;
-    margin-top: 25px;
-    font-weight: bold;
+      display: table;
+      margin: auto;
+      font-weight: bold;
 }
 
 #popupContent {
-    display: block;
-    font-size: 35px;
-    margin-top: 15px;
-    padding-left: 10px;
-    padding-right: 10px;
+      display: block;
+      font-size: 35px;
+      padding-left: 10px;
+      padding-right: 10px;
 }
 
 #popupContent2 {
-    display: block;
-    font-size: 20px;
-    margin-top: 25px;
-    padding-left: 10px;
-    padding-right: 10px;
+      display: block;
+      font-size: 20px;
+      padding-left: 10px;
+      padding-right: 10px;
 }
 
-#gridCanvas, #textCanvas, #numberCanvas {
-    position:absolute; top:0px; left:0px;
+#gridCanvas,
+#textCanvas,
+#numberCanvas {
+      position: absolute;
+      top: 0px;
+      left: 0px;
 }
 
-#acrossclue, #downclue {
-    text-align: left;
-    overflow-y: auto;
-    font-size: 18px;
-    font-family: Arial;
+#acrossclue,
+#downclue {
+      text-align: left;
+      overflow-y: auto;
+      font-size: 18px;
+      font-family: Arial;
 }
 
 .row:after {
-  content: "";
-  display: table;
-  clear: both;
-  padding: 3px;
+      content: "";
+      display: table;
+      clear: both;
+      padding: 3px;
 }
 
 .row {
-    display:flex;
-    justify-content: center;
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      padding: 30px;
+}
+
+.holdingDiv {
+      min-height: 100vh;
+      margin: 0;
+      box-sizing: border-box;
+      display: flex;
+      justify-content: center;
+      align-items: center;
 }
 
 .input {
-    background-color: #bfe5ff;
-    outline: 2px dashed black;
-    outline-offset: -10px;
-    width: 500px;
-    height: 310px;
-    position: relative;
-    -ms-transform: translate(50%, 0%);
-    transform: translate(50%, 0%);
+      background-color: #bfe5ff;
+      outline: 2px dashed black;
+      outline-offset: -10px;
+      width: 500px;
+      height: 310px;
+      position: relative;
 }
 
 .box__file {
-    width: 0.1px;
-    height: 0.1px;
-    opacity: 0;
-    overflow: hidden;
-    position: absolute;
-    z-index: -1;
+      width: 0.1px;
+      height: 0.1px;
+      opacity: 0;
+      overflow: hidden;
+      position: absolute;
+      z-index: -1;
 }
 
 .box__input {
-    position: absolute;
-    margin: 0;
-    top: 50%;
-    left: 50%;
-    -ms-transform: translate(-50%, -50%);
-    transform: translate(-50%, -50%);
+      position: absolute;
+      margin: 0;
+      top: 50%;
+      left: 50%;
+      -ms-transform: translate(-50%, -50%);
+      transform: translate(-50%, -50%);
 }
 
 .input.dragover {
-    background-color: #fae522;
-    outline-offset: -15px;
+      background-color: #fae522;
+      outline-offset: -15px;
 }
 
 .input.uploaded {
-    display: hidden;
-    visibility: hidden;
+      display: none;
+      visibility: hidden;
+}
+
+.highlightPrimaryClue {
+      background-color: #bfe5ff !important;
+}
+
+.highlightSecondaryClue {
+      background-color: #e5e5e5 !important;
+}
+
+.svgGrid {
+      user-select: none;
+}
+
+.clues {
+      user-select: none;
+}
+
+.finishedClue {
+      color: #7e7e7e !important;
+}
+
+.svgGrid .cellBack {
+      position: relative;
+      z-index: 1;
+      fill: #444;
+}
+
+.svgGrid .cellFill {
+      position: relative;
+      z-index: 2;
+}
+
+.svgGrid .gridLine {
+      stroke: #444;
+      stroke-width: 1;
+      shape-rendering: crispedges;
+}
+
+.svgGrid rect.none {
+      fill: #888888;
+}
+
+.svgGrid rect.default {
+      fill: #fff;
+}
+
+.svgGrid rect.highlightPrimary {
+      fill: #fae522 !important;
+}
+
+.svgGrid rect.highlightSecondary {
+      fill: #bfe5ff !important;
+}
+
+.svgGrid rect.block {
+      fill: #000;
+}
+
+.svgGrid .gridBorder {
+      fill: none;
+      stroke: #000;
+      stroke-width: 2;
 }
