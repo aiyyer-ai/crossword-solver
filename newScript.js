@@ -144,13 +144,67 @@ function clickOnCell(event) {
 }
 
 function clickOnClue(event) {
-      const cell = Array.from(document.querySelectorAll(`.cell`)).filter(cell => cell.character == this.clueNum);
+      const cell = Array.from(document.querySelectorAll(`.cell`)).filter(cell => cell.character == this.clueNum)[0];
       if (this.direction == "A") {
             acrossDirection = true;
       } else {
             acrossDirection = false;
       }
-      selectCell({ cell: cell[0], fromClue: true });
+      let textBox = cell.querySelector("#text");
+      if(textBox.textContent == "") {
+            selectCell({ cell: cell, fromClue: true });
+      } else {
+            let positionData = cell.id.split("/").map(Number);
+            var directionalSearch = { left: true, right: true, up: true, down: true };
+            let stillSearching = true;
+            let iteration = 1;
+            let neighbors = {
+                  left: `${positionData[0] - 1}/${positionData[1]}`,
+                  right: `${positionData[0] + 1}/${positionData[1]}`,
+                  up: `${positionData[0]}/${positionData[1] - 1}`,
+                  down: `${positionData[0]}/${positionData[1] + 1}`
+            };
+            while (stillSearching) {
+                  stillSearching = Object.values(directionalSearch).includes(true);
+                  let currentSquares = {
+                        left: `${positionData[0] - iteration}/${positionData[1]}`,
+                        right: `${positionData[0] + iteration}/${positionData[1]}`,
+                        up: `${positionData[0]}/${positionData[1] - iteration}`,
+                        down: `${positionData[0]}/${positionData[1] + iteration}`
+                  };
+                  for (searchDirection in currentSquares) {
+                        if (directionalSearch[searchDirection]) {
+                              let nextCell = document.getElementById(currentSquares[searchDirection]);
+                              if (!nextCell || nextCell.character == "#") {
+                                    neighbors[searchDirection] = null;
+                                    directionalSearch[searchDirection] = false;
+                                    continue;
+                              } else {
+                                    let textBox = nextCell.querySelector("#text");
+                                    if (textBox.textContent != "") {
+                                          continue;
+                                    } else {
+                                          neighbors[searchDirection] = currentSquares[searchDirection];
+                                          directionalSearch[searchDirection] = false;
+                                          continue;
+                                    }
+                              }
+                        }
+                  }
+                  iteration++;
+            }
+            let primaryCell;
+            if (!acrossDirection) {
+                  primaryCell = document.getElementById(neighbors.down);
+            } else {
+                  primaryCell = document.getElementById(neighbors.right);
+            }
+            if(primaryCell) {
+                  selectCell({ cell: primaryCell, fromClue: true });
+            } else {
+                  selectCell({ cell: cell, fromClue: true });
+            }
+      }
 }
 
 function selectCell({ cell, fromClue = false }) {
@@ -464,7 +518,6 @@ function addInputListeners() {
                         if (moveForward) {
                               nextClueSpot = false;
                               while (!nextClueSpot) {
-                                    console.log(currentClue);
                                     currentClue = currentClue.nextElementSibling;
                                     if (currentClue && /^\d/.test(currentClue.id)) {
                                           if (!currentClue.classList.contains("finishedClue")) {
