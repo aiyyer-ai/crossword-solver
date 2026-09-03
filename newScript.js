@@ -571,6 +571,12 @@ function addInputListeners() {
                               let character = event.key.toUpperCase();
                               let currentSquare = document.querySelector(".highlightPrimary").parentElement;
                               let positionData = currentSquare.id.split("/").map(Number);
+                              let neighbors = {
+                                    left: `${positionData[0] - 1}/${positionData[1]}`,
+                                    right: `${positionData[0] + 1}/${positionData[1]}`,
+                                    up: `${positionData[0]}/${positionData[1] - 1}`,
+                                    down: `${positionData[0]}/${positionData[1] + 1}`
+                              };
                               if (currentSquare.editable) {
                                     let textBox = currentSquare.querySelector("#text");
                                     textBox.textContent = character;
@@ -594,11 +600,13 @@ function addInputListeners() {
                                                       let nextCell = document.getElementById(currentSquares[searchDirection]);
                                                       if (!nextCell || nextCell.character == "#") {
                                                             completeInDirection[searchDirection] = true;
+                                                            neighbors[searchDirection] = null;
                                                             directionalSearch[searchDirection] = false;
                                                             continue;
                                                       } else {
                                                             let textBox = nextCell.querySelector("#text");
                                                             if (textBox.textContent == "") {
+                                                                  neighbors[searchDirection] = currentSquares[searchDirection];
                                                                   directionalSearch[searchDirection] = false;
                                                             } else {
                                                                   continue;
@@ -636,12 +644,6 @@ function addInputListeners() {
                                     checkIfCorrect({ typed: true });
                               }
 
-                              let neighbors = {
-                                    left: `${positionData[0] - 1}/${positionData[1]}`,
-                                    right: `${positionData[0] + 1}/${positionData[1]}`,
-                                    up: `${positionData[0]}/${positionData[1] - 1}`,
-                                    down: `${positionData[0]}/${positionData[1] + 1}`
-                              };
                               let nextCellID;
                               if (acrossDirection) {
                                     nextCellID = neighbors.right;
