@@ -839,6 +839,9 @@ function checkIfCorrect({ typed = true }) {
             return textBox.textContent != cell.solution;
       });
       if (allWrong.length == 0 && typed) {
+            document.querySelectorAll(".cell").forEach((cell) => {
+                  cell.editable = false;
+            })
             openCloseForm();
       }
       return allWrong;
